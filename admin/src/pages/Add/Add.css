@@ -1,0 +1,81 @@
+.add {
+    width: 70%;
+    margin-left: max(5vw, 25px);
+    margin-top: 50px;
+    color: #6d6d6d;
+    font-size: 16px;
+}
+
+.add form {
+    gap: 20px;
+}
+
+.add-img-upload img {
+    width: 120px;
+}
+
+.add-product-name,
+.add-product-description,
+.add-product-id,
+.add-supplier-name,
+.add-date {
+    width: max(40%, 280px);
+}
+
+.add-product-name input,
+.add-product-description textarea,
+.add-product-id input,
+.add-supplier-name input,
+.add-date input {
+    padding: 10px;
+}
+
+.add-category-price-quantity {
+    display: flex;
+    gap: 30px;
+}
+
+.add-category-price-quantity select,
+.add-category-price-quantity input {
+    max-width: 120px;
+    padding: 10px;
+}
+
+.add-product-id,
+.add-supplier-name,
+.add-date {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-product-id p,
+.add-supplier-name p,
+.add-date p {
+    margin-bottom: 5px;
+}
+
+.add-product-id input,
+.add-supplier-name input,
+.add-date input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.add-date input {
+    background-color: #f9f9f9;
+}
+
+.add-btn {
+    max-width: 120px;
+    border: none;
+    padding: 10px;
+    background-color:black;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-btn:hover {
+    background-color: #0056b3;
+}
