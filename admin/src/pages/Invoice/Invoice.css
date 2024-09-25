@@ -1,0 +1,54 @@
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1.2rem;
+    text-align: left;
+  }
+  
+  .invoice-table-header {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    padding: 10px 0;
+    border-bottom: 2px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .invoice-table-row {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .invoice-table-row input {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  .delete-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .delete-button:hover {
+    background-color: #d32f2f;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .invoice-table-header, .invoice-table-row {
+      display: block;
+    }
+  
+    .invoice-table-header b, .invoice-table-row p {
+      display: block;
+      padding: 10px 5px;
+    }
+  }
+  
