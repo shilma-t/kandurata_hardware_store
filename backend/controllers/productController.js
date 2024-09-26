@@ -76,10 +76,17 @@ const removeProduct = async (req, res) => {
 };
 
 //update product
+// Update product
 const updateProduct = async (req, res) => {
     try {
-      const { id, name, category, price } = req.body;
-      const updatedProduct = await productModel.findByIdAndUpdate(id, { name, category, price }, { new: true });
+      const { id, name, category, wholesalePrice, retailPrice, quantity } = req.body;
+      const updatedProduct = await productModel.findByIdAndUpdate(id, { 
+        name, 
+        category, 
+        wholesalePrice, 
+        retailPrice, 
+        quantity // Update quantity
+      }, { new: true });
   
       if (!updatedProduct) {
         return res.status(404).json({ success: false, message: "Product not found" });
@@ -90,7 +97,7 @@ const updateProduct = async (req, res) => {
       res.status(500).json({ success: false, message: "Server Error" });
     }
   };
-
+  
  
 
 
