@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import SidebarDriver from './SidebarDriver'; // Updated Sidebar component
 import './DriverForm.css';
+
 
 const DriverForm = () => {
   const [driver, setDriver] = useState({
@@ -45,8 +45,8 @@ const DriverForm = () => {
   };
 
   return (
+    
     <div className="driver-form-container">
-      <SidebarDriver /> {/* Updated Sidebar component */}
       <h2 className="form-heading">Register New Driver</h2> {/* Heading added */}
       <form onSubmit={handleSubmit} className="driver-form">
         <input
