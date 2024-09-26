@@ -1,97 +1,50 @@
-.driver-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 70px;
-  margin-left: 50px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow effect for the table */
-  border-radius: 8px; /* Rounded corners */
-  overflow: hidden; /* Ensures rounded corners work */
+/* Container for the driver list */
+.driver-list {
+  width: 70%;
+  margin: 50px auto; /* Center the list on the page */
+  color: #6d6d6d;
+  font-size: 16px;
 }
 
-.driver-table th, .driver-table td {
-  border: 1px solid #ccc;
-  padding: 12px; /* Increased padding for better spacing */
-  text-align: left;
-  transition: background-color 0.3s; /* Smooth transition for background color */
+/* Table styling */
+.driver-table {
+  width: 100%; /* Full width of the container */
+  border-collapse: collapse; /* Collapses borders */
+  margin-top: 20px; /* Space above the table */
+}
+
+.driver-table th,
+.driver-table td {
+  padding: 10px; /* Padding inside table cells */
+  border: 1px solid #ccc; /* Light border */
+  text-align: left; /* Align text to the left */
 }
 
 .driver-table th {
-  background-color: #f2f2f2;
-  font-weight: bold; /* Bold text for headers */
-  font-size: 1.1em; /* Slightly larger font size */
+  background-color: #f2f2f2; /* Light gray background for header */
 }
 
-.driver-table tr {
-  transition: background-color 0.3s; /* Smooth transition for row background color */
-}
-
-.driver-table tr:hover {
-  background-color: #f9f9f9; /* Light gray on hover */
-}
-
-.driver-table tr:nth-child(even) {
-  background-color: #f9f9f9; /* Light background for even rows */
+/* Action buttons styling */
+.driver-actions {
+  display: flex;
+  gap: 10px; /* Space between action buttons */
 }
 
 .driver-actions button {
-  margin: 0 5px;
-  padding: 8px 12px; /* Added padding for buttons */
-  background-color: #007bff; /* Primary button color */
-  color: white; /* Button text color */
-  border: none; /* Remove default border */
-  border-radius: 4px; /* Rounded corners for buttons */
+  border: none;
+  padding: 10px;
+  background-color: black; /* Black background for buttons */
+  color: white; /* White text */
+  border-radius: 4px; /* Rounded corners */
   cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s; /* Smooth transition for button background color */
 }
 
 .driver-actions button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #0056b3; /* Change color on hover */
 }
 
-.edit-form {
-  margin-top: 20px;
-  padding: 20px;
-  border: 1px solid #ccc; /* Border for the edit form */
-  border-radius: 8px; /* Rounded corners */
-  background-color: #f9f9f9; /* Light background for the form */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow effect for the form */
-}
-
-.edit-form label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold; /* Bold labels */
-}
-
-.edit-form input {
-  width: 100%; /* Full width for inputs */
-  padding: 10px; /* Padding for inputs */
-  border: 1px solid #ccc; /* Border for inputs */
-  border-radius: 4px; /* Rounded corners for inputs */
-  margin-bottom: 12px; /* Space between inputs */
-}
-
-.edit-form button {
-  padding: 10px 15px; /* Padding for buttons in the form */
-  background-color: #28a745; /* Success button color */
-  color: white; /* Button text color */
-  border: none; /* Remove default border */
-  border-radius: 4px; /* Rounded corners for buttons */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s; /* Smooth transition for button background color */
-}
-
-.edit-form button:hover {
-  background-color: #218838; /* Darker green on hover */
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-  .driver-table {
-    font-size: 0.9em; /* Slightly smaller text on mobile */
-  }
-
-  .driver-actions button {
-    padding: 6px 10px; /* Smaller buttons on mobile */
-  }
+/* Message when no drivers are available */
+.driver-list p {
+  text-align: center; /* Center the message */
+  margin-top: 20px; /* Space above the message */
 }
