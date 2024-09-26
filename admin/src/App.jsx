@@ -10,12 +10,12 @@ import CashierDashboard from './pages/Dashboard/CashierDashboard';
 import HrManagerDashboard from './pages/Dashboard/HrManagerDashboard';
 import EmployeeDashboard from './pages/Dashboard/EmployeeDashboard';
 import LoginPage from './pages/adminLogin/AdminLoginPage';
-import { useAuth } from './context/authContext';
 import DriverForm from './pages/driver/DriverForm';
 import DriverList from './pages/driver/DriverList';
 import EditDriver from './pages/driver/EditDriver';
 import MainPage from './pages/MainPage/MainPage';
-import Invoice from './pages/Invoice/Invoice'; // Import Invoice page
+import Invoice from './pages/Invoice/Invoice'; 
+import ViewSales from './pages/Invoice/ViewSales'
 
 const App = () => {
   return (
@@ -40,6 +40,7 @@ const App = () => {
           
           {/* New Invoice route */}
           <Route path="/invoice" element={<Invoice />} />
+          <Route path="/view-sales" element={<ViewSales />} />
         </Routes>
       </div>
     </div>
