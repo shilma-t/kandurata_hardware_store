@@ -1,19 +1,23 @@
+// backend/routes/orderRoutes.js
+
 import express from 'express';
-import Order from '../models/Order.js';
+import orderModel from '../models/Order.js';  // Adjust the path as necessary
 
-const orderRouter = express.Router();
+const router = express.Router();
 
-// Create a new order
-orderRouter.post('/', async (req, res) => {
-  const order = new Order(req.body);
-  await order.save();
-  res.status(201).send(order);
+// GET all orders
+router.get('/', async (req, res) => {
+    console.log("Fetching orders...");
+    try {
+        const orders = await orderModel.find({});
+        console.log("Orders retrieved:", orders);
+        res.status(200).json(orders);
+    } catch (error) {
+        console.error("Error retrieving orders:", error);
+        res.status(500).json({ message: "Error retrieving orders", error });
+    }
 });
 
-// Get all orders
-orderRouter.get('/', async (req, res) => {
-  const orders = await Order.find().populate('driver');
-  res.send(orders);
-});
+// Add more routes here if necessary (e.g., POST, PUT, DELETE)
 
-export default orderRouter;
+export default router;
