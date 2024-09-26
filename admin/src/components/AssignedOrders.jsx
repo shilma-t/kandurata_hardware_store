@@ -1,9 +1,15 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const AssignedOrders = () => {
     const { state } = useLocation();
     const { assignments } = state || { assignments: [] };
+    const navigate = useNavigate(); // Import and use navigate
+
+    // Updated back navigation handler
+    const handleBack = () => {
+        navigate('/logistics'); // Navigate to the logistics dashboard
+    };
 
     return (
         <div>
@@ -42,6 +48,9 @@ const AssignedOrders = () => {
             ) : (
                 <div>No orders assigned.</div>
             )}
+            <button onClick={handleBack}>
+                Back to Dashboard
+            </button>
         </div>
     );
 };
