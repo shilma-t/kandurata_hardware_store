@@ -64,12 +64,26 @@ const SampleComponent = () => {
     };
 
     const handleAssignDrivers = () => {
+        // Check if all selected orders have a driver assigned
+        const unassignedOrders = Array.from(selectedOrders).filter(orderId => {
+            const order = orders.find(o => o._id === orderId);
+            return !order.driverId; // Filter orders without an assigned driver
+        });
+
+        if (unassignedOrders.length > 0) {
+            alert('Please select a driver for all selected orders.');
+            return; // Prevent assignment if any order is unassigned
+        }
+
         const assignments = Array.from(selectedOrders).map(orderId => {
             const order = orders.find(o => o._id === orderId);
             const driverId = order.driverId; // Assume you store the driverId in the order
+            const driver = drivers.find(d => d._id === driverId); // Find driver details
+
             return {
                 orderId,
                 driverId,
+                driverName: driver ? `${driver.firstName} ${driver.lastName}` : 'Unassigned', // Include driver name
                 ...order
             };
         });
@@ -77,7 +91,6 @@ const SampleComponent = () => {
         navigate('/assigned-orders', { state: { assignments } });
     };
 
-    // Updated back navigation handler
     const handleBack = () => {
         navigate('/logistics'); // Navigate to the dashboard
     };
@@ -88,8 +101,6 @@ const SampleComponent = () => {
     return (
         <div>
             <h1 className="header1">Delivery Schedule</h1>
-            {/* Back Button */}
-            
             <table>
                 <thead>
                     <tr>
@@ -125,7 +136,7 @@ const SampleComponent = () => {
                                 <td>{address}</td>
                                 <td>{province}</td>
                                 <td>
-                                    <select onChange={(e) => handleSelectChange(_id, e.target.value)}>
+                                    <select value={driverId || ''} onChange={(e) => handleSelectChange(_id, e.target.value)}>
                                         <option value="">Select Driver</option>
                                         {drivers.length > 0 ? (
                                             drivers.map(driver => (
