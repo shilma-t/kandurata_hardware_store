@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import './DriverList.css';
 
 const DriverList = () => {
   const [drivers, setDrivers] = useState([]);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [driverToDelete, setDriverToDelete] = useState(null);
+  const navigate = useNavigate();
 
   const fetchDrivers = async () => {
     try {
@@ -16,18 +18,26 @@ const DriverList = () => {
     }
   };
 
-  const deleteDriver = async (id) => {
-    try {
-      await axios.delete(`http://localhost:5001/drivers/${id}`);
-      fetchDrivers(); // Refresh the list after deletion
-    } catch (error) {
-      console.error('Error deleting driver:', error);
+  const confirmDelete = (id) => {
+    setDriverToDelete(id);
+    setIsModalOpen(true);
+  };
+
+  const deleteDriver = async () => {
+    if (driverToDelete) {
+      try {
+        await axios.delete(`http://localhost:5001/drivers/${driverToDelete}`);
+        fetchDrivers(); // Refresh the list after deletion
+      } catch (error) {
+        console.error('Error deleting driver:', error);
+      }
+      setIsModalOpen(false); // Close modal after deletion
+      setDriverToDelete(null); // Reset driver ID
     }
   };
 
-  // Navigate to edit driver page
   const editDriver = (id) => {
-    navigate(`/edit-driver/${id}`); // Navigate to edit page with driver ID
+    navigate(`/edit-driver/${id}`);
   };
 
   useEffect(() => {
@@ -57,13 +67,27 @@ const DriverList = () => {
                 <td>{driver.vehicleModel}</td>
                 <td>{driver.nicNumber}</td>
                 <td className="driver-actions">
-                  <button onClick={() => deleteDriver(driver._id)}>Delete</button>
+                  <button onClick={() => confirmDelete(driver._id)}>Delete</button>
                   <button onClick={() => editDriver(driver._id)}>Edit</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+      )}
+
+      {/* Confirmation Modal */}
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Confirm Deletion</h3>
+            <p>Are you sure you want to delete this driver?</p>
+            <div className="modal-actions">
+              <button onClick={deleteDriver}>Delete</button>
+              <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
