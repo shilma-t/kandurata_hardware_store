@@ -1,43 +1,53 @@
+/* Add styles for the heading */
+.form-heading {
+  margin-left: 600px;
+  margin-top: 70px;
+  text-align: center; /* Center the heading text */
+  margin-bottom: 20px; /* Space below the heading */
+  font-size: 40px; /* Font size for the heading */
+  color: #333; /* Dark color for better visibility */
+}
+
 /* Container for the driver form */
 .driver-form {
-    max-width: 600px; /* Maximum width of the form */
-    margin: 50px auto; /* Center the form horizontally */
-    padding: 20px; /* Padding around the form */
-    border: 1px solid #ccc; /* Light border around the form */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    background-color: #f9f9f9; /* Light background color */
-  }
-  
-  /* Input field styles */
-  .driver-form input {
-    width: 100%; /* Full width of the container */
-    padding: 10px; /* Padding inside the input */
-    margin-bottom: 15px; /* Space below the input */
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 4px; /* Rounded corners */
-    font-size: 16px; /* Font size for inputs */
-  }
-  
-  /* Button styles */
-  .driver-form button {
-    width: 100%; /* Full width for the button */
-    padding: 10px; /* Padding for buttons */
-    border: none; /* No border */
-    border-radius: 4px; /* Rounded corners */
-    font-size: 16px; /* Font size for buttons */
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
-    cursor: pointer; /* Pointer cursor on hover */
-  }
-  
-  /* Button hover effects */
-  .driver-form button:hover {
-    background-color: #45a049; /* Darker green on hover */
-  }
-  
-  /* Optional: Add a hover effect on input fields */
-  .driver-form input:hover {
-    border-color: #888; /* Darker border on hover */
-  }
-  
+  max-width: 600px; /* Maximum width of the form */
+  margin-left: 500px; /* Center the form horizontally */
+  margin-top: 90px; /* Space above the form */
+  padding: 20px; /* Padding around the form */
+  border: 1px solid #ccc; /* Light border around the form */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  background-color: #f9f9f9; /* Light background color */
+}
+
+/* Input field styles */
+.driver-form input {
+  width: 100%; /* Full width of the container */
+  padding: 10px; /* Padding inside the input */
+  margin-bottom: 15px; /* Space below the input */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size for inputs */
+}
+
+/* Button styles */
+.driver-form button {
+  width: 100%; /* Full width for the button */
+  padding: 10px; /* Padding for buttons */
+  border: none; /* No border */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size for buttons */
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+/* Button hover effects */
+.driver-form button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+/* Optional: Add a hover effect on input fields */
+.driver-form input:hover {
+  border-color: #888; /* Darker border on hover */
+}

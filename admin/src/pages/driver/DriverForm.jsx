@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import SidebarDriver from './SidebarDriver'; // Updated Sidebar component
 import './DriverForm.css';
 
 const DriverForm = () => {
@@ -44,58 +45,62 @@ const DriverForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="driver-form">
-      <input
-        name="firstName"
-        value={driver.firstName}
-        onChange={handleChange}
-        placeholder="First Name"
-        required
-      />
-      <input
-        name="lastName"
-        value={driver.lastName}
-        onChange={handleChange}
-        placeholder="Last Name"
-        required
-      />
-      <input
-        name="nicNumber"
-        value={driver.nicNumber}
-        onChange={handleChange}
-        placeholder="NIC Number"
-        required
-      />
-      <input
-        name="mobileNumber"
-        value={driver.mobileNumber}
-        onChange={handleChange}
-        placeholder="Mobile Number"
-        required
-      />
-      <input
-        name="homeAddress"
-        value={driver.homeAddress}
-        onChange={handleChange}
-        placeholder="Home Address"
-        required
-      />
-      <input
-        name="emailAddress"
-        value={driver.emailAddress}
-        onChange={handleChange}
-        placeholder="Email Address"
-        required
-      />
-      <input
-        name="vehicleModel"
-        value={driver.vehicleModel}
-        onChange={handleChange}
-        placeholder="Vehicle Model"
-        required
-      />
-      <button type="submit">Add Driver</button>
-    </form>
+    <div className="driver-form-container">
+      <SidebarDriver /> {/* Updated Sidebar component */}
+      <h2 className="form-heading">Register New Driver</h2> {/* Heading added */}
+      <form onSubmit={handleSubmit} className="driver-form">
+        <input
+          name="firstName"
+          value={driver.firstName}
+          onChange={handleChange}
+          placeholder="First Name"
+          required
+        />
+        <input
+          name="lastName"
+          value={driver.lastName}
+          onChange={handleChange}
+          placeholder="Last Name"
+          required
+        />
+        <input
+          name="nicNumber"
+          value={driver.nicNumber}
+          onChange={handleChange}
+          placeholder="NIC Number"
+          required
+        />
+        <input
+          name="mobileNumber"
+          value={driver.mobileNumber}
+          onChange={handleChange}
+          placeholder="Mobile Number"
+          required
+        />
+        <input
+          name="homeAddress"
+          value={driver.homeAddress}
+          onChange={handleChange}
+          placeholder="Home Address"
+          required
+        />
+        <input
+          name="emailAddress"
+          value={driver.emailAddress}
+          onChange={handleChange}
+          placeholder="Email Address"
+          required
+        />
+        <input
+          name="vehicleModel"
+          value={driver.vehicleModel}
+          onChange={handleChange}
+          placeholder="Vehicle Model"
+          required
+        />
+        <button type="submit">Add Driver</button>
+      </form>
+    </div>
   );
 };
 
