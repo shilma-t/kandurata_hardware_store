@@ -9,8 +9,8 @@ const SidebarDriver = () => {
       <h3>Driver Management</h3>
       <ul>
         <li><Link to="/drivers">Driver List</Link></li>
-        <li><Link to="/add-driver">Add Driver</Link></li>
-        <li><Link to="/edit-driver">Edit Driver</Link></li>
+        <li><Link to="/drivers/add">Add Driver</Link></li>
+        <li><Link to="/edit-driver/:id">Edit Driver</Link></li>
         <li><Link to="/delete-driver">Delete Driver</Link></li>
         <li><Link to="/dashboard">Dashboard</Link></li>
       </ul>

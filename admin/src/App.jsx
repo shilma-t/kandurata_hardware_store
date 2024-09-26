@@ -42,6 +42,7 @@ const App = () => {
           <Route path="/drivers" element={<DriverList />} />
           <Route path="/drivers/add" element={<DriverForm />} />
           <Route path="/edit-driver/:id" element={<EditDriver />} />
+        
 
         </Routes>
       </div>

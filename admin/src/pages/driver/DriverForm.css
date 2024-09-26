@@ -1,7 +1,7 @@
 /* Add styles for the heading */
 .form-heading {
   margin-left: 600px;
-  margin-top: 70px;
+  margin-top: 60px;
   text-align: center; /* Center the heading text */
   margin-bottom: 20px; /* Space below the heading */
   font-size: 40px; /* Font size for the heading */
@@ -12,7 +12,7 @@
 .driver-form {
   max-width: 600px; /* Maximum width of the form */
   margin-left: 500px; /* Center the form horizontally */
-  margin-top: 90px; /* Space above the form */
+  margin-top: 80px; /* Space above the form */
   padding: 20px; /* Padding around the form */
   border: 1px solid #ccc; /* Light border around the form */
   border-radius: 8px; /* Rounded corners */
