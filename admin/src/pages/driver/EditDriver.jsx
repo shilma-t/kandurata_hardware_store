@@ -71,7 +71,7 @@ const EditDriver = () => {
         />
 
         <button type="submit">Save Changes</button>
-        <button type="button" onClick={() => navigate('/')}>Cancel</button>
+        <button type="button" onClick={() => navigate('/drivers')}>Cancel</button>
       </form>
     </div>
   );
