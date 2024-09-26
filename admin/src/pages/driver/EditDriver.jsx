@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom'; // Import useParams and useNavigate
+import './EditDriver.css'; // Import the CSS file
 
 const EditDriver = () => {
   const { id } = useParams(); // Get the driver ID from the URL
@@ -42,7 +43,7 @@ const EditDriver = () => {
   };
 
   return (
-    <div>
+    <div className="edit-driver-container">
       <h2>Edit Driver</h2>
       <form onSubmit={handleEditSubmit}>
         <label>First Name</label>
@@ -50,6 +51,7 @@ const EditDriver = () => {
           type="text"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
+          required // Make the field required
         />
 
         <label>Last Name</label>
@@ -57,6 +59,7 @@ const EditDriver = () => {
           type="text"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
+          required // Make the field required
         />
 
         <label>Vehicle Model</label>
@@ -64,6 +67,7 @@ const EditDriver = () => {
           type="text"
           value={vehicleModel}
           onChange={(e) => setVehicleModel(e.target.value)}
+          required // Make the field required
         />
 
         <button type="submit">Save Changes</button>
