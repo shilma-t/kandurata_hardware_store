@@ -1,11 +1,6 @@
-// SampleComponent.js
-
 import React, { useEffect, useState } from 'react';
-<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
 import './SampleComponent.css';
-=======
->>>>>>> parent of df68de6 (SampleComponent update)
 
 const SampleComponent = () => {
     const [orders, setOrders] = useState([]);
@@ -62,7 +57,6 @@ const SampleComponent = () => {
     return (
         <div>
             <h1>Orders</h1>
-<<<<<<< HEAD
             <table>
                 <thead>
                     <tr>
@@ -78,41 +72,39 @@ const SampleComponent = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {orders.map((order, index) => (
-                        <tr key={`${order._id}-${index}`}> {/* Unique key combining _id with index */}
-                            <td>{order.userId}</td>
-                            <td>{order.items.join(', ')}</td>
-                            <td>${order.amount}</td>
-                            <td>{new Date(order.date).toLocaleDateString()}</td>
-                            <td>{order.status}</td>
-                            <td>{order.address}</td>
-                            <td>{order.province}</td>
-                            <td>
-                                <select onChange={(e) => handleSelectChange(order._id, e.target.value)}>
-                                    <option value="">Select Driver</option>
-                                    {drivers.map(driver => (
-                                        <option key={driver._id} value={driver._id}>
-                                            {driver.firstName} {driver.lastName} ({driver.vehicleModel})
-                                        </option>
-                                    ))}
-                                </select>
-                            </td>
-                            <td>
-                                <button onClick={() => handleSelectButtonClick(order._id)}>Select</button>
-                            </td>
-                        </tr>
-                    ))}
+                    {orders.map((order) => {
+                        const { _id, userId, items, amount, date, status, address, province } = order; // Destructuring order properties
+                        return (
+                            <tr key={_id}>
+                                <td>{userId}</td>
+                                <td>{items.join(', ')}</td>
+                                <td>${amount}</td>
+                                <td>{new Date(date).toLocaleDateString()}</td>
+                                <td>{status}</td>
+                                <td>{address}</td>
+                                <td>{province}</td>
+                                <td>
+                                    <select onChange={(e) => handleSelectChange(_id, e.target.value)}>
+                                        <option value="">Select Driver</option>
+                                        {drivers.length > 0 ? (
+                                            drivers.map(driver => (
+                                                <option key={driver._id} value={driver._id}>
+                                                    {driver.firstName} {driver.lastName} ({driver.vehicleModel})
+                                                </option>
+                                            ))
+                                        ) : (
+                                            <option disabled>No drivers available</option>
+                                        )}
+                                    </select>
+                                </td>
+                                <td>
+                                    <button onClick={() => handleSelectButtonClick(_id)}>Select</button>
+                                </td>
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </table>
-=======
-            <ul>
-                {orders.map(order => (
-                    <li key={order._id}>
-                        User ID: {order.userId} - Amount: ${order.amount} - Status: {order.status}
-                    </li>
-                ))}
-            </ul>
->>>>>>> parent of df68de6 (SampleComponent update)
         </div>
     );
 };
