@@ -1,93 +1,125 @@
-/* Container for the driver list */
+.driver-list-container {
+  display: flex; /* Use flexbox to align sidebar and content */
+  height: 100vh; /* Full height of the viewport */
+  font-family: Arial, sans-serif; /* Clean, modern font */
+}
+
+.sidebar {
+  width: 200px; /* Set a fixed width for the sidebar */
+  padding-right: 20px; /* Space between sidebar and content */
+  border-right: 1px solid #ccc; /* Optional: add a border to separate */
+}
+
+.sidebar ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
+}
+
+.sidebar li {
+  margin: 10px 0; /* Space between list items */
+}
+
+.sidebar a {
+  text-decoration: none; /* Remove underline from links */
+  color: #007BFF; /* Link color */
+}
+
+.sidebar a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
 .driver-list {
-  width: 70%;
-  margin: 50px auto; /* Center the list on the page */
-  color: #6d6d6d;
-  font-size: 16px;
+  margin-top: 50px;
+  margin-left: 100px;
+  flex: 1; /* Take the remaining space for the driver list */
+  padding: 20px; /* Add padding around the list */
 }
 
-/* Table styling */
 .driver-table {
-  width: 100%; /* Full width of the container */
-  border-collapse: collapse; /* Collapses borders */
-  margin-top: 20px; /* Space above the table */
-}
-
-.driver-table th,
-.driver-table td {
-  padding: 10px; /* Padding inside table cells */
-  border: 1px solid #ccc; /* Light border */
-  text-align: left; /* Align text to the left */
+  width: 100%; /* Table takes full width */
+  border-collapse: collapse; /* Remove spacing between cells */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  border-radius: 8px; /* Rounded corners */
+  overflow: hidden; /* Ensure rounded corners work */
 }
 
 .driver-table th {
-  background-color: #f2f2f2; /* Light gray background for header */
+  background-color: #5f6265; /* Header background color */
+  color: white; /* Text color */
+  padding: 15px; /* Add padding for header */
+  text-align: left; /* Align text to the left */
+  font-weight: bold; /* Make header text bold */
 }
 
-/* Action buttons styling */
+.driver-table td {
+  padding: 15px; /* Add padding for table cells */
+  border: 1px solid #ccc; /* Border for table cells */
+  background-color: #f9f9f9; /* Light background for table cells */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.driver-table tr:hover td {
+  background-color: #e9ecef; /* Highlight row on hover */
+}
+
 .driver-actions {
-  display: flex;
-  gap: 10px; /* Space between action buttons */
+  display: flex; /* Flex layout for buttons */
+  gap: 10px; /* Space between buttons */
 }
 
 .driver-actions button {
-  border: none;
-  padding: 10px;
-  background-color: black; /* Black background for buttons */
-  color: white; /* White text */
-  border-radius: 4px; /* Rounded corners */
+  background-color: #419721; /* Button background color */
+  color: white; /* Button text color */
+  border: none; /* Remove border */
+  padding: 10px 15px; /* Button padding */
+  border-radius: 5px; /* Rounded corners */
   cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
 
 .driver-actions button:hover {
-  background-color: #0056b3; /* Change color on hover */
+  background-color: #2e4a67; /* Darker shade on hover */
 }
 
-/* Message when no drivers are available */
-.driver-list p {
-  text-align: center; /* Center the message */
-  margin-top: 20px; /* Space above the message */
-}
-
+/* Modal styles */
 .modal-overlay {
-  position: fixed;
+  position: fixed; /* Overlay to cover entire viewport */
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000; /* Make sure it appears on top of other content */
+  align-items: center; /* Center modal vertically */
+  justify-content: center; /* Center modal horizontally */
 }
 
 .modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  background-color: white; /* Modal background */
+  padding: 20px; /* Padding inside modal */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Modal shadow */
+  text-align: center; /* Center align text */
 }
 
 .modal-actions {
-  margin-top: 20px;
+  display: flex; /* Flex layout for buttons */
+  justify-content: space-around; /* Space around buttons */
 }
 
-.modal-actions button {
-  margin: 0 10px;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+/* Responsive design */
+@media (max-width: 768px) {
+  .driver-list-container {
+    flex-direction: column; /* Stack sidebar and content on smaller screens */
+  }
 
-.modal-actions button:first-child {
-  background-color: #e74c3c; /* Delete button color */
-  color: white;
-}
+  .sidebar {
+    width: 100%; /* Sidebar takes full width */
+    border-right: none; /* Remove right border */
+    border-bottom: 1px solid #ccc; /* Add bottom border */
+  }
 
-.modal-actions button:last-child {
-  background-color: #3498db; /* Cancel button color */
-  color: white;
+  .driver-list {
+    padding: 10px; /* Reduce padding for smaller screens */
+  }
 }

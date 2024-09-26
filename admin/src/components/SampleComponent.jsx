@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './SampleComponent.css';
-import { Link } from 'react-router-dom'; // Import Link
 
 const SampleComponent = () => {
     const [orders, setOrders] = useState([]);
@@ -45,7 +44,6 @@ const SampleComponent = () => {
     }, []);
 
     const handleSelectChange = (orderId, driverId) => {
-        // Update order with driverId
         setOrders(prevOrders =>
             prevOrders.map(order =>
                 order._id === orderId ? { ...order, driverId } : order
@@ -76,7 +74,6 @@ const SampleComponent = () => {
             };
         });
 
-        // Navigate to the new page, passing the assignments as state
         navigate('/assigned-orders', { state: { assignments } });
     };
 
@@ -85,11 +82,7 @@ const SampleComponent = () => {
 
     return (
         <div>
-            <h1>Orders</h1>
-            <Link to="/assigned-orders">Go to Assigned Orders</Link>
-            <button onClick={handleAssignDrivers} disabled={selectedOrders.size === 0}>
-                Assign to Driver
-            </button>
+            <h1 className="header1">Delivery Schedule</h1>
             <table>
                 <thead>
                     <tr>
@@ -143,6 +136,10 @@ const SampleComponent = () => {
                     })}
                 </tbody>
             </table>
+            <button onClick={handleAssignDrivers} disabled={selectedOrders.size === 0}>
+                Assign to Driver
+            </button>
+           
         </div>
     );
 };

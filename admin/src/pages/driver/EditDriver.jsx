@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom'; // Import useParams and useNavigate
+import { useParams, useNavigate, Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './EditDriver.css'; // Import the CSS file
 
 const EditDriver = () => {
@@ -44,35 +44,48 @@ const EditDriver = () => {
 
   return (
     <div className="edit-driver-container">
-      <h2>Edit Driver</h2>
-      <form onSubmit={handleEditSubmit}>
-        <label>First Name</label>
-        <input
-          type="text"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          required // Make the field required
-        />
+      <div className="sidebar">
+        <ul>
+          <li><Link to="/">Dashboard</Link></li>
+          <li><Link to="/sample">Manage Order</Link></li>
+          <li><Link to="/drivers">Driver Details</Link></li>
+          <li><Link to="/drivers/add">Add Driver</Link></li>
+          <li><Link to="/drivers/edit">Edit Driver</Link></li>
+          <li><Link to="/drivers">Delete Driver</Link></li>
+        </ul>
+      </div>
 
-        <label>Last Name</label>
-        <input
-          type="text"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          required // Make the field required
-        />
+      <div className="form-content">
+        <h2 className="header">Edit Driver</h2>
+        <form onSubmit={handleEditSubmit}>
+          <label>First Name</label>
+          <input
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            required // Make the field required
+          />
 
-        <label>Vehicle Model</label>
-        <input
-          type="text"
-          value={vehicleModel}
-          onChange={(e) => setVehicleModel(e.target.value)}
-          required // Make the field required
-        />
+          <label>Last Name</label>
+          <input
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            required // Make the field required
+          />
 
-        <button type="submit">Save Changes</button>
-        <button type="button" onClick={() => navigate('/drivers')}>Cancel</button>
-      </form>
+          <label>Vehicle Model</label>
+          <input
+            type="text"
+            value={vehicleModel}
+            onChange={(e) => setVehicleModel(e.target.value)}
+            required // Make the field required
+          />
+
+          <button type="submit">Save Changes</button>
+          <button type="button" onClick={() => navigate('/drivers')}>Cancel</button>
+        </form>
+      </div>
     </div>
   );
 };
