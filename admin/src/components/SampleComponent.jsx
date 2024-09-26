@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SampleComponent.css';
+import { Link } from 'react-router-dom'; // Import Link
 
 const SampleComponent = () => {
     const [orders, setOrders] = useState([]);
     const [drivers, setDrivers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [selectedOrders, setSelectedOrders] = useState(new Set());
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -43,12 +45,39 @@ const SampleComponent = () => {
     }, []);
 
     const handleSelectChange = (orderId, driverId) => {
-        console.log(`Order ${orderId} assigned to Driver ${driverId}`);
+        // Update order with driverId
+        setOrders(prevOrders =>
+            prevOrders.map(order =>
+                order._id === orderId ? { ...order, driverId } : order
+            )
+        );
     };
 
-    const handleSelectButtonClick = (orderId) => {
-        sessionStorage.setItem('selectedOrderId', orderId);
-        navigate('/order-details');
+    const handleCheckboxChange = (orderId) => {
+        setSelectedOrders((prevSelected) => {
+            const updatedSelected = new Set(prevSelected);
+            if (updatedSelected.has(orderId)) {
+                updatedSelected.delete(orderId);
+            } else {
+                updatedSelected.add(orderId);
+            }
+            return updatedSelected;
+        });
+    };
+
+    const handleAssignDrivers = () => {
+        const assignments = Array.from(selectedOrders).map(orderId => {
+            const order = orders.find(o => o._id === orderId);
+            const driverId = order.driverId; // Assume you store the driverId in the order
+            return {
+                orderId,
+                driverId,
+                ...order
+            };
+        });
+
+        // Navigate to the new page, passing the assignments as state
+        navigate('/assigned-orders', { state: { assignments } });
     };
 
     if (loading) return <div>Loading...</div>;
@@ -57,9 +86,14 @@ const SampleComponent = () => {
     return (
         <div>
             <h1>Orders</h1>
+            <Link to="/assigned-orders">Go to Assigned Orders</Link>
+            <button onClick={handleAssignDrivers} disabled={selectedOrders.size === 0}>
+                Assign to Driver
+            </button>
             <table>
                 <thead>
                     <tr>
+                        <th>Select</th>
                         <th>User ID</th>
                         <th>Items</th>
                         <th>Amount</th>
@@ -68,14 +102,21 @@ const SampleComponent = () => {
                         <th>Address</th>
                         <th>Province</th>
                         <th>Assign Driver</th>
-                        <th>Select</th>
                     </tr>
                 </thead>
                 <tbody>
                     {orders.map((order) => {
-                        const { _id, userId, items, amount, date, status, address, province } = order; // Destructuring order properties
+                        const { _id, userId, items, amount, date, status, address, province, driverId } = order;
+                        const isChecked = selectedOrders.has(_id);
                         return (
                             <tr key={_id}>
+                                <td>
+                                    <input 
+                                        type="checkbox" 
+                                        checked={isChecked} 
+                                        onChange={() => handleCheckboxChange(_id)} 
+                                    />
+                                </td>
                                 <td>{userId}</td>
                                 <td>{items.join(', ')}</td>
                                 <td>${amount}</td>
@@ -96,9 +137,6 @@ const SampleComponent = () => {
                                             <option disabled>No drivers available</option>
                                         )}
                                     </select>
-                                </td>
-                                <td>
-                                    <button onClick={() => handleSelectButtonClick(_id)}>Select</button>
                                 </td>
                             </tr>
                         );
