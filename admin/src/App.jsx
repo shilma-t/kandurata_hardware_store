@@ -38,7 +38,7 @@ const App = () => {
           <Route path="/employee" element={<EmployeeDashboard />} />
           <Route path="/drivers" element={<DriverList />} />
           <Route path="/drivers/add" element={<DriverForm />} />
-          <Route path="/edit-driver/:id" element={<EditDriver />} />
+          <Route path="/drivers/edit/:id" element={<EditDriver />} />
           <Route path="/drivers/orders" element={<Driver />} />
           <Route path="/sample" element={<SampleComponent />} />
           <Route path="/assigned-orders" element={<AssignedOrders />} /> {/* New route */}

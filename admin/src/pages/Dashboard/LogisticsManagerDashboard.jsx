@@ -5,6 +5,7 @@ import './LogisticsManager.css';
 import { Link } from 'react-router-dom';
 
 function Dashboard() {
+  // Data for the chart
   const data = {
     labels: ['April', 'May', 'June', 'July', 'August', 'September'],
     datasets: [
@@ -27,12 +28,12 @@ function Dashboard() {
     <div className="dashboard">
       <div className="sidebar">
         <ul>
-        <li><Link to="/">Dashboard</Link></li>
-        <li><Link to="/sample">Manage Order</Link></li>
-        <li><Link to="/drivers">Driver Details</Link></li>
-        <li><Link to="/drivers/add">Add Driver</Link></li>
-        <li><Link to="/edit-driver/:id">Edit Driver</Link></li>
-        <li><Link to="/drivers">Delete Driver</Link></li>
+          <li><Link to="/">Dashboard</Link></li>
+          <li><Link to="/sample">Manage Order</Link></li>
+          <li><Link to="/drivers">Driver Details</Link></li>
+          <li><Link to="/drivers/add">Add Driver</Link></li>
+          <li><Link to="/drivers/edit/:id">Edit Driver</Link></li> {/* Dynamic link for editing */}
+          <li><Link to="/drivers/delete">Delete Driver</Link></li>
         </ul>
       </div>
       <div className="main-content">
@@ -42,15 +43,15 @@ function Dashboard() {
             <h2>5</h2>
           </div>
           <div className="stat-box">
-            <p>Orders delivered</p>
+            <p>Orders Delivered</p>
             <h2>5</h2>
           </div>
           <div className="stat-box">
-            <p>Orders in progress</p>
+            <p>Orders in Progress</p>
             <h2>2</h2>
           </div>
           <div className="stat-box">
-            <p>Orders failed</p>
+            <p>Orders Failed</p>
             <h2>5</h2>
           </div>
         </div>
@@ -59,10 +60,7 @@ function Dashboard() {
           <Line data={data} />
         </div>
       </div>
-      <div>
-      </div>
     </div>
-    
   );
 }
 

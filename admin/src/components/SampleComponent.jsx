@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './SampleComponent.css';
 
 const SampleComponent = () => {
@@ -77,12 +77,19 @@ const SampleComponent = () => {
         navigate('/assigned-orders', { state: { assignments } });
     };
 
+    // Updated back navigation handler
+    const handleBack = () => {
+        navigate('/logistics'); // Navigate to the dashboard
+    };
+
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
 
     return (
         <div>
             <h1 className="header1">Delivery Schedule</h1>
+            {/* Back Button */}
+            
             <table>
                 <thead>
                     <tr>
@@ -139,7 +146,9 @@ const SampleComponent = () => {
             <button onClick={handleAssignDrivers} disabled={selectedOrders.size === 0}>
                 Assign to Driver
             </button>
-           
+            <button onClick={handleBack}>
+                Back to Dashboard
+            </button>
         </div>
     );
 };
