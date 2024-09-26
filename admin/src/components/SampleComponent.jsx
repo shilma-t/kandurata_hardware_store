@@ -1,6 +1,11 @@
+// SampleComponent.js
+
 import React, { useEffect, useState } from 'react';
+<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
 import './SampleComponent.css';
+=======
+>>>>>>> parent of df68de6 (SampleComponent update)
 
 const SampleComponent = () => {
     const [orders, setOrders] = useState([]);
@@ -57,6 +62,7 @@ const SampleComponent = () => {
     return (
         <div>
             <h1>Orders</h1>
+<<<<<<< HEAD
             <table>
                 <thead>
                     <tr>
@@ -98,6 +104,15 @@ const SampleComponent = () => {
                     ))}
                 </tbody>
             </table>
+=======
+            <ul>
+                {orders.map(order => (
+                    <li key={order._id}>
+                        User ID: {order.userId} - Amount: ${order.amount} - Status: {order.status}
+                    </li>
+                ))}
+            </ul>
+>>>>>>> parent of df68de6 (SampleComponent update)
         </div>
     );
 };
