@@ -1,6 +1,5 @@
-// SampleComponent.js
-
 import React, { useEffect, useState } from 'react';
+import './SampleComponent.css'; // Ensure you import the CSS file if you have styles
 
 const SampleComponent = () => {
     const [orders, setOrders] = useState([]);
@@ -32,13 +31,32 @@ const SampleComponent = () => {
     return (
         <div>
             <h1>Orders</h1>
-            <ul>
-                {orders.map(order => (
-                    <li key={order._id}>
-                        User ID: {order.userId} - Amount: ${order.amount} - Status: {order.status}
-                    </li>
-                ))}
-            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Items</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Address</th>
+                        <th>Province</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {orders.map(order => (
+                        <tr key={order._id}>
+                            <td>{order.userId}</td>
+                            <td>{order.items.join(', ')}</td>
+                            <td>${order.amount}</td>
+                            <td>{new Date(order.date).toLocaleDateString()}</td>
+                            <td>{order.status}</td>
+                            <td>{order.address}</td>
+                            <td>{order.province}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };
