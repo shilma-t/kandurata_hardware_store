@@ -19,6 +19,7 @@ import DriverList from './pages/driver/DriverList';
 import EditDriver from './pages/driver/EditDriver';
 import MainPage from './pages/MainPage/MainPage';
 import SampleComponent from './components/SampleComponent'; // Import SampleComponent
+import OrderDetails from './components/OrderDetails';
 
 const App = () => {
   return (
@@ -44,11 +45,8 @@ const App = () => {
           <Route path="/drivers" element={<DriverList />} />
           <Route path="/drivers/add" element={<DriverForm />} />
           <Route path="/edit-driver/:id" element={<EditDriver />} />
-
-          {/* New route for displaying orders for drivers */}
           <Route path="/drivers/orders" element={<Driver />} /> {/* Updated this line */}
-          
-          {/* SampleComponent route */}
+          <Route path="/order-details" element={<OrderDetails />} /> {/* New route for OrderDetails */}
           <Route path="/sample" element={<SampleComponent />} /> {/* Add a route for SampleComponent */}
         </Routes>
       </div>
