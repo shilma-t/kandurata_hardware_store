@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './DriverForm.css';
-
 
 const DriverForm = () => {
   const [driver, setDriver] = useState({
@@ -45,61 +44,73 @@ const DriverForm = () => {
   };
 
   return (
-    
     <div className="driver-form-container">
-      <h2 className="form-heading">Register New Driver</h2> {/* Heading added */}
-      <form onSubmit={handleSubmit} className="driver-form">
-        <input
-          name="firstName"
-          value={driver.firstName}
-          onChange={handleChange}
-          placeholder="First Name"
-          required
-        />
-        <input
-          name="lastName"
-          value={driver.lastName}
-          onChange={handleChange}
-          placeholder="Last Name"
-          required
-        />
-        <input
-          name="nicNumber"
-          value={driver.nicNumber}
-          onChange={handleChange}
-          placeholder="NIC Number"
-          required
-        />
-        <input
-          name="mobileNumber"
-          value={driver.mobileNumber}
-          onChange={handleChange}
-          placeholder="Mobile Number"
-          required
-        />
-        <input
-          name="homeAddress"
-          value={driver.homeAddress}
-          onChange={handleChange}
-          placeholder="Home Address"
-          required
-        />
-        <input
-          name="emailAddress"
-          value={driver.emailAddress}
-          onChange={handleChange}
-          placeholder="Email Address"
-          required
-        />
-        <input
-          name="vehicleModel"
-          value={driver.vehicleModel}
-          onChange={handleChange}
-          placeholder="Vehicle Model"
-          required
-        />
-        <button type="submit">Add Driver</button>
-      </form>
+      <div className="sidebar">
+        <ul>
+          <li><Link to="/">Dashboard</Link></li>
+          <li><Link to="/sample">Manage Order</Link></li>
+          <li><Link to="/drivers">Driver Details</Link></li>
+          <li><Link to="/drivers/add">Add Driver</Link></li>
+          <li><Link to="/edit-driver/:id">Edit Driver</Link></li>
+          <li><Link to="/drivers">Delete Driver</Link></li>
+        </ul>
+      </div>
+
+      <div className="form-content"> {/* Add a wrapper for the form */}
+        <h2 className="form-heading">Register New Driver</h2> {/* Heading added */}
+        <form onSubmit={handleSubmit} className="driver-form">
+          <input
+            name="firstName"
+            value={driver.firstName}
+            onChange={handleChange}
+            placeholder="First Name"
+            required
+          />
+          <input
+            name="lastName"
+            value={driver.lastName}
+            onChange={handleChange}
+            placeholder="Last Name"
+            required
+          />
+          <input
+            name="nicNumber"
+            value={driver.nicNumber}
+            onChange={handleChange}
+            placeholder="NIC Number"
+            required
+          />
+          <input
+            name="mobileNumber"
+            value={driver.mobileNumber}
+            onChange={handleChange}
+            placeholder="Mobile Number"
+            required
+          />
+          <input
+            name="homeAddress"
+            value={driver.homeAddress}
+            onChange={handleChange}
+            placeholder="Home Address"
+            required
+          />
+          <input
+            name="emailAddress"
+            value={driver.emailAddress}
+            onChange={handleChange}
+            placeholder="Email Address"
+            required
+          />
+          <input
+            name="vehicleModel"
+            value={driver.vehicleModel}
+            onChange={handleChange}
+            placeholder="Vehicle Model"
+            required
+          />
+          <button type="submit">Add Driver</button>
+        </form>
+      </div>
     </div>
   );
 };

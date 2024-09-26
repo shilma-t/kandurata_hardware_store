@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './DriverList.css';
 
 const DriverList = () => {
@@ -45,50 +45,63 @@ const DriverList = () => {
   }, []);
 
   return (
-    <div className="driver-list">
-      {drivers.length === 0 ? (
-        <p>No drivers available</p>
-      ) : (
-        <table className="driver-table">
-          <thead>
-            <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Vehicle Model</th>
-              <th>NIC Number</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {drivers.map((driver) => (
-              <tr key={driver._id}>
-                <td>{driver.firstName}</td>
-                <td>{driver.lastName}</td>
-                <td>{driver.vehicleModel}</td>
-                <td>{driver.nicNumber}</td>
-                <td className="driver-actions">
-                  <button onClick={() => confirmDelete(driver._id)}>Delete</button>
-                  <button onClick={() => editDriver(driver._id)}>Edit</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+    <div className="driver-list-container">
+      <div className="sidebar">
+        <ul>
+          <li><Link to="/">Dashboard</Link></li>
+          <li><Link to="/sample">Manage Order</Link></li>
+          <li><Link to="/drivers">Driver Details</Link></li>
+          <li><Link to="/drivers/add">Add Driver</Link></li>
+          <li><Link to="/drivers/edit">Edit Driver</Link></li>
+          <li><Link to="/drivers">Delete Driver</Link></li>
+        </ul>
+      </div>
 
-      {/* Confirmation Modal */}
-      {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h3>Confirm Deletion</h3>
-            <p>Are you sure you want to delete this driver?</p>
-            <div className="modal-actions">
-              <button onClick={deleteDriver}>Delete</button>
-              <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+      <div className="driver-list">
+        {drivers.length === 0 ? (
+          <p>No drivers available</p>
+        ) : (
+          <table className="driver-table">
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Vehicle Model</th>
+                <th>NIC Number</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {drivers.map((driver) => (
+                <tr key={driver._id}>
+                  <td>{driver.firstName}</td>
+                  <td>{driver.lastName}</td>
+                  <td>{driver.vehicleModel}</td>
+                  <td>{driver.nicNumber}</td>
+                  <td className="driver-actions">
+                    <button onClick={() => confirmDelete(driver._id)}>Delete</button>
+                    <button onClick={() => editDriver(driver._id)}>Edit</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+
+        {/* Confirmation Modal */}
+        {isModalOpen && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h3>Confirm Deletion</h3>
+              <p>Are you sure you want to delete this driver?</p>
+              <div className="modal-actions">
+                <button onClick={deleteDriver}>Delete</button>
+                <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
