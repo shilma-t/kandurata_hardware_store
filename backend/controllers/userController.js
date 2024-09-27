@@ -71,4 +71,36 @@ const registerUser = async (req, res) => {
     }
 };
 
-export { loginUser, registerUser };
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await userModel.find({}, { password: 0 }); // Exclude password field for security
+        res.json({ success: true, users }); // Ensure 'users' is sent in the response
+    } catch (error) {
+        console.error(error);
+        res.json({ success: false, message: 'Error fetching users' });
+    }
+};
+
+
+const deleteUser = async (req, res) => {
+    try {
+      const { id } = req.params; // Get user ID from request params
+      await userModel.findByIdAndDelete(id);
+      res.json({ success: true, message: "User deleted successfully" });
+    } catch (error) {
+      console.error(error);
+      res.json({ success: false, message: "Error deleting user" });
+    }
+  };
+
+  const getUserCount = async (req, res) => {
+    try {
+        const userCount = await userModel.countDocuments(); // Get total count of users
+        res.json({ success: true, count: userCount });
+    } catch (error) {
+        console.error(error);
+        res.json({ success: false, message: 'Error fetching user count' });
+    }
+};
+  
+export { loginUser, registerUser,getAllUsers,deleteUser,getUserCount};

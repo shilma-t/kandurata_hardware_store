@@ -1,4 +1,4 @@
-.list-table-format {
+.alist-table-format {
     display: grid;
     grid-template-columns: 0.7fr 1fr 1.5fr 1fr 1fr 0.7fr 0.7fr 0.7fr 0.7fr 0.7fr 0.7fr; /* Adjusted to make room for actions */
     align-items: center;
@@ -8,25 +8,25 @@
     font-size: 13px;
 }
 
-.list-table-format.title {
+.alist-table-format.title {
     background-color: #f9f9f9;
     font-weight: bold;
 }
 
-.list-table-format img {
+.alist-table-format img {
     width: 50px;
     height: auto;
     border-radius: 4px;
 }
 
-.list-table-format div {
+.alist-table-format div {
     display: flex;
     justify-content: flex-end; /* Aligns the actions to the right */
     align-items: center;
     gap: 10px;
 }
 
-.list-table-format div p {
+.alist-table-format div p {
     margin: 0;
     padding: 5px 15px; /* Adjusted padding to make them look like buttons */
     border-radius: 4px;
@@ -38,35 +38,35 @@
     text-align: center;
 }
 
-.list-table-format div p:hover {
+.alist-table-format div p:hover {
     background-color:tomato; /* Darker shade for hover effect */
 }
 
-.list-table-format div p.cursor-delete {
+.alist-table-format div p.cursor-delete {
     background-color: #dc3545; /* Red color for delete button */
 }
 
-.list-table-format div p.cursor-delete:hover {
+.alist-table-format div p.cursor-delete:hover {
     background-color: #c82333; /* Darker red on hover */
 }
 
 @media (max-width: 600px) {
-    .list-table-format {
+    .alist-table-format {
         grid-template-columns: 1fr 1fr 1fr;
         gap: 10px;
         font-size: 12px;
         padding: 10px;
     }
 
-    .list-table-format.title {
+    .alist-table-format.title {
         display: none;
     }
 
-    .list-table-format img {
+    .alist-table-format img {
         width: 40px;
     }
 
-    .list-table-format p {
+    .alist-table-format p {
         word-wrap: break-word;
     }
 }
@@ -134,4 +134,55 @@
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.75);
+}
+.search-bar {
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .btn-report {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .btn-report:hover {
+    background-color: #45a049;
+  }
+  .search-report-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between elements */
+    margin-bottom: 15px; /* Space below the container */
+}
+
+.search-bar {
+    flex: 1; /* Make search bar grow */
+    padding: 8px;
+}
+
+.supplier-dropdown {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn-report {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-report:hover {
+    background-color: tomato; /* Hover effect for the button */
 }

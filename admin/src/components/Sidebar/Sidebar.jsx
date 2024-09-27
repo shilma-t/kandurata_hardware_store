@@ -26,6 +26,18 @@ const Sidebar = () => {
           <img src={assets.order_icon} alt="Orders" />
           <p>Orders</p>
         </NavLink>
+
+        {/* New link to navigate to the user table page */}
+        <NavLink to="/users" className="sidebar-option">
+          <img src={assets.order_icon} alt="Users" />
+          <p>Users</p>
+        </NavLink>
+
+        {/* New link to navigate to the sales page */}
+        <NavLink to="/Sales" className="sidebar-option">
+          <img src={assets.order_icon} alt="Sales" /> {/* Change the icon as necessary */}
+          <p>Sales</p>
+        </NavLink>
       </div>
     </div>
   );

@@ -28,4 +28,13 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.get('/', async (req, res) => {
+  try {
+    const invoices = await Invoice.find(); // Fetch all invoices
+    res.json(invoices); // Send back as JSON
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch invoices', error });
+  }
+});
+
 export default router;

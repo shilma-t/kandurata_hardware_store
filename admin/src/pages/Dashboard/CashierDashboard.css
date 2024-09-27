@@ -1,109 +1,109 @@
-.list {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .add {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .list p {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .price-toggle {
-    margin-bottom: 20px;
-  }
-  
-  .price-toggle label {
-    font-size: 18px;
-    color: #555;
-  }
-  
-  .category-filter,
-  .search-bar {
-    padding: 10px;
-    margin-right: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-  }
-  
-  .list-table {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-  }
-  
+.list-container {
+  display: flex;
+}
+
+.list-content {
+  flex-grow: 1;
+  padding: 20px;
+  margin-left: 20px; /* Reduced margin for less spacing */
+}
+
+.list p {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.price-toggle {
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #555;
+}
+
+.category-filter,
+.search-bar {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 200px; /* Set fixed width */
+}
+
+/* Styling the list table with grid layout */
+.list-table {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.list-table-format {
+  display: grid;
+  grid-template-columns: 0.7fr 1fr 1.5fr 1fr 1fr 0.7fr 0.7fr 0.7fr;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  border: 1px solid #cacaca;
+  font-size: 13px;
+}
+
+.list-table-format.title {
+  background-color: #f9f9f9;
+  font-weight: bold;
+}
+
+.list-table-format img {
+  width: 50px;
+  height: auto;
+  border-radius: 4px;
+}
+
+.list-table-format .add-button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+.proceed-button {
+  background-color: tomato;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+.list-table-format .add-button:hover,
+.proceed-button:hover {
+  background-color: tomato; /* Hover effect */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
   .list-table-format {
-    display: flex;
-    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    font-size: 12px;
     padding: 10px;
-    border-bottom: 1px solid #ddd;
   }
-  
+
   .list-table-format.title {
-    background-color: #f0f0f0;
-    font-weight: bold;
+    display: none;
   }
-  
+
   .list-table-format img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-right: 10px;
+    width: 40px;
   }
-  
+
   .list-table-format p {
-    flex: 1;
-    margin: 0 10px;
+    word-wrap: break-word;
   }
-  
-  .list-table-format input {
-    width: 70px;
-    padding: 5px;
-    margin-left: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-  
-  .list-table-format button {
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .list-table-format button:hover {
-    background-color: #0056b3;
-  }
-  
-  .proceed-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 18px;
-    transition: background-color 0.3s;
-  }
-  
-  .proceed-button:hover {
-    background-color: #218838;
-  }
-  
-  .toastify-container {
-    z-index: 9999; /* Ensure toast notifications are visible */
-  }
-  
+}

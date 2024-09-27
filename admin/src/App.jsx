@@ -16,6 +16,10 @@ import DriverList from './pages/driver/DriverList';
 import EditDriver from './pages/driver/EditDriver';
 import MainPage from './pages/MainPage/MainPage';
 import Invoice from './pages/Invoice/Invoice'; // Import Invoice page
+import InvoiceDisplay from './pages/Invoice/InvoiceDisplay';
+import UserTable from './pages/User/UserTable'; 
+import Sales from './pages/Sales/Sales';
+
 
 const App = () => {
   return (
@@ -30,7 +34,7 @@ const App = () => {
           <Route path="/orders" element={<Orders />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard/admin" element={<AdminDashboard />} />
-          <Route path="/dashboard/cashier" element={<CashierDashboard />}/>
+          <Route path="/dashboard/cashier" element={<CashierDashboard />} />
           <Route path="/logistics" element={<LogisticsManagerDashboard />} />
           <Route path="/hr" element={<HrManagerDashboard />} />
           <Route path="/employee" element={<EmployeeDashboard />} />
@@ -40,6 +44,9 @@ const App = () => {
           
           {/* New Invoice route */}
           <Route path="/invoice" element={<Invoice />} />
+          <Route path="/invoice-display" element={<InvoiceDisplay />} /> 
+          <Route path="/users" element={<UserTable />} /> {/* Corrected this line */}
+          <Route path="/sales" element={<Sales/>} />
         </Routes>
       </div>
     </div>
