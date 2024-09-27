@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import jsPDF from 'jspdf'; // Import jsPDF
+import 'jspdf-autotable';
 
 const AssignedOrders = () => {
     const location = useLocation();
@@ -37,6 +38,39 @@ const AssignedOrders = () => {
 
     const handleBack = () => {
         navigate('/logistics'); // Navigate back to the logistics dashboard
+    };
+
+    // Function to generate PDF
+    const generatePDF = () => {
+        const doc = new jsPDF();
+
+        // Add title
+        doc.setFontSize(18);
+        doc.text('Assigned Orders', 14, 22);
+
+        // Set font size for table header
+        doc.setFontSize(12);
+        const headers = ["User ID", "Items", "Amount", "Date", "Status", "Address", "Province", "Driver Name"];
+        const data = orders.map(order => [
+            order.userId,
+            order.items.join(', '),
+            `$${order.amount}`,
+            new Date(order.date).toLocaleDateString(),
+            order.status,
+            order.address,
+            order.province,
+            order.driverName
+        ]);
+
+        // Add the table to the PDF
+        doc.autoTable({
+            head: [headers],
+            body: data,
+            startY: 30, // Start below the title
+        });
+
+        // Save the PDF
+        doc.save('assigned_orders.pdf');
     };
 
     if (loading) return <div>Loading...</div>;
@@ -82,6 +116,9 @@ const AssignedOrders = () => {
             </table>
             <button onClick={handleBack}>
                 Back to Dashboard
+            </button>
+            <button onClick={generatePDF}>
+                Download PDF
             </button>
         </div>
     );
