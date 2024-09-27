@@ -11,13 +11,12 @@ import CashierDashboard from './pages/Dashboard/CashierDashboard';
 import HrManagerDashboard from './pages/Dashboard/HrManagerDashboard';
 import EmployeeDashboard from './pages/Dashboard/EmployeeDashboard';
 import LoginPage from './pages/adminLogin/AdminLoginPage';
-import { useAuth } from './context/authContext';
 import DriverForm from './pages/driver/DriverForm';
 import DriverList from './pages/driver/DriverList';
 import EditDriver from './pages/driver/EditDriver';
 import MainPage from './pages/MainPage/MainPage';
 import SampleComponent from './components/SampleComponent';
-import AssignedOrders from './components/AssignedOrders'; // Import AssignedOrders component
+import AssignedOrders from './components/AssignedOrders';
 
 const App = () => {
   return (
@@ -38,10 +37,11 @@ const App = () => {
           <Route path="/employee" element={<EmployeeDashboard />} />
           <Route path="/drivers" element={<DriverList />} />
           <Route path="/drivers/add" element={<DriverForm />} />
-          <Route path="/drivers/edit/:id" element={<EditDriver />} />
+          <Route path="/edit-driver/:id" element={<EditDriver />} />
           <Route path="/drivers/orders" element={<Driver />} />
           <Route path="/sample" element={<SampleComponent />} />
-          <Route path="/assigned-orders" element={<AssignedOrders />} /> {/* New route */}
+          <Route path="/assigned-orders" element={<AssignedOrders />} />
+         
         </Routes>
       </div>
     </div>

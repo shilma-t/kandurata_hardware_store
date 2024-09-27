@@ -32,7 +32,6 @@ function Dashboard() {
           <li><Link to="/sample">Manage Order</Link></li>
           <li><Link to="/drivers">Driver Details</Link></li>
           <li><Link to="/drivers/add">Add Driver</Link></li>
-          <li><Link to="/drivers/edit/:id">Edit Driver</Link></li> {/* Dynamic link for editing */}
           <li><Link to="/drivers/delete">Delete Driver</Link></li>
         </ul>
       </div>
