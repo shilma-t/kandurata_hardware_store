@@ -52,7 +52,6 @@ const DriverList = () => {
           <li><Link to="/sample">Manage Order</Link></li>
           <li><Link to="/drivers">Driver Details</Link></li>
           <li><Link to="/drivers/add">Add Driver</Link></li>
-          <li><Link to="/drivers/edit">Edit Driver</Link></li>
           <li><Link to="/drivers">Delete Driver</Link></li>
         </ul>
       </div>
