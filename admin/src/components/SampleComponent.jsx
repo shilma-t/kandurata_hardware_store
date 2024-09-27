@@ -8,6 +8,7 @@ const SampleComponent = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedOrders, setSelectedOrders] = useState(new Set());
+    const [searchQuery, setSearchQuery] = useState(''); // New state for search query
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -64,26 +65,25 @@ const SampleComponent = () => {
     };
 
     const handleAssignDrivers = () => {
-        // Check if all selected orders have a driver assigned
         const unassignedOrders = Array.from(selectedOrders).filter(orderId => {
             const order = orders.find(o => o._id === orderId);
-            return !order.driverId; // Filter orders without an assigned driver
+            return !order.driverId;
         });
 
         if (unassignedOrders.length > 0) {
             alert('Please select a driver for all selected orders.');
-            return; // Prevent assignment if any order is unassigned
+            return;
         }
 
         const assignments = Array.from(selectedOrders).map(orderId => {
             const order = orders.find(o => o._id === orderId);
-            const driverId = order.driverId; // Assume you store the driverId in the order
-            const driver = drivers.find(d => d._id === driverId); // Find driver details
+            const driverId = order.driverId;
+            const driver = drivers.find(d => d._id === driverId);
 
             return {
                 orderId,
                 driverId,
-                driverName: driver ? `${driver.firstName} ${driver.lastName}` : 'Unassigned', // Include driver name
+                driverName: driver ? `${driver.firstName} ${driver.lastName}` : 'Unassigned',
                 ...order
             };
         });
@@ -92,8 +92,13 @@ const SampleComponent = () => {
     };
 
     const handleBack = () => {
-        navigate('/logistics'); // Navigate to the dashboard
+        navigate('/logistics');
     };
+
+    // Function to handle search by province only
+    const filteredOrders = orders.filter(order => {
+        return order.province.toLowerCase().includes(searchQuery.toLowerCase());
+    });
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
@@ -101,6 +106,16 @@ const SampleComponent = () => {
     return (
         <div>
             <h1 className="header1">Delivery Schedule</h1>
+            
+            {/* Search Bar for filtering by Province */}
+            <input
+                type="text"
+                placeholder="Search by province..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)} // Update search query state
+                className="search-bar"
+            />
+
             <table>
                 <thead>
                     <tr>
@@ -116,16 +131,16 @@ const SampleComponent = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {orders.map((order) => {
+                    {filteredOrders.map((order) => {
                         const { _id, userId, items, amount, date, status, address, province, driverId } = order;
                         const isChecked = selectedOrders.has(_id);
                         return (
                             <tr key={_id}>
                                 <td>
-                                    <input 
-                                        type="checkbox" 
-                                        checked={isChecked} 
-                                        onChange={() => handleCheckboxChange(_id)} 
+                                    <input
+                                        type="checkbox"
+                                        checked={isChecked}
+                                        onChange={() => handleCheckboxChange(_id)}
                                     />
                                 </td>
                                 <td>{userId}</td>

@@ -75,3 +75,21 @@ td:nth-child(7), th:nth-child(7) {
     margin-top: 10px;
     text-align: center;
 }
+
+/* CSS for the search bar */
+.search-bar {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    margin-left: 1200px;
+}
+
+.search-bar:focus {
+    outline: none;
+    border-color: #007bff; /* Add a blue border when the input is focused */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a subtle shadow for focus effect */
+}
