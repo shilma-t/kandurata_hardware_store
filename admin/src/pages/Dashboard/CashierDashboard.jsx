@@ -3,6 +3,8 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate, useLocation } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import Sidebar from '../../components/Sidebar/CSidebar'; // Corrected import statement
+import './CashierDashboard.css';
 
 const List = () => {
   const url = "http://localhost:5001";
@@ -13,7 +15,7 @@ const List = () => {
   const [categories, setCategories] = useState([]);
   const [isWholesale, setIsWholesale] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation(); // Hook to access current location
+  const location = useLocation(); 
 
   // Fetch product list
   const fetchList = async () => {
@@ -34,8 +36,6 @@ const List = () => {
 
   useEffect(() => {
     fetchList();
-
-    // Check if there are any existing invoice items passed from the invoice page
     if (location.state?.invoiceItems) {
       setInvoiceItems(location.state.invoiceItems);
     }
@@ -45,20 +45,43 @@ const List = () => {
   const handleAddToInvoice = (item, quantity) => {
     const selectedPrice = isWholesale ? item.wholesalePrice : item.retailPrice;
     const quantityNumber = Number(quantity);
-
-    // Check if quantity is valid
+  
     if (!quantity || quantityNumber < 1) {
       toast.error("Please enter a valid quantity.");
       return;
     }
-
-    const selectedItem = { ...item, quantity: quantityNumber, price: selectedPrice, total: selectedPrice * quantityNumber };
+  
+    if (quantityNumber > item.quantity) {
+      toast.error(`Insufficient stock. Only ${item.quantity} available.`);
+      return;
+    }
+  
+    const existingItemIndex = invoiceItems.findIndex(existingItem => existingItem._id === item._id);
+  
+    if (existingItemIndex !== -1) {
+      toast.error(`${item.name} is already added to the invoice. Please adjust the quantity.`);
+      return;
+    }
+  
+    const selectedItem = {
+      ...item,
+      quantity: quantityNumber,
+      price: selectedPrice,
+      total: selectedPrice * quantityNumber,
+      availableQuantity: item.quantity 
+    };
+  
     setInvoiceItems([...invoiceItems, selectedItem]);
     toast.success(`${item.name} added to invoice`);
   };
 
   // Proceed to invoice page
   const handleProceedToInvoice = () => {
+    if (invoiceItems.length === 0) {
+      toast.error("No items in the invoice. Please add products before proceeding.");
+      return;
+    }
+    
     navigate('/invoice', { state: { invoiceItems } });
   };
 
@@ -68,80 +91,86 @@ const List = () => {
     .filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
-    <div className='list add flex-col'>
-      <p>All Products List</p>
+    <div className='list-container'>
+      <Sidebar />
 
-      {/* Wholesale/Retail Toggle */}
-      <div className="price-toggle">
-        <label>
-          <input
-            type="checkbox"
-            checked={isWholesale}
-            onChange={(e) => setIsWholesale(e.target.checked)}
-          />
-          Use Wholesale Prices
-        </label>
-      </div>
+      <div className='list-content'>
+        <p></p>
 
-      {/* Category Filter */}
-      <select 
-        value={selectedCategory} 
-        onChange={(e) => setSelectedCategory(e.target.value)} 
-        className="category-filter"
-      >
-        <option value=''>All Categories</option>
-        {categories.map((category, index) => (
-          <option key={index} value={category}>{category}</option>
-        ))}
-      </select>
-
-      {/* Search Input */}
-      <input
-        type="text"
-        placeholder="Search products..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="search-bar"
-      />
-
-      <div className="list-table">
-        <div className="list-table-format title">
-          <b>Image</b>
-          <b>Name</b>
-          <b>Category</b>
-          <b>Wholesale Price</b>
-          <b>Retail Price</b>
-          <b>Quantity</b>
-          <b>Action</b>
+        <div className="price-toggle">
+          <label>
+            <input
+              type="checkbox"
+              checked={isWholesale}
+              onChange={(e) => setIsWholesale(e.target.checked)}
+            />
+            Use Wholesale Prices
+          </label>
         </div>
-        
-        {/* Display filtered list */}
-        {filteredList.length > 0 ? (
-          filteredList.map((item, index) => (
-            <div key={index} className='list-table-format'>
-              <img src={`${url}/images/` + item.image} alt={item.name} />
-              <p>{item.name}</p>
-              <p>{item.category || "No category"}</p>
-              <p>{item.wholesalePrice || "No wholesale price"}</p>
-              <p>{item.retailPrice || "No retail price"}</p>
-              <input 
-                type="number" 
-                placeholder="Enter quantity" 
-                min="1" 
-                onChange={(e) => { item.quantity = e.target.value; }} 
-              />
-              <button className='cursor' onClick={() => handleAddToInvoice(item, item.quantity)}>Add</button>
-            </div>
-          ))
-        ) : (
-          <p>No products found</p>
-        )}
-      </div>
 
-      <button className="proceed-button" onClick={handleProceedToInvoice}>
-        Proceed to Invoice
-      </button>
-      <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} closeOnClick pauseOnHover draggable />
+        <select 
+          value={selectedCategory} 
+          onChange={(e) => setSelectedCategory(e.target.value)} 
+          className="category-filter"
+        >
+          <option value=''>All Categories</option>
+          {categories.map((category, index) => (
+            <option key={index} value={category}>{category}</option>
+          ))}
+        </select>
+
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="search-bar"
+        />
+
+        <div className="list-table">
+          <div className="list-table-format title">
+            <b>Image</b>
+            <b>Name</b>
+            <b>Category</b>
+            <b>Wholesale Price</b>
+            <b>Retail Price</b>
+            <b>Available Quantity</b>
+            <b>Quantity</b>
+            <b>Action</b>
+          </div>
+          
+          {filteredList.length > 0 ? (
+            filteredList.map((item, index) => (
+              <div key={index} className='list-table-format'>
+                <img src={`${url}/images/` + item.image} alt={item.name} />
+                <p>{item.name}</p>
+                <p>{item.category || "No category"}</p>
+                <p>{item.wholesalePrice || "No wholesale price"}</p>
+                <p>{item.retailPrice || "No retail price"}</p>
+                <p>{item.quantity || "No products left"}</p>
+                <input 
+                  type="number" 
+                  placeholder="Enter quantity" 
+                  min="1" 
+                  onChange={(e) => { 
+                    const value = e.target.value;
+                    item.inputQuantity = value;
+                  }} 
+                />
+                <button className='add-button' onClick={() => handleAddToInvoice(item, item.inputQuantity)}>Add</button>
+              </div>
+            ))
+          ) : (
+            <p>No products found</p>
+          )}
+        </div>
+
+        <button className="proceed-button" onClick={handleProceedToInvoice}>
+          Proceed to Invoice
+        </button>
+
+        <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} closeOnClick pauseOnHover draggable />
+      </div>
     </div>
   );
 };
