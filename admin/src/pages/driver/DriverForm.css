@@ -4,6 +4,16 @@
   height: 100vh;
   font-family: Arial, sans-serif; /* Ensure a clean, modern font */
 }
+.error {
+  color: red;
+  font-size: 0.8em;
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+}
 
 .form-heading{
   margin-top: 100px;

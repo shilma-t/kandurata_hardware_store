@@ -2,8 +2,15 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px;
+    padding: 20px; /* Adjusted padding for the body */
     background-color: #f4f4f4;
+}
+
+/* Header Styles */
+h1 {
+    color: #333; /* Header color */
+    text-align: center; /* Center the header */
+    margin-top: 10px; /* Optional: Add some space above the header */
 }
 
 /* Table Styles */
@@ -32,10 +39,6 @@ tr:hover {
     background-color: #ddd; /* Hover effect */
 }
 
-h1 {
-    color: #333; /* Header color */
-}
-
 /* Button Styles */
 button {
     background-color: #4CAF50; /* Change this to your preferred button color */
@@ -44,7 +47,7 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 10px; /* Optional: Space above buttons */
 }
 
 button:disabled {
@@ -71,21 +74,16 @@ a:hover {
 td:nth-child(7), th:nth-child(7) {
     min-width: 200px; /* Adjust the width as needed */
 }
-.header1{
-    margin-top: 10px;
-    text-align: center;
-}
 
-/* CSS for the search bar */
+/* CSS for the Search Bar */
 .search-bar {
     width: 300px;
     padding: 10px;
-    margin-bottom: 20px;
+    margin: 20px auto; /* Center the search bar */
     border: 1px solid #ccc;
     border-radius: 20px;
     font-size: 16px;
     transition: border-color 0.3s ease;
-    margin-left: 1200px;
 }
 
 .search-bar:focus {
