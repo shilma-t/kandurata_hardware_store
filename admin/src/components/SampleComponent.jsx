@@ -8,7 +8,7 @@ const SampleComponent = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedOrders, setSelectedOrders] = useState(new Set());
-    const [searchQuery, setSearchQuery] = useState(''); // New state for search query
+    const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -21,9 +21,7 @@ const SampleComponent = () => {
                 const data = await response.json();
                 setOrders(data);
             } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
+                setError(`Order Fetch Error: ${err.message}`);
             }
         };
 
@@ -36,17 +34,17 @@ const SampleComponent = () => {
                 const data = await response.json();
                 setDrivers(data);
             } catch (err) {
-                setError(err.message);
+                setError(`Driver Fetch Error: ${err.message}`);
             }
         };
 
         fetchOrders();
-        fetchDrivers();
+        fetchDrivers().finally(() => setLoading(false)); // Ensure loading is false after fetching
     }, []);
 
     const handleSelectChange = (orderId, driverId) => {
-        setOrders(prevOrders =>
-            prevOrders.map(order =>
+        setOrders((prevOrders) =>
+            prevOrders.map((order) =>
                 order._id === orderId ? { ...order, driverId } : order
             )
         );
@@ -55,19 +53,15 @@ const SampleComponent = () => {
     const handleCheckboxChange = (orderId) => {
         setSelectedOrders((prevSelected) => {
             const updatedSelected = new Set(prevSelected);
-            if (updatedSelected.has(orderId)) {
-                updatedSelected.delete(orderId);
-            } else {
-                updatedSelected.add(orderId);
-            }
+            updatedSelected.has(orderId) ? updatedSelected.delete(orderId) : updatedSelected.add(orderId);
             return updatedSelected;
         });
     };
 
     const handleAssignDrivers = () => {
-        const unassignedOrders = Array.from(selectedOrders).filter(orderId => {
-            const order = orders.find(o => o._id === orderId);
-            return !order.driverId;
+        const unassignedOrders = Array.from(selectedOrders).filter((orderId) => {
+            const order = orders.find((o) => o._id === orderId);
+            return !order?.driverId; // Optional chaining to safely access driverId
         });
 
         if (unassignedOrders.length > 0) {
@@ -75,10 +69,10 @@ const SampleComponent = () => {
             return;
         }
 
-        const assignments = Array.from(selectedOrders).map(orderId => {
-            const order = orders.find(o => o._id === orderId);
+        const assignments = Array.from(selectedOrders).map((orderId) => {
+            const order = orders.find((o) => o._id === orderId);
             const driverId = order.driverId;
-            const driver = drivers.find(d => d._id === driverId);
+            const driver = drivers.find((d) => d._id === driverId);
 
             return {
                 orderId,
@@ -95,8 +89,7 @@ const SampleComponent = () => {
         navigate('/logistics');
     };
 
-    // Function to handle search by province only
-    const filteredOrders = orders.filter(order => {
+    const filteredOrders = orders.filter((order) => {
         return order.province.toLowerCase().includes(searchQuery.toLowerCase());
     });
 
@@ -106,15 +99,16 @@ const SampleComponent = () => {
     return (
         <div>
             <h1 className="header1">Delivery Schedule</h1>
-            
-            {/* Search Bar for filtering by Province */}
-            <input
-                type="text"
-                placeholder="Search by province..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)} // Update search query state
-                className="search-bar"
-            />
+
+            <div className="search-bar-container">
+                <input
+                    type="text"
+                    placeholder="Search by province..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="search-bar"
+                />
+            </div>
 
             <table>
                 <thead>
