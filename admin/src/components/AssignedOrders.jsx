@@ -51,9 +51,11 @@ const AssignedOrders = () => {
         // Set font size for table header
         doc.setFontSize(12);
         const headers = ["User ID", "Items", "Amount", "Date", "Status", "Address", "Province", "Driver Name"];
+        
+        // Prepare data for the PDF, with items listed on new lines
         const data = orders.map(order => [
             order.userId,
-            order.items.join(', '),
+            order.items.map(item => item.name).join('\n'), // Join item names with newline characters
             `$${order.amount}`,
             new Date(order.date).toLocaleDateString(),
             order.status,
@@ -67,6 +69,21 @@ const AssignedOrders = () => {
             head: [headers],
             body: data,
             startY: 30, // Start below the title
+            theme: 'grid',
+            styles: {
+                cellPadding: 2,
+                lineColor: [0, 0, 0],
+                lineWidth: 0.5,
+                halign: 'left',
+                valign: 'middle',
+            },
+            didParseCell: (data) => {
+                // If this cell is the 'Items' cell, set the text to wrap
+                if (data.column.index === 1) {
+                    data.cell.styles.cellWidth = 'auto'; // Allow auto width for wrapping
+                    data.cell.styles.valign = 'top'; // Align text to the top
+                }
+            },
         });
 
         // Save the PDF
@@ -99,7 +116,13 @@ const AssignedOrders = () => {
                         return (
                             <tr key={_id}>
                                 <td>{userId}</td>
-                                <td>{items.join(', ')}</td>
+                                <td>
+                                    <ul>
+                                        {items.map((item, index) => (
+                                            <li key={index}>{item.name}</li> // Print each item on a new line
+                                        ))}
+                                    </ul>
+                                </td>
                                 <td>${amount}</td>
                                 <td>{new Date(date).toLocaleDateString()}</td>
                                 <td>{status}</td>

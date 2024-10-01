@@ -55,8 +55,8 @@ th, td {
 }
 
 th {
-    background-color: #5f6265; /* Change this to your preferred header color */
-    color: white;
+    background-color: #000000; /* Change this to your preferred header color */
+    color: rgb(224, 220, 220);
 }
 
 tr:nth-child(even) {
@@ -127,3 +127,21 @@ td:nth-child(7), th:nth-child(7) {
     align-items: center; /* Center elements horizontally */
     margin-top: 20px; /* Space above the container */
 }
+
+/* Select Styles */
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px; /* Space above select */
+    width: 100%; /* Full width */
+    max-width: 300px; /* Max width */
+}
+
+/* Styles for Assign Driver Button */
+.assign-driver-container button {
+    width: 100%; /* Full width for assign button */
+}
+
+
+

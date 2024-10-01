@@ -127,6 +127,7 @@ const SampleComponent = () => {
                     {filteredOrders.map((order) => {
                         const { _id, userId, items, amount, date, status, address, province } = order;
                         const isChecked = selectedOrders.has(_id);
+
                         return (
                             <tr key={_id}>
                                 <td>
@@ -137,7 +138,13 @@ const SampleComponent = () => {
                                     />
                                 </td>
                                 <td>{userId}</td>
-                                <td>{items.join(', ')}</td>
+                                <td>
+                                    <ul>
+                                        {items.map((item, index) => (
+                                            <li key={index}>{item.name}</li> // Display each item on a new line
+                                        ))}
+                                    </ul>
+                                </td>
                                 <td>${amount}</td>
                                 <td>{new Date(date).toLocaleDateString()}</td>
                                 <td>{status}</td>
