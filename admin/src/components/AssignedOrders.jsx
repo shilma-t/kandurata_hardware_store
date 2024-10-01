@@ -18,18 +18,18 @@ const AssignedOrders = () => {
         }
     }, [assignments]);
 
-    const handleReadyToShip = async (orderId) => {
+    const handleReadyToShip = async (id) => {
         try {
-            const response = await fetch(`http://localhost:5001/api/orders/${orderId}`, {
+            const response = await fetch(`http://localhost:5001/api/orders/${id}`, {
                 method: 'DELETE',
             });
-            
+
             if (!response.ok) {
                 throw new Error('Order not found or already deleted');
             }
 
             // Filter out the deleted order from the state
-            setOrders((prevOrders) => prevOrders.filter(order => order.orderId !== orderId));
+            setOrders((prevOrders) => prevOrders.filter(order => order._id !== id));
         } catch (error) {
             console.error('Failed to delete order:', error.message);
             alert(`Error: ${error.message}`); // Provide feedback to the user
@@ -95,9 +95,9 @@ const AssignedOrders = () => {
                 </thead>
                 <tbody>
                     {orders.map((order) => {
-                        const { orderId, userId, items, amount, date, status, address, province, driverName } = order;
+                        const { _id, userId, items, amount, date, status, address, province, driverName } = order;
                         return (
-                            <tr key={orderId}>
+                            <tr key={_id}>
                                 <td>{userId}</td>
                                 <td>{items.join(', ')}</td>
                                 <td>${amount}</td>
@@ -107,7 +107,7 @@ const AssignedOrders = () => {
                                 <td>{province}</td>
                                 <td>{driverName}</td>
                                 <td>
-                                    <button onClick={() => handleReadyToShip(orderId)}>Ready to Ship</button>
+                                    <button onClick={() => handleReadyToShip(_id)}>Ready to Ship</button>
                                 </td>
                             </tr>
                         );

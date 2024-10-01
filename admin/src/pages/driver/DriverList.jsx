@@ -42,7 +42,7 @@ const DriverList = () => {
 
   useEffect(() => {
     fetchDrivers();
-  }, []);
+  }, []); 
 
   return (
     <div className="driver-list-container">

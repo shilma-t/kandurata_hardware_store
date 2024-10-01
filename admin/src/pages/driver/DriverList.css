@@ -1,38 +1,46 @@
 .driver-list-container {
   display: flex; /* Use flexbox to align sidebar and content */
+  flex-direction: row; /* Ensure sidebar and content align side-by-side */
   height: 100vh; /* Full height of the viewport */
   font-family: Arial, sans-serif; /* Clean, modern font */
+  align-items: flex-start; /* Align items to the top */
 }
 
 .sidebar {
-  width: 200px; /* Set a fixed width for the sidebar */
-  padding-right: 20px; /* Space between sidebar and content */
+  width: 220px; /* Slightly larger width for better content spacing */
+  padding: 20px; /* Consistent padding */
   border-right: 1px solid #ccc; /* Optional: add a border to separate */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for separation */
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
 }
 
 .sidebar ul {
   list-style-type: none; /* Remove bullet points */
   padding: 0; /* Remove default padding */
+  margin: 0; /* Remove margin */
 }
 
 .sidebar li {
-  margin: 10px 0; /* Space between list items */
+  margin: 15px 0; /* Space between list items for better visual separation */
 }
 
 .sidebar a {
   text-decoration: none; /* Remove underline from links */
   color: #007BFF; /* Link color */
+  display: block; /* Make links block-level for easier clicking */
+  padding: 10px; /* Add padding to make links more clickable */
 }
 
 .sidebar a:hover {
   text-decoration: underline; /* Underline on hover */
+  background-color: #f0f0f0; /* Subtle background color on hover */
 }
 
 .driver-list {
-  margin-top: 50px;
-  margin-left: 100px;
+  margin: 20px; /* Adjust the margin for consistent spacing */
   flex: 1; /* Take the remaining space for the driver list */
   padding: 20px; /* Add padding around the list */
+  overflow-y: auto; /* Allow scrolling if the content is too long */
 }
 
 .driver-table {
@@ -120,6 +128,11 @@
   }
 
   .driver-list {
+    padding: 10px; /* Reduce padding for smaller screens */
+    margin: 10px; /* Reduce margin for smaller screens */
+  }
+
+  .driver-table td {
     padding: 10px; /* Reduce padding for smaller screens */
   }
 }

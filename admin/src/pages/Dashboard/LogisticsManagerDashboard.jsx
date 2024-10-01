@@ -28,7 +28,7 @@ function Dashboard() {
     <div className="dashboard">
       <div className="sidebar">
         <ul>
-          <li><Link to="/">Dashboard</Link></li>
+          <li><Link to="/logistics">Dashboard</Link></li>
           <li><Link to="/sample">Manage Order</Link></li>
           <li><Link to="/drivers">Driver Details</Link></li>
           <li><Link to="/drivers/add">Add Driver</Link></li>
