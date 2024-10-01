@@ -97,7 +97,7 @@ const SampleComponent = () => {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div>
+        <div className="app-content">
             <h1 className="header1">Delivery Schedule</h1>
 
             <div className="search-bar-container">
@@ -121,12 +121,11 @@ const SampleComponent = () => {
                         <th>Status</th>
                         <th>Address</th>
                         <th>Province</th>
-                        <th>Assign Driver</th>
                     </tr>
                 </thead>
                 <tbody>
                     {filteredOrders.map((order) => {
-                        const { _id, userId, items, amount, date, status, address, province, driverId } = order;
+                        const { _id, userId, items, amount, date, status, address, province } = order;
                         const isChecked = selectedOrders.has(_id);
                         return (
                             <tr key={_id}>
@@ -144,28 +143,34 @@ const SampleComponent = () => {
                                 <td>{status}</td>
                                 <td>{address}</td>
                                 <td>{province}</td>
-                                <td>
-                                    <select value={driverId || ''} onChange={(e) => handleSelectChange(_id, e.target.value)}>
-                                        <option value="">Select Driver</option>
-                                        {drivers.length > 0 ? (
-                                            drivers.map(driver => (
-                                                <option key={driver._id} value={driver._id}>
-                                                    {driver.firstName} {driver.lastName} ({driver.vehicleModel})
-                                                </option>
-                                            ))
-                                        ) : (
-                                            <option disabled>No drivers available</option>
-                                        )}
-                                    </select>
-                                </td>
                             </tr>
                         );
                     })}
                 </tbody>
             </table>
-            <button onClick={handleAssignDrivers} disabled={selectedOrders.size === 0}>
-                Assign to Driver
-            </button>
+
+            <div className="assign-driver-container">
+                <h3>Assign Driver to Selected Orders</h3>
+                <select onChange={(e) => {
+                    const driverId = e.target.value;
+                    selectedOrders.forEach(orderId => handleSelectChange(orderId, driverId));
+                }}>
+                    <option value="">Select Driver</option>
+                    {drivers.length > 0 ? (
+                        drivers.map(driver => (
+                            <option key={driver._id} value={driver._id}>
+                                {driver.firstName} {driver.lastName} ({driver.vehicleModel})
+                            </option>
+                        ))
+                    ) : (
+                        <option disabled>No drivers available</option>
+                    )}
+                </select>
+                <button onClick={handleAssignDrivers} disabled={selectedOrders.size === 0}>
+                    Assign to Driver
+                </button>
+            </div>
+
             <button onClick={handleBack}>
                 Back to Dashboard
             </button>

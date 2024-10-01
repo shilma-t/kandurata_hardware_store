@@ -117,59 +117,13 @@ td:nth-child(7), th:nth-child(7) {
     max-width: 300px; /* Max width for larger screens */
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 20px;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
+    border-radius: 5px;
 }
 
-.search-bar:focus {
-    outline: none;
-    border-color: #007bff; /* Add a blue border when the input is focused */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a subtle shadow for focus effect */
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .search-bar {
-        width: 90%; /* Wider on smaller screens */
-    }
-
-    button {
-        width: 100%; /* Full-width buttons on small screens */
-        padding: 15px; /* Increase padding for easier tapping */
-    }
-
-    h1 {
-        font-size: 1.5rem; /* Smaller font size on mobile */
-    }
-
-    th, td {
-        font-size: 14px; /* Slightly smaller font for table */
-    }
-}
-
-@media (max-width: 1024px) {
-    /* Adjustments for tablets */
-    table {
-        font-size: 15px; /* Slightly smaller font size */
-    }
-
-    button {
-        padding: 12px; /* Adjust button size for tablets */
-    }
-}
-
-@media (min-width: 1200px) {
-    /* Adjustments for large screens */
-    .app-content {
-        padding: 20px; /* More padding for larger screens */
-    }
-
-    table {
-        font-size: 16px; /* Larger font size */
-    }
-
-    h1 {
-        font-size: 2.5rem; /* Larger header font on big screens */
-    }
+/* Assign Driver Container */
+.assign-driver-container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center elements horizontally */
+    margin-top: 20px; /* Space above the container */
 }
