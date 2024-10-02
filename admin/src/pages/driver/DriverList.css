@@ -1,138 +1,143 @@
-.driver-list-container {
-  display: flex; /* Use flexbox to align sidebar and content */
-  flex-direction: row; /* Ensure sidebar and content align side-by-side */
-  height: 100vh; /* Full height of the viewport */
-  font-family: Arial, sans-serif; /* Clean, modern font */
-  align-items: flex-start; /* Align items to the top */
-}
-
+/* Sidebar Styling */
 .sidebar {
-  width: 220px; /* Slightly larger width for better content spacing */
-  padding: 20px; /* Consistent padding */
-  border-right: 1px solid #ccc; /* Optional: add a border to separate */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for separation */
-  flex-shrink: 0; /* Prevent sidebar from shrinking */
+  position: fixed;
+  top: 114px; /* Assuming there's a navbar above */
+  left: 0;
+  width: 250px;
+  height: calc(100% - 60px); /* Leaves space for the navbar */
+  background-color: #2b2b2b;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar ul {
-  list-style-type: none; /* Remove bullet points */
-  padding: 0; /* Remove default padding */
-  margin: 0; /* Remove margin */
+  list-style: none;
+  padding: 0;
 }
 
-.sidebar li {
-  margin: 15px 0; /* Space between list items for better visual separation */
+.sidebar ul li {
+  margin-bottom: 15px;
 }
 
-.sidebar a {
-  text-decoration: none; /* Remove underline from links */
-  color: #007BFF; /* Link color */
-  display: block; /* Make links block-level for easier clicking */
-  padding: 10px; /* Add padding to make links more clickable */
+.sidebar ul li a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
 }
 
-.sidebar a:hover {
-  text-decoration: underline; /* Underline on hover */
-  background-color: #f0f0f0; /* Subtle background color on hover */
+/* Driver List Content */
+.driver-list-container {
+  margin-top: 50px;
+  display: flex;
 }
 
-.driver-list {
-  margin: 20px; /* Adjust the margin for consistent spacing */
-  flex: 1; /* Take the remaining space for the driver list */
-  padding: 20px; /* Add padding around the list */
-  overflow-y: auto; /* Allow scrolling if the content is too long */
+.driver-list-content {
+  margin-left: 220px;
+  padding: 20px;
+  width: calc(100% - 220px);
 }
 
+.driver-list-content h1 {
+  margin-bottom: 20px;
+}
+
+/* Table Styling */
 .driver-table {
-  width: 100%; /* Table takes full width */
-  border-collapse: collapse; /* Remove spacing between cells */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-  border-radius: 8px; /* Rounded corners */
-  overflow: hidden; /* Ensure rounded corners work */
+  margin-top: 80px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.driver-table th,
+.driver-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
 .driver-table th {
-  background-color: #5f6265; /* Header background color */
-  color: white; /* Text color */
-  padding: 15px; /* Add padding for header */
-  text-align: left; /* Align text to the left */
-  font-weight: bold; /* Make header text bold */
-}
-
-.driver-table td {
-  padding: 15px; /* Add padding for table cells */
-  border: 1px solid #ccc; /* Border for table cells */
-  background-color: #f9f9f9; /* Light background for table cells */
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
-}
-
-.driver-table tr:hover td {
-  background-color: #e9ecef; /* Highlight row on hover */
-}
-
-.driver-actions {
-  display: flex; /* Flex layout for buttons */
-  gap: 10px; /* Space between buttons */
+  background-color: #000000;
 }
 
 .driver-actions button {
-  background-color: #419721; /* Button background color */
-  color: white; /* Button text color */
-  border: none; /* Remove border */
-  padding: 10px 15px; /* Button padding */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
+  margin-right: 10px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.driver-actions button:hover {
-  background-color: #2e4a67; /* Darker shade on hover */
+.delete-button {
+  background-color: tomato;
+  color: white;
 }
 
-/* Modal styles */
+.edit-button {
+  background-color: black;
+  color: white;
+}
+
+/* Modal Styling */
 .modal-overlay {
-  position: fixed; /* Overlay to cover entire viewport */
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: center; /* Center modal vertically */
-  justify-content: center; /* Center modal horizontally */
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-content {
-  background-color: white; /* Modal background */
-  padding: 20px; /* Padding inside modal */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Modal shadow */
-  text-align: center; /* Center align text */
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
 }
 
-.modal-actions {
-  display: flex; /* Flex layout for buttons */
-  justify-content: space-around; /* Space around buttons */
+.modal-actions button {
+  padding: 10px 20px;
+  margin: 10px;
 }
 
-/* Responsive design */
+/* Responsiveness */
 @media (max-width: 768px) {
-  .driver-list-container {
-    flex-direction: column; /* Stack sidebar and content on smaller screens */
-  }
-
   .sidebar {
-    width: 100%; /* Sidebar takes full width */
-    border-right: none; /* Remove right border */
-    border-bottom: 1px solid #ccc; /* Add bottom border */
+    width: 150px;
   }
 
-  .driver-list {
-    padding: 10px; /* Reduce padding for smaller screens */
-    margin: 10px; /* Reduce margin for smaller screens */
+  .driver-list-content {
+    margin-left: 170px;
+    padding: 15px;
   }
 
+  .driver-table th,
   .driver-table td {
-    padding: 10px; /* Reduce padding for smaller screens */
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+
+  .driver-list-content {
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  .driver-table {
+    font-size: 14px;
+  }
+
+  .driver-actions button {
+    padding: 6px 10px;
   }
 }

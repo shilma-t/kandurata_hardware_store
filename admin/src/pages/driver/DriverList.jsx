@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { useNavigate, Link } from 'react-router-dom';
 import './DriverList.css';
 
 const DriverList = () => {
@@ -31,8 +31,8 @@ const DriverList = () => {
       } catch (error) {
         console.error('Error deleting driver:', error);
       }
-      setIsModalOpen(false); // Close modal after deletion
-      setDriverToDelete(null); // Reset driver ID
+      setIsModalOpen(false);
+      setDriverToDelete(null);
     }
   };
 
@@ -42,7 +42,7 @@ const DriverList = () => {
 
   useEffect(() => {
     fetchDrivers();
-  }, []); 
+  }, []);
 
   return (
     <div className="driver-list-container">
@@ -56,7 +56,8 @@ const DriverList = () => {
         </ul>
       </div>
 
-      <div className="driver-list">
+      <div className="driver-list-content">
+        <h1>Driver Details</h1>
         {drivers.length === 0 ? (
           <p>No drivers available</p>
         ) : (
@@ -78,8 +79,8 @@ const DriverList = () => {
                   <td>{driver.vehicleModel}</td>
                   <td>{driver.nicNumber}</td>
                   <td className="driver-actions">
-                    <button onClick={() => confirmDelete(driver._id)}>Delete</button>
-                    <button onClick={() => editDriver(driver._id)}>Edit</button>
+                    <button className="delete-button" onClick={() => confirmDelete(driver._id)}>Delete</button>
+                    <button className="edit-button" onClick={() => editDriver(driver._id)}>Edit</button>
                   </td>
                 </tr>
               ))}

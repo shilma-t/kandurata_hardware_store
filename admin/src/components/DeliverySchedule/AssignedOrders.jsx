@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf'; // Import jsPDF
 import 'jspdf-autotable';
+import './AssignedOrders.css';
 
 const AssignedOrders = () => {
     const location = useLocation();
@@ -137,12 +138,14 @@ const AssignedOrders = () => {
                     })}
                 </tbody>
             </table>
-            <button onClick={handleBack}>
-                Back to Dashboard
-            </button>
-            <button onClick={generatePDF}>
-                Download PDF
-            </button>
+            <div className="button-container">
+                <button onClick={handleBack}>
+                    Back to Dashboard
+                </button>
+                <button className="pdf-button" onClick={generatePDF}>
+                    Download PDF
+                </button>
+            </div>
         </div>
     );
 };

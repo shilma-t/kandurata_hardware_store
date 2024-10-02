@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #fcfcfc;
+}
+
+.app-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Header Styles */
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Add space between buttons */
+    margin-top: 20px; /* Add space above the buttons */
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    max-width: 1200px;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #000000;
+    color: rgb(224, 220, 220);
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+/* General Button Styles */
+button {
+    background-color: tomato;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    width: 150px; /* Set button width to 200px */
+}
+
+/* Disabled Button Style */
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Hover Style */
+button:hover:not(:disabled) {
+    background-color: #45a049;
+}
+
+/* Specific Style for "Download PDF" Button */
+button.pdf-button {
+    background-color: black; /* Set to black */
+    color: white;
+}
+
+button.pdf-button:hover {
+    background-color: #333; /* Slightly lighter for hover effect */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    button {
+        width: 100%; /* Full width for smaller screens */
+    }
+
+    table, th, td {
+        font-size: 0.9em;
+    }
+}
