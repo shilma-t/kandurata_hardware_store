@@ -41,7 +41,6 @@ const App = () => {
           <Route path="/drivers/orders" element={<Driver />} />
           <Route path="/sample" element={<SampleComponent />} />
           <Route path="/assigned-orders" element={<AssignedOrders />} />
-         
         </Routes>
       </div>
     </div>

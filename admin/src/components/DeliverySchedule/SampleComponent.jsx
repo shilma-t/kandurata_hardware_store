@@ -9,7 +9,7 @@ const SampleComponent = () => {
     const [error, setError] = useState(null);
     const [selectedOrders, setSelectedOrders] = useState(new Set());
     const [searchQuery, setSearchQuery] = useState('');
-    const [selectedProvince, setSelectedProvince] = useState(''); // New state for province sorting
+    const [selectedProvince, setSelectedProvince] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -104,30 +104,32 @@ const SampleComponent = () => {
         <div className="app-content">
             <h1 className="header1">Delivery Schedule</h1>
 
-            <div className="search-bar-container">
-                <input
-                    type="text"
-                    placeholder="Search by province..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="search-bar"
-                />
-            </div>
+            <div className="controls-container">
+                <div className="sort-bar-container">
+                    <label htmlFor="provinceSelect">Sort by Province: </label>
+                    <select
+                        id="provinceSelect"
+                        value={selectedProvince}
+                        onChange={(e) => setSelectedProvince(e.target.value)}
+                    >
+                        <option value="">All Provinces</option>
+                        {Array.from(new Set(orders.map((order) => order.province))).map((province) => (
+                            <option key={province} value={province}>
+                                {province}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
-            <div className="sort-bar-container">
-                <label htmlFor="provinceSelect">Sort by Province: </label>
-                <select
-                    id="provinceSelect"
-                    value={selectedProvince}
-                    onChange={(e) => setSelectedProvince(e.target.value)}
-                >
-                    <option value="">All Provinces</option>
-                    {Array.from(new Set(orders.map((order) => order.province))).map((province) => (
-                        <option key={province} value={province}>
-                            {province}
-                        </option>
-                    ))}
-                </select>
+                <div className="search-bar-container">
+                    <input
+                        type="text"
+                        placeholder="Search by province..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="search-bar"
+                    />
+                </div>
             </div>
 
             <table>
@@ -177,7 +179,6 @@ const SampleComponent = () => {
             </table>
 
             <div className="assign-driver-container">
-                <h3>Assign Driver to Selected Orders</h3>
                 <select
                     onChange={(e) => {
                         const driverId = e.target.value;
@@ -198,9 +199,8 @@ const SampleComponent = () => {
                 <button onClick={handleAssignDrivers} disabled={selectedOrders.size === 0}>
                     Assign to Driver
                 </button>
+                <button onClick={handleBack}>Back to Dashboard</button>
             </div>
-
-            <button onClick={handleBack}>Back to Dashboard</button>
         </div>
     );
 };
