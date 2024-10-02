@@ -9,6 +9,7 @@ const SampleComponent = () => {
     const [error, setError] = useState(null);
     const [selectedOrders, setSelectedOrders] = useState(new Set());
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedProvince, setSelectedProvince] = useState(''); // New state for province sorting
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -39,7 +40,7 @@ const SampleComponent = () => {
         };
 
         fetchOrders();
-        fetchDrivers().finally(() => setLoading(false)); // Ensure loading is false after fetching
+        fetchDrivers().finally(() => setLoading(false));
     }, []);
 
     const handleSelectChange = (orderId, driverId) => {
@@ -61,7 +62,7 @@ const SampleComponent = () => {
     const handleAssignDrivers = () => {
         const unassignedOrders = Array.from(selectedOrders).filter((orderId) => {
             const order = orders.find((o) => o._id === orderId);
-            return !order?.driverId; // Optional chaining to safely access driverId
+            return !order?.driverId;
         });
 
         if (unassignedOrders.length > 0) {
@@ -78,7 +79,7 @@ const SampleComponent = () => {
                 orderId,
                 driverId,
                 driverName: driver ? `${driver.firstName} ${driver.lastName}` : 'Unassigned',
-                ...order
+                ...order,
             };
         });
 
@@ -90,7 +91,10 @@ const SampleComponent = () => {
     };
 
     const filteredOrders = orders.filter((order) => {
-        return order.province.toLowerCase().includes(searchQuery.toLowerCase());
+        return (
+            order.province.toLowerCase().includes(searchQuery.toLowerCase()) &&
+            (selectedProvince === '' || order.province === selectedProvince)
+        );
     });
 
     if (loading) return <div>Loading...</div>;
@@ -108,6 +112,22 @@ const SampleComponent = () => {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="search-bar"
                 />
+            </div>
+
+            <div className="sort-bar-container">
+                <label htmlFor="provinceSelect">Sort by Province: </label>
+                <select
+                    id="provinceSelect"
+                    value={selectedProvince}
+                    onChange={(e) => setSelectedProvince(e.target.value)}
+                >
+                    <option value="">All Provinces</option>
+                    {Array.from(new Set(orders.map((order) => order.province))).map((province) => (
+                        <option key={province} value={province}>
+                            {province}
+                        </option>
+                    ))}
+                </select>
             </div>
 
             <table>
@@ -141,7 +161,7 @@ const SampleComponent = () => {
                                 <td>
                                     <ul>
                                         {items.map((item, index) => (
-                                            <li key={index}>{item.name}</li> // Display each item on a new line
+                                            <li key={index}>{item.name}</li>
                                         ))}
                                     </ul>
                                 </td>
@@ -158,13 +178,15 @@ const SampleComponent = () => {
 
             <div className="assign-driver-container">
                 <h3>Assign Driver to Selected Orders</h3>
-                <select onChange={(e) => {
-                    const driverId = e.target.value;
-                    selectedOrders.forEach(orderId => handleSelectChange(orderId, driverId));
-                }}>
+                <select
+                    onChange={(e) => {
+                        const driverId = e.target.value;
+                        selectedOrders.forEach((orderId) => handleSelectChange(orderId, driverId));
+                    }}
+                >
                     <option value="">Select Driver</option>
                     {drivers.length > 0 ? (
-                        drivers.map(driver => (
+                        drivers.map((driver) => (
                             <option key={driver._id} value={driver._id}>
                                 {driver.firstName} {driver.lastName} ({driver.vehicleModel})
                             </option>
@@ -178,9 +200,7 @@ const SampleComponent = () => {
                 </button>
             </div>
 
-            <button onClick={handleBack}>
-                Back to Dashboard
-            </button>
+            <button onClick={handleBack}>Back to Dashboard</button>
         </div>
     );
 };

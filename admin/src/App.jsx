@@ -15,8 +15,8 @@ import DriverForm from './pages/driver/DriverForm';
 import DriverList from './pages/driver/DriverList';
 import EditDriver from './pages/driver/EditDriver';
 import MainPage from './pages/MainPage/MainPage';
-import SampleComponent from './components/SampleComponent';
-import AssignedOrders from './components/AssignedOrders';
+import SampleComponent from './components/DeliverySchedule/SampleComponent'
+import AssignedOrders from './components/DeliverySchedule/AssignedOrders'
 
 const App = () => {
   return (
