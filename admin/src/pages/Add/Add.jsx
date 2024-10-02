@@ -4,6 +4,7 @@ import { assets } from '../../assets/assets';
 import axios from "axios";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import the CSS for react-confirm-alert
+import Sidebar from '../../components/Sidebar/Sidebar'; // Import Sidebar component
 
 const Add = () => {
   const url = "http://localhost:5001"; // Updated URL for API
@@ -101,80 +102,83 @@ const Add = () => {
   }, []);
 
   return (
-    <div className='add'>
-      <form className='flex-col' onSubmit={onSubmitHandler}>
-        {/* Product ID - Auto-generated */}
-        <div className="add-product-id">
-          <p>Product ID</p>
-          <input type="text" name='productId' value={productId} readOnly />
-        </div>
-
-        {/* Upload Image */}
-        <div className="add-img-upload flex-col">
-          <p>Upload Image</p>
-          <label htmlFor="image">
-            <img src={image ? URL.createObjectURL(image) : assets.upload_area} alt="" />
-          </label>
-          <input onChange={handleImageChange} type="file" id="image" hidden />
-        </div>
-
-        {/* Product Name */}
-        <div className="add-product-name flex-col">
-          <p>Product Name</p>
-          <input type="text" name='name' placeholder='Type here' value={data.name} onChange={onChangeHandler} required />
-        </div>
-
-        {/* Product Description */}
-        <div className="add-product-description flex-col">
-          <p>Product Description</p>
-          <textarea name="description" rows="6" placeholder='Write content here' value={data.description} onChange={onChangeHandler}></textarea>
-        </div>
-
-        {/* Category, Price, and Quantity */}
-        <div className="add-category-price-quantity">
-          <div className="add-category flex-col">
-            <p>Product Category</p>
-            <select name="category" value={data.category} onChange={onChangeHandler} required>
-              <option value="">Select a category</option>
-              <option value="Building and Hardware">Building and Hardware</option>
-              <option value="Safety Gear">Safety Gear</option>
-              <option value="Paint">Paint</option>
-              <option value="Tools">Tools</option>
-              <option value="Storage">Storage</option>
-              <option value="Lighting">Lighting</option>
-              <option value="Gardening">Gardening</option>
-              <option value="Fasteners">Fasteners</option>
-            </select>
+    <div className="dashboard"> {/* Add a wrapper for the layout */}
+      <Sidebar /> {/* Render the Sidebar on the left */}
+      <div className="add-container"> {/* Container for Add component */}
+        <form className='flex-col' onSubmit={onSubmitHandler}>
+          {/* Product ID - Auto-generated */}
+          <div className="add-product-id">
+            <p>Product ID</p>
+            <input type="text" name='productId' value={productId} readOnly />
           </div>
 
-          <div className="add-price flex-col">
-            <p>Wholesale Price</p>
-            <input type="number" name='wholesalePrice' placeholder='LKR 100' value={data.wholesalePrice} onChange={onChangeHandler} required />
-            <p>Retail Price</p>
-            <input type="number" name='retailPrice' placeholder='LKR 100' value={data.retailPrice} onChange={onChangeHandler} required />
+          {/* Upload Image */}
+          <div className="add-img-upload flex-col">
+            <p>Upload Image</p>
+            <label htmlFor="image">
+              <img src={image ? URL.createObjectURL(image) : assets.upload_area} alt="" />
+            </label>
+            <input onChange={handleImageChange} type="file" id="image" hidden />
           </div>
 
-          <div className="add-quantity flex-col">
-            <p>Quantity</p>
-            <input type="number" name='quantity' placeholder='Enter quantity' value={data.quantity} onChange={onChangeHandler} required />
+          {/* Product Name */}
+          <div className="add-product-name flex-col">
+            <p>Product Name</p>
+            <input type="text" name='name' placeholder='Type here' value={data.name} onChange={onChangeHandler} required />
           </div>
-        </div>
 
-        {/* Supplier Name */}
-        <div className="add-supplier-name flex-col">
-          <p>Supplier Name</p>
-          <input type="text" name='supplierName' placeholder='Enter supplier name' value={data.supplierName} onChange={onChangeHandler} required />
-        </div>
+          {/* Product Description */}
+          <div className="add-product-description flex-col">
+            <p>Product Description</p>
+            <textarea name="description" rows="6" placeholder='Write content here' value={data.description} onChange={onChangeHandler}></textarea>
+          </div>
 
-        {/* System Date */}
-        <div className="add-date">
-          <p>Date</p>
-          <input type="text" name='date' value={date} readOnly />
-        </div>
+          {/* Category, Price, and Quantity */}
+          <div className="add-category-price-quantity">
+            <div className="add-category flex-col">
+              <p>Product Category</p>
+              <select name="category" value={data.category} onChange={onChangeHandler} required>
+                <option value="">Select a category</option>
+                <option value="Building and Hardware">Building and Hardware</option>
+                <option value="Safety Gear">Safety Gear</option>
+                <option value="Paint">Paint</option>
+                <option value="Tools">Tools</option>
+                <option value="Storage">Storage</option>
+                <option value="Lighting">Lighting</option>
+                <option value="Gardening">Gardening</option>
+                <option value="Fasteners">Fasteners</option>
+              </select>
+            </div>
 
-        {/* Submit Button */}
-        <button type='submit' className='add-btn'>ADD</button>
-      </form>
+            <div className="add-price flex-col">
+              <p>Wholesale Price</p>
+              <input type="number" name='wholesalePrice' placeholder='LKR 100' value={data.wholesalePrice} onChange={onChangeHandler} required />
+              <p>Retail Price</p>
+              <input type="number" name='retailPrice' placeholder='LKR 100' value={data.retailPrice} onChange={onChangeHandler} required />
+            </div>
+
+            <div className="add-quantity flex-col">
+              <p>Quantity</p>
+              <input type="number" name='quantity' placeholder='Enter quantity' value={data.quantity} onChange={onChangeHandler} required />
+            </div>
+          </div>
+
+          {/* Supplier Name */}
+          <div className="add-supplier-name flex-col">
+            <p>Supplier Name</p>
+            <input type="text" name='supplierName' placeholder='Enter supplier name' value={data.supplierName} onChange={onChangeHandler} required />
+          </div>
+
+          {/* System Date */}
+          <div className="add-date">
+            <p>Date</p>
+            <input type="text" name='date' value={date} readOnly />
+          </div>
+
+          {/* Submit Button */}
+          <button type='submit' className='add-btn'>ADD</button>
+        </form>
+      </div>
     </div>
   );
 };

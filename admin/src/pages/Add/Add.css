@@ -1,5 +1,5 @@
 .add {
-    width: 70%;
+    width: calc(100% + 100px);
     margin-left: max(5vw, 25px);
     margin-top: 50px;
     color: #6d6d6d;
@@ -19,7 +19,7 @@
 .add-product-id,
 .add-supplier-name,
 .add-date {
-    width: max(40%, 280px);
+    width: max(40%, 350px); /* Adjusted the width here if necessary */
 }
 
 .add-product-name input,
@@ -37,7 +37,7 @@
 
 .add-category-price-quantity select,
 .add-category-price-quantity input {
-    max-width: 120px;
+    max-width: 140px; /* Adjust max width if needed */
     padding: 10px;
 }
 
@@ -70,7 +70,7 @@
     max-width: 120px;
     border: none;
     padding: 10px;
-    background-color:black;
+    background-color: black;
     color: white;
     border-radius: 4px;
     cursor: pointer;
@@ -78,4 +78,16 @@
 
 .add-btn:hover {
     background-color: #0056b3;
+}
+
+.dashboard {
+    display: flex; /* Use flexbox for layout */
+    height: 100vh; /* Full height of the viewport */
+}
+
+.add-container {
+    width:100%;
+    flex: 1; /* Allow the add-container to take up remaining space */
+    padding: 20px; /* Add some padding for aesthetics */
+    overflow-y: auto; /* Allow scrolling if content overflows */
 }

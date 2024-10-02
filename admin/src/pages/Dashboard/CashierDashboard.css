@@ -1,0 +1,109 @@
+.list-container {
+  display: flex;
+}
+
+.list-content {
+  flex-grow: 1;
+  padding: 20px;
+  margin-left: 20px; /* Reduced margin for less spacing */
+}
+
+.list p {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.price-toggle {
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #555;
+}
+
+.category-filter,
+.search-bar {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 200px; /* Set fixed width */
+}
+
+/* Styling the list table with grid layout */
+.list-table {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.list-table-format {
+  display: grid;
+  grid-template-columns: 0.7fr 1fr 1.5fr 1fr 1fr 0.7fr 0.7fr 0.7fr;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  border: 1px solid #cacaca;
+  font-size: 13px;
+}
+
+.list-table-format.title {
+  background-color: #f9f9f9;
+  font-weight: bold;
+}
+
+.list-table-format img {
+  width: 50px;
+  height: auto;
+  border-radius: 4px;
+}
+
+.list-table-format .add-button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+.proceed-button {
+  background-color: tomato;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+.list-table-format .add-button:hover,
+.proceed-button:hover {
+  background-color: tomato; /* Hover effect */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .list-table-format {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .list-table-format.title {
+    display: none;
+  }
+
+  .list-table-format img {
+    width: 40px;
+  }
+
+  .list-table-format p {
+    word-wrap: break-word;
+  }
+}

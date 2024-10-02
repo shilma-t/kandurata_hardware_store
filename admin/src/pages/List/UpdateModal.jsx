@@ -46,31 +46,36 @@ const UpdateModal = ({ isOpen, onRequestClose, product, onUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(`${url}/api/product/update`, {
-        id: product._id,   // Make sure _id is being sent to the backend
+    const updateData = {
+        id: product._id,
         name,
         description,
-        wholesalePrice: parseFloat(wholesalePrice), 
-        retailPrice: parseFloat(retailPrice),     
-        quantity: parseInt(quantity),               // Ensure quantity is an integer
+        wholesalePrice: parseFloat(wholesalePrice),
+        retailPrice: parseFloat(retailPrice),
+        quantity: parseInt(quantity),
         category,
         supplierName,
-        date: new Date(date),                       // Ensure the date is in proper format
-      });
+        date: new Date(date),
+    };
 
-      if (response.data.success) {
-        toast.success("Product updated successfully!");
-        onUpdate(); // Call the onUpdate to refresh product list
-        onRequestClose(); // Close modal after successful update
-      } else {
-        toast.error("Error updating product");
-      }
+    console.log('Updating product with:', updateData);
+
+    try {
+        const response = await axios.post(`${url}/api/product/update`, updateData);
+
+        if (response.data.success) {
+            toast.success("Product updated successfully!");
+            onUpdate(); // Call the onUpdate to refresh product list
+            onRequestClose(); // Close modal after successful update
+        } else {
+            toast.error("Error updating product");
+        }
     } catch (error) {
-      toast.error("Network Error");
-      console.error("Error updating product:", error);
+        toast.error("Network Error");
+        console.error("Error updating product:", error);
     }
-  };
+};
+
 
   return (
     <Modal 

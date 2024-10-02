@@ -1,5 +1,5 @@
 .sidebar{
-    width: 18% ;
+    width: 250px ;
     min-height: 100vh;
     border: 1.5px solid #a9a9a9;
     border-top: 0;
@@ -10,7 +10,7 @@
 .sidebar-options{
 
     padding-top: 50px;
-    padding-left: 20%;
+    padding-left: 40px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -44,4 +44,9 @@
 .dash_icon{
     width: 30px;
     height: 30px;
+}
+
+.sidebar-option:hover {
+    background-color: rgba(255, 109, 71, 0.2);
+    
 }
