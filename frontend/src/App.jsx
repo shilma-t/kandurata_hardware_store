@@ -31,7 +31,6 @@ const App = () => {
         <Route path='/cart' element={<Cart />} />
         
         <Route path='/order' element={<PlaceOrder />} />
-        {/* Login route */}
         <Route path='/login' element={<LoginPopup setShowLogin={setShowLogin} />} />
       </Routes>
     </div>

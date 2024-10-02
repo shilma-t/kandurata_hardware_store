@@ -24,7 +24,6 @@ import SampleComponent from './components/DeliverySchedule/SampleComponent' //DS
 import AssignedOrders from './components/DeliverySchedule/AssignedOrders' // DS
 
 
-
 const App = () => {
   return (
     <div>
