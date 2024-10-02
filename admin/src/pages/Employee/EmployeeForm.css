@@ -1,0 +1,130 @@
+/* EmployeeForm.css */
+
+/* Container for the form */
+form {
+    display: flex;
+    flex-direction: column; /* Stack fields vertically */
+    align-items: center;
+    gap: 20px; /* Space between form elements */
+    width: 70%; 
+    margin: 50px auto; /* Center the form and add top margin */
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    margin-left: 300px;
+    margin-top: -540px;
+  }
+  
+  /* Group related form fields */
+  .form-group {
+    width: 100%;
+    max-width: 400px; /* Set a fixed width for form fields */
+    display: flex;
+    flex-direction: column;
+    gap: 5 px; /* Space between label and input */
+  }
+  
+  /* Adjust label styling */
+  label {
+    font-weight: bold;
+    color: grey;
+  }
+  
+  /* Style for input and select fields */
+  input[type="text"],
+  input[type="email"],
+  input[type="date"],
+  select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 13px;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%; /* Ensure fields take full width of their container */
+  }
+  
+  /* Add focus style for inputs and selects */
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="date"]:focus,
+  select:focus {
+    border-color: tomato; /* Tomato orange on focus */
+    box-shadow: 0 0 5px rgba(255, 99, 71, 0.5);
+    outline: none;
+  }
+  
+  /* Style for error messages */
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  /* Style for the form buttons */
+  .button-group {
+    display: flex;
+    justify-content: flex-end; 
+    width: 100%;
+    gap: 10px; 
+    margin-top: 20px;
+  }
+  
+  button[type="submit"],
+  button[type="button"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  button[type="submit"] {
+    background-color: tomato; /* Tomato orange for submit */
+    color: white;
+  }
+  
+  button[type="button"] {
+    background-color: black; /* Black for cancel */
+    color: white;
+  }
+  
+  /* Add hover effects to buttons */
+  button[type="submit"]:hover {
+    background-color: #e67e22; /* Darker orange on hover */
+  }
+  
+  button[type="button"]:hover {
+    background-color: grey; /* Grey on hover */
+  }
+  
+  /* Add active effects to buttons */
+  button[type="submit"]:active,
+  button[type="button"]:active {
+    transform: scale(0.95);
+  }
+  
+  /* Media query for responsive design */
+  @media (max-width: 480px) {
+    form {
+      width: 90%; /* More responsive width for small screens */
+    }
+  
+    .form-group {
+      max-width: 100%; /* Adjust form fields for small screens */
+    }
+  
+    .button-group {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    button[type="submit"],
+    button[type="button"] {
+      width: 100%;
+    }
+  }
+  

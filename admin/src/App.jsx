@@ -17,6 +17,10 @@ import DriverForm from './pages/driver/DriverForm';
 import DriverList from './pages/driver/DriverList';
 import EditDriver from './pages/driver/EditDriver';
 import MainPage from './pages/MainPage/MainPage';
+import EmployeeForm from './pages/Employee/EmployeeForm';
+
+
+
 
 const App = () => {
   return (
@@ -42,6 +46,8 @@ const App = () => {
           <Route path="/drivers" element={<DriverList />} />
           <Route path="/drivers/add" element={<DriverForm />} />
           <Route path="/edit-driver/:id" element={<EditDriver />} />
+          <Route path="/create-account" element={<EmployeeForm />} />
+
 
         </Routes>
       </div>

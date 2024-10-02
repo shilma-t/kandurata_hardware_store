@@ -5,10 +5,15 @@ import { Link } from 'react-router-dom';
 const MainPage = () => {
   return (
     <div>
-      <p>This is a main page for all admins</p>
       <Link to="/drivers/add">
         <button>Logistic Manager</button>
       </Link>
+      <p>
+        <Link to="/hr">
+          <button>HR Manager</button>
+        </Link>
+      </p>
+      <p><button>Employee</button></p>
     </div>
   )
 }

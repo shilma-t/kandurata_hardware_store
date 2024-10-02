@@ -1,0 +1,83 @@
+/* Sidebar container */
+.dashboard-container {
+    position: fixed; /* Keeps the sidebar fixed on the left */
+    top: 50%; /* Centers the sidebar vertically */
+    left: 0; /* Aligns it to the left */
+    transform: translateY(-50%); /* Adjusts for the vertical centering */
+    background-color: white; /* Background color */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    padding: 10px; /* Padding for the content */
+    z-index: 1000; /* Ensures it stays above other content */
+}
+
+.buttons-hr {
+    display: flex;
+    flex-direction: column; /* Stacks buttons vertically */
+}
+
+.buttons-hr {
+    margin: 5px 0; /* Adds space between buttons */
+    padding: 10px; /* Adds padding to buttons */
+    border: none; /* Removes default button border */
+    background-color: tomato; /* Uses preferred color */
+    color: white; /* Button text color */
+    cursor: pointer; /* Changes cursor to pointer */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.buttons-hr :hover {
+    background-color: darkorange; /* Change color on hover */
+}
+.actions-button{
+    width: 70px;
+
+}
+
+.generate-pdf-button{
+    background-color: #000000;
+    border: none;
+    padding: 10px;
+    color: #ffffff;
+    border-radius: 5px;
+}
+
+.sidebar {
+    height: 100vh;
+    width: 200px;
+    background-color: #ffffff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  
+  /* Buttons container */
+  .sidebar-buttons {
+    display: flex;
+    flex-direction: column;  /* Stack buttons vertically */
+    gap: 15px;               /* Space between buttons */
+    margin-top: 20px;        /* Space from top (optional) */
+  }
+  
+  /* Button styles */
+  .sidebar-buttons button {
+    background-color: white; /* White background */
+    color: #ff6347;          /* Tomato orange text color */
+    border: none;            /* Remove borders */
+    padding: 6px 10px;       /* Add padding inside buttons */
+    font-size: 15px;         /* Font size */
+    border-radius: 5px;      /* Rounded corners */
+    cursor: pointer;         /* Show pointer on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+    text-align: left;        /* Align button text to the left */
+    width: 100%;             /* Full width of the container */
+    border: 2px solid #ff6347; /* Add border with tomato orange color */
+  }
+  
+  /* Hover effect */
+  .sidebar-buttons button:hover {
+    background-color: #ff6347; /* Tomato orange background on hover */
+    transform: translateY(-2px); /* Lift button slightly on hover */
+    color: white;               /* Change text color to white on hover */
+  }
+  
