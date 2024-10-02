@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import Add from './pages/Add/Add';
 import List from './pages/List/List';
 import Orders from './pages/Orders/Orders';
+import Driver from './pages/driver/Driver'; //DS
 import AdminDashboard from './pages/Dashboard/AdminDashboard';
 import LogisticsManagerDashboard from './pages/Dashboard/LogisticsManagerDashboard';
 import CashierDashboard from './pages/Dashboard/CashierDashboard';
@@ -19,6 +20,8 @@ import Invoice from './pages/Invoice/Invoice'; // Import Invoice page
 import InvoiceDisplay from './pages/Invoice/InvoiceDisplay';
 import UserTable from './pages/User/UserTable'; 
 import Sales from './pages/Sales/Sales';
+import SampleComponent from './components/DeliverySchedule/SampleComponent' //DS
+import AssignedOrders from './components/DeliverySchedule/AssignedOrders' // DS
 
 
 const App = () => {
@@ -41,6 +44,9 @@ const App = () => {
           <Route path="/drivers" element={<DriverList />} />
           <Route path="/drivers/add" element={<DriverForm />} />
           <Route path="/edit-driver/:id" element={<EditDriver />} />
+          <Route path="/drivers/orders" element={<Driver />} />{/* DS */}
+          <Route path="/sample" element={<SampleComponent />} />{/* DS */}
+          <Route path="/assigned-orders" element={<AssignedOrders />} /> {/* DS */}
           
           {/* New Invoice route */}
           <Route path="/invoice" element={<Invoice />} />

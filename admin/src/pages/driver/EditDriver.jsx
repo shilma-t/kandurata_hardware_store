@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom'; // Import useParams and useNavigate
-
+import './EditDriver.css';
 const EditDriver = () => {
   const { id } = useParams(); // Get the driver ID from the URL
   const navigate = useNavigate();

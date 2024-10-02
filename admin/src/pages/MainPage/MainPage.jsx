@@ -7,7 +7,7 @@ const MainPage = () => {
     <div className="main-page">
       <h1 className="welcome-message">Welcome to Kandurata Hardware!</h1>
       <div className="button-container">
-        <Link to="/drivers/add">
+        <Link to="/logistics">
           <button className="nav-button">Logistic Manager</button>
         </Link>
         <Link to="/dashboard/admin">
