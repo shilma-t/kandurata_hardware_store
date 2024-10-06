@@ -40,7 +40,7 @@ const Navbar = ({ setShowLogin }) => {
         <li onClick={() => setMenu("Home")} className={menu === "Home" ? "active" : ""}>Home</li>
         <li onClick={() => setMenu("Shop")} className={menu === "Shop" ? "active" : ""}>Shop</li>
         <li onClick={() => setMenu("Mobile-app")} className={menu === "Mobile-app" ? "active" : ""}>Mobile-app</li>
-        <li onClick={() => setMenu("Contact Us")} className={menu === "Contact Us" ? "active" : ""}>Contact us</li>
+        <Link to='/contact-us'><li onClick={() => setMenu("Contact Us")} className={menu === "Contact Us" ? "active" : ""}>Contact us</li></Link> 
       </ul>
 
       <div className='navbar-right'>

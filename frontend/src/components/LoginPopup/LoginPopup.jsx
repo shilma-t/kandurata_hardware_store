@@ -29,6 +29,9 @@ const LoginPopup = ({ setShowLogin }) => {
             setToken(response.data.token);
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("email", data.email);
+            if (currState === "Sign Up") {
+                localStorage.setItem("name", data.name); // Store the name
+            }
             setShowLogin(false); // Close the popup
         } else {
             alert(response.data.message);

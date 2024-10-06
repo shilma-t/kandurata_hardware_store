@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./contactUsForm.css";
@@ -7,7 +7,6 @@ import { createNotify } from "./ToastMessages"; // Custom notification function
 import { Bounce, ToastContainer } from "react-toastify"; // Toast notifications
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"; // Success icon
 import ListAltIcon from '@mui/icons-material/ListAlt'; // Inquiry list icon
-
 
 const ContactUsForm = () => {
   const storedName = localStorage.getItem('name') || ''; // Retrieve name from localStorage
@@ -110,7 +109,7 @@ const ContactUsForm = () => {
                 onChange={handleChange}
                 className="form-control"
                 style={{ width: "100%", boxSizing: "border-box" }}
-                
+                //disabled
               />
               {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
             </div>
