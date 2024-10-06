@@ -5,7 +5,11 @@ import Home from './pages/Home/Home';
 import Cart from './pages/Cart/Cart';
 import PlaceOrder from './pages/PlaceOrder/PlaceOrder';
 import LoginPopup from './components/LoginPopup/LoginPopup';  
+import ContactUsForm from './components/Inquiry/ContactUsForm';
+import UserQueries from './components/Inquiry/UserQueries';
+import EditInquiryForm from './components/Inquiry/EditInquiryForm'; 
 import { StoreContext } from './context/StoreContext';
+import 'bootstrap/dist/css/bootstrap.css';
 
 
 const App = () => {
@@ -29,10 +33,12 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/cart' element={<Cart />} />
-        
         <Route path='/order' element={<PlaceOrder />} />
         <Route path='/login' element={<LoginPopup setShowLogin={setShowLogin} />} />
-      </Routes>
+        <Route path="/contact-us" element={<ContactUsForm />} />
+        <Route path="/queries" element={<UserQueries />} />
+        <Route path="/edit-inquiry/:id" element={<EditInquiryForm />} /> {/* Ensure correct route here */}
+       </Routes>
     </div>
   );
 };
