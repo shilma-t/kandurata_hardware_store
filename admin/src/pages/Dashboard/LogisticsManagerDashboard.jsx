@@ -1,10 +1,16 @@
 import React from 'react';
+import LogisticsManagerSidebar from "../../components/LogisticsManagerSidebar/LogisticsManagerSidebar";
+import './LogisticsManagerDashboard.css'
 
 const LogisticsManagerDashboard = () => {
   return (
-    <div>
-      <h1>Logistics Manager Dashboard</h1>
-      {/* Add Logistics Manager dashboard content here */}
+    <div className="dashboard-container">
+      <LogisticsManagerSidebar /> {/* Include the sidebar */}
+
+      <div className="dashboard-content">
+        <h1>Logistics Manager Dashboard</h1>
+        
+      </div>
     </div>
   );
 };

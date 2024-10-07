@@ -6,7 +6,7 @@ const MainPage = () => {
   return (
     <div>
       <p>This is a main page for all admins</p>
-      <Link to="/drivers/add">
+      <Link to="/logistics">
         <button>Logistic Manager</button>
       </Link>
     </div>

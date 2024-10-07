@@ -17,6 +17,10 @@ import DriverForm from './pages/driver/DriverForm';
 import DriverList from './pages/driver/DriverList';
 import EditDriver from './pages/driver/EditDriver';
 import MainPage from './pages/MainPage/MainPage';
+import SupplierList from './pages/Supplier/SupplierList';
+import AddSupplier from './pages/Supplier/AddSupplier';
+import UpdateSupplier from './pages/Supplier/UpdateSupplier';
+
 
 const App = () => {
   return (
@@ -42,6 +46,11 @@ const App = () => {
           <Route path="/drivers" element={<DriverList />} />
           <Route path="/drivers/add" element={<DriverForm />} />
           <Route path="/edit-driver/:id" element={<EditDriver />} />
+
+          <Route path="/addSupplier" element={<AddSupplier/>}/>
+          <Route path="/listSupplier" element={<SupplierList/>}/>
+          <Route path="/updateSupplier/:id" element={<UpdateSupplier />} />
+
 
         </Routes>
       </div>

@@ -1,0 +1,61 @@
+/* Sidebar container styling */
+.sidebar {
+    margin-top: 114px;
+    height: 100vh; /* Full viewport height */
+    width: 250px; /* Fixed width for the sidebar */
+    background-color:white; /* Dark background color */
+    position: fixed; /* Sticks the sidebar to the left */
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column; /* Stack sidebar options vertically */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Adds a slight shadow to the sidebar */
+}
+
+/* Sidebar option styling */
+.sidebar-option {
+    display: flex;
+    align-items: center; /* Center-aligns items vertically */
+    padding: 15px;
+    text-decoration: none; /* Removes underline from links */
+    color: black;
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.sidebar-option img {
+    width: 24px; /* Icon size */
+    height: 24px;
+    margin-right: 10px; /* Space between icon and text */
+}
+
+.sidebar-option p {
+    margin: 0; /* Ensures the text has no extra spacing */
+}
+
+/* Hover effect for sidebar options */
+.sidebar-option:hover {
+    background-color: tomato; /* Changes background on hover */
+    cursor: pointer;
+}
+
+/* Active link styling */
+.sidebar-option.active {
+    background-color: white; /* Darker background for active links */
+}
+
+/* Responsive sidebar for smaller screens */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 200px; /* Smaller sidebar width for small screens */
+    }
+
+    .sidebar-option img {
+        width: 20px; /* Adjust icon size for smaller screens */
+        height: 20px;
+    }
+
+    .sidebar-option {
+        font-size: 14px; /* Smaller font for smaller screens */
+    }
+}

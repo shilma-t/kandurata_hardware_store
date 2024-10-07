@@ -7,7 +7,7 @@ import productRouter from './routes/productRoute.js';
 import userRouter from './routes/userRoute.js';
 import driverRoutes from './routes/driverRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
-
+import supplierRoutes from './routes/supplierRoutes.js';
 
 import 'dotenv/config'
 import cartRouter from './routes/cartRoute.js';
@@ -31,7 +31,7 @@ app.use("/api/user",userRouter)
 app.use('/drivers', driverRoutes);
 app.use('/orders', orderRoutes);
 app.use('/api/cart',cartRouter)
-
+app.use('/api/suppliers', supplierRoutes);
 
 
 // Simple route
