@@ -118,6 +118,24 @@ export const createUser = async (req, res) => {
     }
 };
 
+// Example searchUsers function implementation
+export const searchUsers = (req, res) => {
+    const query = req.query.q || '';  // Get search query from request
+
+    UserModel.find({
+        $or: [
+            { name: { $regex: query, $options: 'i' } },
+            { company_name: { $regex: query, $options: 'i' } },
+            { product_name: { $regex: query, $options: 'i' } },
+            { email: { $regex: query, $options: 'i' } }
+        ]
+    })
+    .then(users => res.json(users))
+    .catch(err => res.status(500).json(err));
+};
+
+
+
 // Generate PDF report for selected users with date, month, or year filters
 // Generate PDF report for selected users with date, month, or year filters
 export const generateReport = async (req, res) => {
