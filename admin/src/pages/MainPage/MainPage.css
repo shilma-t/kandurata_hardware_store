@@ -14,6 +14,7 @@
   font-size: 3rem; /* Big font size */
   font-weight: bold; /* Bold text */
   margin-bottom: 2rem; /* Space below the message */
+  color: white;
 }
 
 .button-container {

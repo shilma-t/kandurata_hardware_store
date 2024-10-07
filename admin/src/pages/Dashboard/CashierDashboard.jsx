@@ -95,7 +95,7 @@ const List = () => {
       <Sidebar />
 
       <div className='list-content'>
-        <p></p>
+        <p>All Products List</p>
 
         <div className="price-toggle">
           <label>

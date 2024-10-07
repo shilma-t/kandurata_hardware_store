@@ -1,236 +1,207 @@
 import React, { useEffect, useState } from 'react';
-import './List.css';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import UpdateModal from './UpdateModal';
-import Sidebar from '../../components/Sidebar/Sidebar';
-import { CSVLink } from 'react-csv';
+import { toast } from 'react-toastify';
+import UpdateModal from './UpdateModal'; // Adjust path as necessary
 import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import Papa from 'papaparse';
+import { confirmAlert } from 'react-confirm-alert'; // Import confirmAlert
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import CSS
+import './List.css'; // Import the CSS file
+import Sidebar from '../../components/Sidebar/Sidebar'; // Import the Sidebar component
 
 const List = () => {
-  const url = "http://localhost:5001";
-  const [list, setList] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
-  const [suppliers, setSuppliers] = useState([]); // New state for suppliers
-  const [selectedSupplier, setSelectedSupplier] = useState(""); // New state for selected supplier
+  const [searchTerm, setSearchTerm] = useState(''); // State for search term
+  const [suppliers, setSuppliers] = useState([]); // State for suppliers
+  const [selectedSupplier, setSelectedSupplier] = useState(''); // State for selected supplier
 
-  const fetchList = async () => {
+  const url = "http://localhost:5001/api/product";
+
+  // Fetch products from the server
+  const fetchProducts = async () => {
     try {
-      const response = await axios.get(`${url}/api/product/list`);
+      const response = await axios.get(`${url}/list`);
       if (response.data.success) {
-        setList(response.data.data);
-        setFilteredProducts(response.data.data);
-        // Extract unique suppliers for the dropdown
-        const uniqueSuppliers = [...new Set(response.data.data.map(item => item.supplierName))];
+        setProducts(response.data.data);
+        const uniqueSuppliers = Array.from(new Set(response.data.data.map(product => product.supplierName)));
         setSuppliers(uniqueSuppliers);
       } else {
-        toast.error("Error");
+        toast.error("Error fetching products");
       }
     } catch (error) {
       toast.error("Network Error");
-      console.error("Error fetching list:", error);
+      console.error("Error fetching products:", error);
     }
   };
 
-  const handleRemoveProduct = (prodID) => {
-    confirmAlert({
-      title: 'Confirm Deletion',
-      message: 'Are you sure you want to delete this product?',
-      buttons: [
-        {
-          label: 'Yes',
-          onClick: () => removeProduct(prodID)
-        },
-        {
-          label: 'No',
-        }
-      ],
-    });
-  };
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
-  const removeProduct = async (prodID) => {
-    try {
-      const response = await axios.post(`${url}/api/product/remove`, { id: prodID });
-      if (response.data.success) {
-        setList(list.filter(item => item._id !== prodID));
-        setFilteredProducts(filteredProducts.filter(item => item._id !== prodID));
-        toast.success(response.data.message);
-      } else {
-        toast.error("Error");
-      }
-    } catch (error) {
-      toast.error("Network Error");
-      console.error("Error removing product:", error);
-    }
-  };
-
-  const handleUpdateProduct = (product) => {
+  const handleEdit = (product) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedProduct(null);
-    fetchList();
+  const handleUpdate = () => {
+    fetchProducts(); // Refresh the product list after update
+    toast.success("Product updated successfully!"); // Toast message after update
   };
 
-  const handleSearch = (event) => {
-    const value = event.target.value.toLowerCase();
-    setSearchQuery(value);
-    const filtered = list.filter(item => 
-      item.supplierName && item.supplierName.toLowerCase().includes(value)
-    );
-    setFilteredProducts(filtered);
-  };
-
-  const handleSort = (key) => {
-    let direction = 'ascending';
-    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
-    }
-    const sorted = [...filteredProducts].sort((a, b) => {
-      if (a[key] < b[key]) return direction === 'ascending' ? -1 : 1;
-      if (a[key] > b[key]) return direction === 'ascending' ? 1 : -1;
-      return 0;
+  const handleDelete = async (id) => {
+    console.log("Delete function triggered");
+    confirmAlert({
+      title: 'Confirm to delete',
+      message: 'Are you sure you want to delete this product?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: async () => {
+            try {
+              const response = await axios.post(`${url}/remove`, { id });
+              if (response.data.success) {
+                toast.success("Product removed successfully!"); // Toast message after deletion
+                fetchProducts(); // Refresh the product list after deletion
+              } else {
+                toast.error("Error removing product");
+              }
+            } catch (error) {
+              toast.error("Network Error");
+              console.error("Error removing product:", error);
+            }
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => console.log('Deletion cancelled')
+        }
+      ]
     });
-    setSortConfig({ key, direction });
-    setFilteredProducts(sorted);
   };
 
-  const generatePDF = (supplierName) => {
+  const generatePDF = () => {
     const doc = new jsPDF();
-    doc.setFontSize(20);
-    doc.text(`Products Supplied by ${supplierName}`, 14, 22);
-  
-    // Filter products by selected supplier
-    const data = filteredProducts
-      .filter(item => item.supplierName === supplierName)
-      .map(item => [item.name, item.quantity, item.date]);
-  
-    // Set headers
-    const headers = ["Product Name", "Quantity", "Supplied Date"];
-    let startY = 40; // Starting position for headers
-    headers.forEach((header, index) => {
-      doc.text(header, 14 + (index * 60), startY);
+    doc.text("Product List by Supplier", 14, 16);
+    const filteredBySupplier = products.filter(product => product.supplierName === selectedSupplier);
+    
+    autoTable(doc, {
+      head: [['Name', 'Description', 'Wholesale Price', 'Retail Price', 'Quantity', 'Category', 'Date']],
+      body: filteredBySupplier.map(product => [
+        product.name,
+        product.description,
+        product.wholesalePrice,
+        product.retailPrice,
+        product.quantity,
+        product.category,
+        new Date(product.date).toLocaleDateString()
+      ])
     });
-  
-    // Adding data to the PDF
-    startY += 10; // Move down for data rows
-    data.forEach((row, rowIndex) => {
-      row.forEach((cell, cellIndex) => {
-        doc.text(cell.toString(), 14 + (cellIndex * 60), startY + (rowIndex * 10));
-      });
-    });
-  
-    doc.save(`supplier_products_report_${supplierName}.pdf`);
-  };
-  
-  const csvHeaders = [
-    { label: "Name", key: "name" },
-    { label: "Description", key: "description" },
-    { label: "Category", key: "category" },
-    { label: "Wholesale Price", key: "wholesalePrice" },
-    { label: "Retail Price", key: "retailPrice" },
-    { label: "Quantity", key: "quantity" },
-    { label: "Supplier Name", key: "supplierName" },
-    { label: "Date", key: "date" },
-  ];
 
-  useEffect(() => {
-    fetchList();
-  }, []);
+    if (filteredBySupplier.length > 0) {
+      doc.save(`${selectedSupplier}-product-list.pdf`);
+    } else {
+      toast.error("No products found for the selected supplier");
+    }
+  };
+
+  const generateCSV = () => {
+    const csv = Papa.unparse(products, {
+      fields: ['name', 'description', 'wholesalePrice', 'retailPrice', 'quantity', 'category', 'supplierName', 'date']
+    });
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'product-list.csv');
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <div className='dashboard'>
-      <Sidebar />
-      <div className='alist add flex-col'>
-        <p>All Products List</p>
-
-        <div className="search-and-report">
-          <input 
-            type="text" 
-            placeholder="Search by supplier name..." 
-            value={searchQuery}
-            onChange={handleSearch} 
-            className="search-bar"
-          />
-          
-          <select 
-            value={selectedSupplier} 
-            onChange={(e) => setSelectedSupplier(e.target.value)} 
-            className="supplier-dropdown"
+    <div className="main-container">
+      <Sidebar /> {/* Sidebar takes some width */}
+      
+      <div className="product-list-container"> {/* The product list will adjust next to Sidebar */}
+        <h2>Product List</h2>
+        <input
+          type="text"
+          placeholder="Search by name or description..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
+        
+        <div className="supplier-selection">
+          <label htmlFor="supplier">Select Supplier:</label>
+          <select
+            id="supplier"
+            value={selectedSupplier}
+            onChange={(e) => setSelectedSupplier(e.target.value)}
           >
-            <option value="">Select Supplier</option>
-            {suppliers.map((supplier, index) => (
-              <option key={index} value={supplier}>{supplier}</option>
+            <option value="">All Suppliers</option>
+            {suppliers.map(supplier => (
+              <option key={supplier} value={supplier}>{supplier}</option>
             ))}
           </select>
-          
-          <button onClick={() => generatePDF(selectedSupplier)} className="btn-report" disabled={!selectedSupplier}>
-            Generate Supplier Report
-          </button>
+        </div>
+
+        <div className="actions">
+          <button onClick={generatePDF}>Download PDF</button>
+          <button onClick={generateCSV}>Download CSV</button>
         </div>
         
-        <div className="alist-table">
-          <div className="alist-table-format title">
-            <b onClick={() => handleSort('image')}>Image</b>
-            <b onClick={() => handleSort('name')}>Name</b>
-            <b onClick={() => handleSort('description')}>Description</b>
-            <b onClick={() => handleSort('category')}>Category</b>
-            <b onClick={() => handleSort('wholesalePrice')}>Wholesale Price</b>
-            <b onClick={() => handleSort('retailPrice')}>Retail Price</b>
-            <b onClick={() => handleSort('quantity')}>Quantity</b>
-            <b onClick={() => handleSort('supplierName')}>Supplier Name</b>
-            <b onClick={() => handleSort('date')}>Date</b>
-            <b>Action</b>
-          </div>
-          
-          {filteredProducts.map((item, index) => (
-            <div key={index} className='alist-table-format'>
-              <img src={`${url}/images/` + item.image} alt={item.name} />
-              <p>{item.name}</p>
-              <p>{item.description || "No description"}</p>
-              <p>{item.category || "No category"}</p>
-              <p>{item.wholesalePrice || "No wholesale price"}</p>
-              <p>{item.retailPrice || "No retail price"}</p>
-              <p>{item.quantity || "No quantity"}</p>
-              <p>{item.supplierName || "No supplier name"}</p>
-              <p>{item.date || "No date"}</p>
-              <div>
-                <p onClick={() => handleUpdateProduct(item)} className='cursor'>Edit</p>
-                <p onClick={() => handleRemoveProduct(item._id)} className='cursor'>Delete</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Wholesale Price</th>
+              <th>Retail Price</th>
+              <th>Quantity</th>
+              <th>Category</th>
+              <th>Supplier Name</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredProducts.map(product => (
+              <tr key={product._id}>
+                <td>{product.name}</td>
+                <td>{product.description}</td>
+                <td>{product.wholesalePrice}</td>
+                <td>{product.retailPrice}</td>
+                <td>{product.quantity}</td>
+                <td>{product.category}</td>
+                <td>{product.supplierName}</td>
+                <td>{new Date(product.date).toLocaleDateString()}</td>
+                <td className="actions">
+                  <button onClick={() => handleEdit(product)}>Edit</button>
+                  <button onClick={() => handleDelete(product._id)}>Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-        <CSVLink 
-          data={filteredProducts}
-          headers={csvHeaders}
-          filename={"supplier_products_report.csv"}
-          className="btn-report"
-          target="_blank"
-        >
-          Download CSV
-        </CSVLink>
-      </div>
-
-      {isModalOpen && (
+        {/* Update Modal */}
         <UpdateModal 
           isOpen={isModalOpen} 
-          closeModal={closeModal} 
-          selectedProduct={selectedProduct} 
+          onRequestClose={() => setIsModalOpen(false)} 
+          product={selectedProduct} 
+          onUpdate={handleUpdate} 
         />
-      )}
-      <ToastContainer />
+      </div>
     </div>
   );
 };

@@ -1,0 +1,19 @@
+/* InvoiceDisplay.css */
+
+/* Style for the Generate PDF button */
+.generate-pdf-button {
+    background-color: black; /* Set the background color to black */
+    color: white; /* Set the text color to white */
+    border: none; /* Remove default border */
+    padding: 10px 20px; /* Add padding for a better appearance */
+    border-radius: 5px; /* Add rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    font-size: 16px; /* Increase font size */
+    transition: background-color 0.3s; /* Add a transition effect */
+  }
+  
+  /* Style for hover effect */
+  .generate-pdf-button:hover {
+    background-color: #333; /* Darken the button on hover */
+  }
+  

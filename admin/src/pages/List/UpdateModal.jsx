@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
-import './UpdateModal.css'; // Assuming you saved the CSS above in this file
+import './UpdateModal.css'; // Make sure this path is correct
 import { assets } from '../../assets/assets';
 
 const UpdateModal = ({ isOpen, onRequestClose, product, onUpdate }) => {
@@ -32,50 +31,45 @@ const UpdateModal = ({ isOpen, onRequestClose, product, onUpdate }) => {
 
   useEffect(() => {
     if (product && isOpen) {
-      setName(product.name);
-      setDescription(product.description);
-      setWholesalePrice(product.wholesalePrice);
-      setRetailPrice(product.retailPrice);
-      setQuantity(product.quantity);
-      setCategory(product.category);
-      setSupplierName(product.supplierName);
-      setDate(product.date.split('T')[0]); // Split to handle date formatting if necessary
+      setName(product.name || '');
+      setDescription(product.description || '');
+      setWholesalePrice(product.wholesalePrice || '');
+      setRetailPrice(product.retailPrice || '');
+      setQuantity(product.quantity || '');
+      setCategory(product.category || '');
+      setSupplierName(product.supplierName || '');
+      setDate(product.date.split('T')[0] || ''); // Ensure date is in correct format
     }
   }, [product, isOpen]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updateData = {
+    try {
+      const response = await axios.post(`${url}/api/product/update`, {
         id: product._id,
         name,
         description,
-        wholesalePrice: parseFloat(wholesalePrice),
-        retailPrice: parseFloat(retailPrice),
-        quantity: parseInt(quantity),
+        wholesalePrice: parseFloat(wholesalePrice), 
+        retailPrice: parseFloat(retailPrice),     
+        quantity: parseInt(quantity, 10), // Ensure quantity is an integer
         category,
         supplierName,
-        date: new Date(date),
-    };
+        date: new Date(date).toISOString() // Send date in ISO format
+      });
 
-    console.log('Updating product with:', updateData);
-
-    try {
-        const response = await axios.post(`${url}/api/product/update`, updateData);
-
-        if (response.data.success) {
-            toast.success("Product updated successfully!");
-            onUpdate(); // Call the onUpdate to refresh product list
-            onRequestClose(); // Close modal after successful update
-        } else {
-            toast.error("Error updating product");
-        }
+      if (response.data.success) {
+        toast.success("Product updated successfully!");
+        onUpdate(); // Call the onUpdate to refresh product list
+        onRequestClose(); // Close modal after successful update
+      } else {
+        toast.error("Error updating product");
+      }
     } catch (error) {
-        toast.error("Network Error");
-        console.error("Error updating product:", error);
+      toast.error("Network Error");
+      console.error("Error updating product:", error);
     }
-};
-
+  };
 
   return (
     <Modal 
@@ -110,8 +104,6 @@ const UpdateModal = ({ isOpen, onRequestClose, product, onUpdate }) => {
           <label>Quantity:</label>
           <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} required />
         </div>
-
-        {/* Replace Category input with Dropdown */}
         <div>
           <label>Category:</label>
           <select value={category} onChange={(e) => setCategory(e.target.value)} required>
@@ -121,7 +113,6 @@ const UpdateModal = ({ isOpen, onRequestClose, product, onUpdate }) => {
             ))}
           </select>
         </div>
-
         <div>
           <label>Supplier Name:</label>
           <input type="text" value={supplierName} onChange={(e) => setSupplierName(e.target.value)} required />
