@@ -104,7 +104,7 @@ const DriverForm = () => {
 
   return (
     <div className="driver-form-container">
-      <div className="sidebar">
+      <div className="AddDriverSidebar">
         <ul>
           <li><Link to="/">Dashboard</Link></li>
           <li><Link to="/sample">Manage Order</Link></li>
@@ -176,7 +176,8 @@ const DriverForm = () => {
             ))}
           </select>
 
-          <button type="submit">Add Driver</button>
+          <button type="submit" className="add-driver-button">Register Driver</button>
+          <button type="button" className="cancel-button" onClick={() => navigate('/drivers')}>Cancel</button>
         </form>
       </div>
     </div>

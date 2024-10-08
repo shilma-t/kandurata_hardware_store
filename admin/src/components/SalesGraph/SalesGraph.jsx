@@ -74,15 +74,9 @@ const SalesGraph = () => {
   };
 
   return (
-    <div className="sales-graph-container">
-      <div className="line-chart">
+    <div className="sales-graph-container">   
         <Line data={data} options={options} />
-      </div>
       <div className="legend-container">
-        <div className="legend-item">
-          <div className="legend-color-box" style={{ backgroundColor: 'tomato' }}></div>
-          <span>Daily Sales</span>
-        </div>
       </div>
     </div>
   );

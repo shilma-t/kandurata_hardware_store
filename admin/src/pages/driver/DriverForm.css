@@ -4,6 +4,7 @@
   height: 100vh;
   font-family: Arial, sans-serif; /* Ensure a clean, modern font */
 }
+
 .error {
   color: red;
   font-size: 0.8em;
@@ -13,33 +14,34 @@ select {
   width: 100%;
   padding: 8px;
   margin: 10px 0;
-} 
+}
 
-.form-heading{
+.form-heading {
   margin-top: 100px;
 }
 
-.sidebar {
+.AddDriverSidebar {
   width: 200px; /* Set a fixed width for the sidebar */
   padding-right: 20px; /* Space between sidebar and form */
   border-right: 1px solid #ccc; /* Optional: add a border to separate */
+  background-color: #555;
 }
 
-.sidebar ul {
+.AddDriverSidebar ul {
   list-style-type: none; /* Remove bullet points */
   padding: 0; /* Remove default padding */
 }
 
-.sidebar li {
+.AddDriverSidebar li {
   margin: 10px 0; /* Space between list items */
 }
 
-.sidebar a {
+.AddDriverSidebar a {
   text-decoration: none; /* Remove underline from links */
-  color: #007BFF; /* Link color */
+  color: #ffffff; /* Link color */
 }
 
-.sidebar a:hover {
+.AddDriverSidebar a:hover {
   text-decoration: underline; /* Underline on hover */
 }
 
@@ -51,7 +53,6 @@ select {
 }
 
 .driver-form {
-
   display: flex;
   margin-top: 30px;
   flex-direction: column;
@@ -70,7 +71,6 @@ select {
 
 .driver-form button {
   padding: 10px; /* Button padding */
-  background-color: #007BFF; /* Button color */
   color: white; /* Text color */
   border: none; /* Remove border */
   border-radius: 4px; /* Rounded corners */
@@ -78,8 +78,21 @@ select {
   margin-top: 15px; /* Space above button */
 }
 
-.driver-form button:hover {
+.add-driver-button {
+  background-color: #007BFF; /* Button color */
+}
+
+.add-driver-button:hover {
   background-color: #0056b3; /* Darker blue on hover */
+}
+
+.cancel-button {
+  background-color: #dc3545; /* Red color for cancel button */
+  margin-top: 5px; /* Space between buttons */
+}
+
+.cancel-button:hover {
+  background-color: #c82333; /* Darker red on hover */
 }
 
 /* Responsive design */
@@ -88,7 +101,7 @@ select {
     flex-direction: column; /* Stack sidebar and form on smaller screens */
   }
   
-  .sidebar {
+  .AddDriverSidebar {
     width: 100%; /* Sidebar takes full width */
     border-right: none; /* Remove border */
     border-bottom: 1px solid #ccc; /* Add bottom border */
@@ -96,6 +109,5 @@ select {
 
   .form-content {
     width: 100%; /* Form takes full width */
-    padding: 20px; /* Add padding */
   }
 }

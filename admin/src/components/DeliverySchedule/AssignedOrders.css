@@ -71,7 +71,7 @@ button {
     padding: 10px 15px;
     border-radius: 5px;
     transition: background-color 0.3s;
-    width: 150px; /* Set button width to 200px */
+    width: 150px; /* Set button width to 150px */
 }
 
 /* Disabled Button Style */
@@ -85,7 +85,7 @@ button:hover:not(:disabled) {
     background-color: #45a049;
 }
 
-/* Specific Style for "Download PDF" Button */
+/* Specific Style for "Export PDF" Button */
 button.pdf-button {
     background-color: black; /* Set to black */
     color: white;

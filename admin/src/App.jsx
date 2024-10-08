@@ -38,9 +38,10 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard/admin" element={<AdminDashboard />} />
           <Route path="/dashboard/cashier" element={<CashierDashboard />} />
-          <Route path="/logistics" element={<LogisticsManagerDashboard />} />
           <Route path="/hr" element={<HrManagerDashboard />} />
           <Route path="/employee" element={<EmployeeDashboard />} />
+
+          <Route path="/logistics" element={<LogisticsManagerDashboard />} />
           <Route path="/drivers" element={<DriverList />} />
           <Route path="/drivers/add" element={<DriverForm />} />
           <Route path="/edit-driver/:id" element={<EditDriver />} />

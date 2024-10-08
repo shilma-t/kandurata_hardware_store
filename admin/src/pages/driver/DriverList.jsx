@@ -46,7 +46,7 @@ const DriverList = () => {
 
   return (
     <div className="driver-list-container">
-      <div className="sidebar">
+      <div className="DriverListSidebar">
         <ul>
           <li><Link to="/">Dashboard</Link></li>
           <li><Link to="/sample">Manage Order</Link></li>
@@ -55,7 +55,7 @@ const DriverList = () => {
           <li><Link to="/drivers">Delete Driver</Link></li>
         </ul>
       </div>
-
+      
       <div className="driver-list-content">
         <h1>Driver Details</h1>
         {drivers.length === 0 ? (
@@ -79,8 +79,8 @@ const DriverList = () => {
                   <td>{driver.vehicleModel}</td>
                   <td>{driver.nicNumber}</td>
                   <td className="driver-actions">
-                    <button className="delete-button" onClick={() => confirmDelete(driver._id)}>Delete</button>
-                    <button className="edit-button" onClick={() => editDriver(driver._id)}>Edit</button>
+                    <button className="delete-button" onClick={() => confirmDelete(driver._id)}>Remove Driver</button>
+                    <button className="edit-button" onClick={() => editDriver(driver._id)}>Edit Driver</button>
                   </td>
                 </tr>
               ))}
@@ -95,8 +95,8 @@ const DriverList = () => {
               <h3>Confirm Deletion</h3>
               <p>Are you sure you want to delete this driver?</p>
               <div className="modal-actions">
-                <button onClick={deleteDriver}>Delete</button>
-                <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+                <button className="confirm-delete-button" onClick={deleteDriver}>Yes, Delete</button>
+                <button className="cancel-button" onClick={() => setIsModalOpen(false)}>Cancel</button>
               </div>
             </div>
           </div>

@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react';
 import './PlaceOrder.css'; 
 import { StoreContext } from '../../context/StoreContext';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for programmatic navigation
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const PlaceOrder = () => {
-  const { getTotalCartAmount } = useContext(StoreContext);
+  const { getTotalCartAmount, cartItems, userId, clearCart, token } = useContext(StoreContext);
   const [selectedProvince, setSelectedProvince] = useState('');
   const [deliveryFee, setDeliveryFee] = useState(0);
   const [formValues, setFormValues] = useState({
@@ -15,7 +16,8 @@ const PlaceOrder = () => {
   });
   const [formErrors, setFormErrors] = useState({});
   const [paymentMethod, setPaymentMethod] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [loading, setLoading] = useState(false); // Add loading state
+  const navigate = useNavigate(); 
 
   const provinces = {
     'Central Province': 100,
@@ -36,10 +38,10 @@ const PlaceOrder = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
+    setFormValues((prevValues) => ({
+      ...prevValues,
       [name]: value,
-    });
+    }));
   };
 
   const handlePaymentMethodChange = (e) => {
@@ -47,7 +49,7 @@ const PlaceOrder = () => {
   };
 
   const validate = () => {
-    let errors = {};
+    const errors = {};
     if (!formValues.firstName) errors.firstName = 'First Name is required';
     if (!formValues.lastName) errors.lastName = 'Last Name is required';
     if (!formValues.address) errors.address = 'Address is required';
@@ -62,25 +64,84 @@ const PlaceOrder = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const decreaseQuantity = async (productId, quantity) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:5001/api/product/decrease-quantity',
+        { productId, quantity },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      const data = response.data;
+      if (!data.success) {
+        throw new Error(data.message);
+      }
+
+      return data; // Handle success if needed
+    } catch (error) {
+      console.error('Error decreasing product quantity:', error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+  
     if (validate()) {
-      if (paymentMethod === 'card') {
-        // Handle card payment logic here
-        console.log('Form is valid, proceed to card payment');
-      } else if (paymentMethod === 'cash') {
-        // Redirect to OrderPlacement page with total amount
-        const totalAmount = getTotalCartAmount() + deliveryFee;
-        navigate('/orderplacement', {
-          state: {
-            totalAmount,
-            deliveryFee,
-            ...formValues
+      setLoading(true); // Set loading state before the API call
+  
+      const orderData = {
+        userId,
+        items: cartItems,
+        amount: getTotalCartAmount() + deliveryFee,
+        date: Date.now(),
+        address: formValues.address,
+        province: selectedProvince,
+        payment: paymentMethod === 'card',
+        paymentMethod,
+      };
+  
+      try {
+        const response = await axios.post(
+          'http://localhost:5001/api/orders/place',
+          orderData,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+  
+        if (response.data.success) {
+          // Decrease quantity for each item in the order
+          for (const itemId in cartItems) {
+            const { quantity } = cartItems[itemId];
+            const decreaseResponse = await decreaseQuantity(itemId, quantity);
+            if (!decreaseResponse.success) {
+              console.error("Error decreasing product quantity:", decreaseResponse.message);
+            }
           }
-        });
+  
+          clearCart();
+          navigate('/order-confirmation', { 
+            state: { 
+              orderId: response.data.orderId,
+              orderDetails: orderData.items,
+              totalAmount: orderData.amount 
+            } 
+          });
+        } else {
+          throw new Error(response.data.message || 'Order placement failed');
+        }
+      } catch (error) {
+        if (error.response) {
+          console.error("Error placing the order:", error.response.data);
+          alert(`Error: ${error.response.data.message || error.message}`);
+        } else {
+          console.error("Error:", error.message);
+          alert(`Error: ${error.message}`);
+        }
+      } finally {
+        setLoading(false); // Reset loading state after API call
       }
     }
   };
+  
 
   return (
     <div>
@@ -140,17 +201,17 @@ const PlaceOrder = () => {
           <div className='cart-total'>
             <h2>Cart Totals</h2>
             <div>
-              <hr/>
+              <hr />
               <div className='cart-total-details'>
                 <p>Subtotal</p>
                 <p>Rs.{getTotalCartAmount()}</p>
               </div>
-              <hr/>
+              <hr />
               <div className='cart-total-details'>
                 <p>Delivery Fee</p>
                 <p>Rs.{deliveryFee}</p>
               </div>
-              <hr/>
+              <hr />
               <div className='cart-total-details'>
                 <b>Total</b>
                 <b>Rs.{getTotalCartAmount() + deliveryFee}</b>
@@ -185,11 +246,9 @@ const PlaceOrder = () => {
             </div>
           </div>
 
-          {paymentMethod === 'card' ? (
-            <button className="proceed-payment" type="submit">PROCEED TO PAYMENT</button>
-          ) : paymentMethod === 'cash' ? (
-            <button className="place-order" type="submit">PLACE ORDER</button>
-          ) : null}
+          <button className={paymentMethod === 'card' ? "proceed-payment" : "place-order"} type="submit" disabled={loading}>
+            {loading ? 'Processing...' : (paymentMethod === 'card' ? 'PROCEED TO PAYMENT' : 'PLACE ORDER')}
+          </button>
         </div>
       </form>
     </div>

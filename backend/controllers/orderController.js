@@ -1,31 +1,35 @@
 //order controller
 
-import orderModel from "../models/orderModel.js";
+import orderModel from "../models/Order.js";
 import userModel from "../models/userModel.js";
 
 //placing orders on cash on delivery method 
 const placeOrder =async (req,res)=>{
   try {
+    console.log("Placing order:", req.body); // Log the incoming order data
+  
+    const {userId,items,amount,address,province,paymentMethod} =req.body;
 
-    const {userId,items,amount,address,province} =req.body;
-
-    const orderData={
+    if (!userId) {
+        return res.status(400).json({ success: false, message: "User ID is required" });
+      }
+    const orderData = {
         userId,
         items,
         address,
         province,
         amount,
-        PaymentMethod:"COD",
-        payment:false,
-        date:Date.now()
-    }
+        paymentMethod,
+        payment: paymentMethod === "Card" ? true : false, // Payment will be marked true for card
+        date: Date.now(),
+      };
 
     const newOrder =new orderModel(orderData)
     await newOrder.save()
 
-    await userModel.findByIdAndUpdate(userId,{cartData:{}})
+    await userModel.findByIdAndUpdate(req.body.userId,{cartData:{}})
 
-    res.json({success:true,message:"Order placed message from controller"})
+    res.json({ success: true, orderId: newOrder._id, message: "Order placed successfully" });
 
   } catch (error) {
     console.log(error)

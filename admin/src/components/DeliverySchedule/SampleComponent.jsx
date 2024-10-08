@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import './SampleComponent.css';
 
 const SampleComponent = () => {
@@ -15,7 +17,7 @@ const SampleComponent = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const response = await fetch('http://localhost:5001/api/orders');
+                const response = await fetch('http://localhost:5001/api');
                 if (!response.ok) {
                     throw new Error('Failed to fetch orders');
                 }
@@ -88,6 +90,36 @@ const SampleComponent = () => {
 
     const handleBack = () => {
         navigate('/logistics');
+    };
+
+    const generatePDF = () => {
+        const doc = new jsPDF();
+        doc.text('Delivery Schedule Report', 14, 10);
+        
+        const tableColumn = ["Order ID", "User ID", "Items", "Amount", "Date", "Status", "Address", "Province"];
+        const tableRows = [];
+
+        filteredOrders.forEach(order => {
+            const orderData = [
+                order._id,
+                order.userId,
+                order.items.map(item => item.name).join(", "),
+                `$${order.amount}`,
+                new Date(order.date).toLocaleDateString(),
+                order.status,
+                order.address,
+                order.province,
+            ];
+            tableRows.push(orderData);
+        });
+
+        doc.autoTable({
+            head: [tableColumn],
+            body: tableRows,
+            startY: 20,
+        });
+
+        doc.save("delivery_schedule_report.pdf");
     };
 
     const filteredOrders = orders.filter((order) => {
@@ -196,10 +228,11 @@ const SampleComponent = () => {
                         <option disabled>No drivers available</option>
                     )}
                 </select>
-                <button onClick={handleAssignDrivers} disabled={selectedOrders.size === 0}>
+                <button className="assign-driver-btn" onClick={handleAssignDrivers} disabled={selectedOrders.size === 0}>
                     Assign to Driver
                 </button>
-                <button onClick={handleBack}>Back to Dashboard</button>
+                <button className="back-btn" onClick={handleBack}>Back to Dashboard</button>
+                <button className="pdf-btn" onClick={generatePDF}>Download PDF Report</button>
             </div>
         </div>
     );

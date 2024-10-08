@@ -25,18 +25,20 @@ const Cart = () => {
         <hr />
         
         {Object.keys(cartItems).length > 0 ? (
-          featuredProducts.map((item, index) => {
-            if (cartItems[item._id] > 0) {
+          Object.keys(cartItems).map((itemId, index) => {
+            const product = featuredProducts.find((item) => item._id === itemId); // Find product by _id
+            const cartItem = cartItems[itemId]; // Access the specific cart item (including quantity and size)
+            if (product) {
               return (
                 <div key={index}>
                   <div className="cart-items-title cart-items-item">
-                    <img src={`http://localhost:5001/images/${item.image}`} alt={item.name} />
-                    <p>{item.name}</p>
-                    <p>Rs.{item.retailPrice}</p>
-                    <p>{cartItems[item._id]}</p>
-                    <p>Rs.{item.retailPrice * cartItems[item._id]}</p>
-                    <p onClick={() => addToCart(item._id)} className='add'>+</p>
-                    <p onClick={() => removeFromCart(item._id)} className='cross'>x</p>
+                    <img src={`http://localhost:5001/images/${product.image}`} alt={product.name} />
+                    <p>{product.name}</p>
+                    <p>Rs.{product.retailPrice}</p>
+                    <p>{cartItem.quantity}</p> {/* Display quantity correctly */}
+                    <p>Rs.{product.retailPrice * cartItem.quantity}</p> {/* Calculate total based on quantity */}
+                    <p onClick={() => addToCart(itemId)} className='add'>+</p>
+                    <p onClick={() => removeFromCart(itemId)} className='cross'>x</p>
                   </div>
                   <hr />
                 </div>

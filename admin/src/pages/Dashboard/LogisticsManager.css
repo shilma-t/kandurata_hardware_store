@@ -21,7 +21,7 @@ body {
 }
 
 /* Sidebar styling */
-.sidebar {
+.LogisticSidebar {
   width: 250px;
   background-color: #333;
   color: #fff;
@@ -32,16 +32,16 @@ body {
   justify-content: space-between;
 }
 
-.sidebar ul {
+.LogisticSidebar ul {
   list-style-type: none;
   padding: 0;
 }
 
-.sidebar ul li {
+.LogisticSidebar ul li {
   margin: 15px 0;
 }
 
-.sidebar ul li a {
+.LogisticSidebar ul li a {
   color: #fff;
   text-decoration: none;
   font-size: 16px;
@@ -50,7 +50,7 @@ body {
   border-radius: 4px;
 }
 
-.sidebar ul li a:hover {
+.LogisticSidebar ul li a:hover {
   background-color: #555;
   text-decoration: underline;
 }

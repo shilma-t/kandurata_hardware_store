@@ -21,7 +21,7 @@ const AssignedOrders = () => {
 
     const handleReadyToShip = async (id) => {
         try {
-            const response = await fetch(`http://localhost:5001/api/orders/${id}`, {
+            const response = await fetch(`http://localhost:5001/api/${id}`, {
                 method: 'DELETE',
             });
 
@@ -131,7 +131,7 @@ const AssignedOrders = () => {
                                 <td>{province}</td>
                                 <td>{driverName}</td>
                                 <td>
-                                    <button onClick={() => handleReadyToShip(_id)}>Ready to Ship</button>
+                                    <button onClick={() => handleReadyToShip(_id)}>Mark as Ready</button>
                                 </td>
                             </tr>
                         );
@@ -140,10 +140,10 @@ const AssignedOrders = () => {
             </table>
             <div className="button-container">
                 <button onClick={handleBack}>
-                    Back to Dashboard
+                    Return to Logistics
                 </button>
                 <button className="pdf-button" onClick={generatePDF}>
-                    Download PDF
+                    Export PDF
                 </button>
             </div>
         </div>
