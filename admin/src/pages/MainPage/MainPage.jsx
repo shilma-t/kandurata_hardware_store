@@ -16,6 +16,9 @@ const MainPage = () => {
         <Link to="/dashboard/cashier">
           <button className="nav-button">Cashier Dashboard</button>
         </Link>
+        <Link to="/hr">
+        <button className="nav-button">HR Manager</button>
+      </Link>
       </div>
     </div>
   );

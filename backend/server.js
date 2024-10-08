@@ -10,7 +10,8 @@ import orderRoutes from './routes/orderRoutes.js';
 import 'dotenv/config'
 import cartRouter from './routes/cartRoute.js';
 import router from './routes/invoiceRoutes.js';
-
+import inquiryRoutes from './routes/inquiryRoutes.js';
+import repliesRoutes from './routes/replies.js';
 
 dotenv.config();
 
@@ -31,7 +32,8 @@ app.use('/drivers', driverRoutes);
 app.use('/api', orderRoutes);
 app.use('/api/cart',cartRouter)
 app.use('/api/invoice', router);
-
+app.use('/inquiries', inquiryRoutes);
+app.use('/replies', repliesRoutes);
 
 
 // Simple route

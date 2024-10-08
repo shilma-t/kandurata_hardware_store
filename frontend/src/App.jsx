@@ -4,10 +4,15 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Cart from './pages/Cart/Cart';
 import PlaceOrder from './pages/PlaceOrder/PlaceOrder';
-import LoginPopup from './components/LoginPopup/LoginPopup';  
+import LoginPopup from './components/LoginPopup/LoginPopup'; 
+import ContactUsForm from './components/Inquiry/ContactUsForm'; 
 import { StoreContext } from './context/StoreContext';
 import OrderConfirmation from './pages/OrderConformation/OrderConfirmation';
 import UserOrders from './pages/UserOrders/Order'
+import UserQueries from './components/Inquiry/UserQueries';
+import EditInquiryForm from './components/Inquiry/EditInquiryForm'; 
+import 'bootstrap/dist/css/bootstrap.css';
+
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false); 
@@ -34,6 +39,9 @@ const App = () => {
         <Route path='/u-orders' element={<UserOrders />} />
         <Route path='/order-confirmation' element={<OrderConfirmation />} />
         <Route path='/login' element={<LoginPopup setShowLogin={setShowLogin} />} />
+        <Route path="/contact-us" element={<ContactUsForm />} />
+        <Route path="/queries" element={<UserQueries />} />
+        <Route path="/edit-inquiry/:id" element={<EditInquiryForm />} /> {/* Ensure correct route here */}
       </Routes>
     </div>
   );
