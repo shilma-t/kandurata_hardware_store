@@ -97,47 +97,49 @@ const AssignedOrders = () => {
     return (
         <div>
             <h1 className="header1">Assigned Orders</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>User ID</th>
-                        <th>Items</th>
-                        <th>Amount</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Address</th>
-                        <th>Province</th>
-                        <th>Driver Name</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {orders.map((order) => {
-                        const { _id, userId, items, amount, date, status, address, province, driverName } = order;
-                        return (
-                            <tr key={_id}>
-                                <td>{userId}</td>
-                                <td>
-                                    <ul>
-                                        {items.map((item, index) => (
-                                            <li key={index}>{item.name}</li> // Print each item on a new line
-                                        ))}
-                                    </ul>
-                                </td>
-                                <td>${amount}</td>
-                                <td>{new Date(date).toLocaleDateString()}</td>
-                                <td>{status}</td>
-                                <td>{address}</td>
-                                <td>{province}</td>
-                                <td>{driverName}</td>
-                                <td>
-                                    <button onClick={() => handleReadyToShip(_id)}>Mark as Ready</button>
-                                </td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
+            <div className="table-responsive"> {/* Added a wrapper for responsive design */}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Items</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Address</th>
+                            <th>Province</th>
+                            <th>Driver Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {orders.map((order) => {
+                            const { _id, userId, items, amount, date, status, address, province, driverName } = order;
+                            return (
+                                <tr key={_id}>
+                                    <td>{userId}</td>
+                                    <td>
+                                        <ul className="items-list"> {/* Added a class for styling */}
+                                            {items.map((item, index) => (
+                                                <li key={index}>{item.name}</li> // Print each item on a new line
+                                            ))}
+                                        </ul>
+                                    </td>
+                                    <td>${amount}</td>
+                                    <td>{new Date(date).toLocaleDateString()}</td>
+                                    <td>{status}</td>
+                                    <td>{address}</td>
+                                    <td>{province}</td>
+                                    <td>{driverName}</td>
+                                    <td>
+                                        <button className="action-button" onClick={() => handleReadyToShip(_id)}>Mark as Ready</button> {/* Added class for styling */}
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
             <div className="button-container">
                 <button onClick={handleBack}>
                     Return to Logistics
