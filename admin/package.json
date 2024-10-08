@@ -11,6 +11,10 @@
     "start": "set PORT=5174 && react-scripts start"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.1.2",
+    "@mui/material": "^6.1.2",
     "axios": "^1.7.7",
     "chart.js": "^4.4.4",
     "jspdf": "^2.5.2",
@@ -20,6 +24,7 @@
     "react-confirm-alert": "^3.0.6",
     "react-csv": "^2.2.2",
     "react-dom": "^18.3.1",
+    "react-hot-toast": "^2.4.1",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.26.1",
     "react-toastify": "^10.0.5"

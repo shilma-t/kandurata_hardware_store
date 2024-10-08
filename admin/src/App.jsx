@@ -22,7 +22,7 @@ import UserTable from './pages/User/UserTable';
 import Sales from './pages/Sales/Sales';
 import SampleComponent from './components/DeliverySchedule/SampleComponent' //DS
 import AssignedOrders from './components/DeliverySchedule/AssignedOrders' // DS
-
+import ReplyForm from './pages/Reply/ReplyForm';
 
 const App = () => {
   return (
@@ -54,6 +54,8 @@ const App = () => {
           <Route path="/invoice-display" element={<InvoiceDisplay />} /> 
           <Route path="/users" element={<UserTable />} /> {/* Corrected this line */}
           <Route path="/sales" element={<Sales/>} />
+
+          <Route path="/reply/:id" element={<ReplyForm />} />  {/* Reply to inquiries */}
         </Routes>
       </div>
     </div>

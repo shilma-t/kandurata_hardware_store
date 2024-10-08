@@ -40,7 +40,7 @@ const Navbar = ({ setShowLogin }) => {
         <li onClick={() => setMenu("Home")} className={menu === "Home" ? "active" : ""}>Home</li>
         <li onClick={() => setMenu("Shop")} className={menu === "Shop" ? "active" : ""}>Shop</li>
         <li onClick={() => setMenu("Mobile-app")} className={menu === "Mobile-app" ? "active" : ""}>Mobile-app</li>
-        <li onClick={() => setMenu("Contact Us")} className={menu === "Contact Us" ? "active" : ""}>Contact us</li>
+        <Link to='/contact-us'><li onClick={() => setMenu("Contact Us")} className={menu === "Contact Us" ? "active" : ""}>Contact us</li></Link> 
       </ul>
 
       <div className='navbar-right'>
@@ -82,13 +82,8 @@ const Navbar = ({ setShowLogin }) => {
           : <div className='navbar-profile'>
               <img src={assets.profile_icon} alt="" />
               <ul className="nav-profile-dropdown">
-              <li>
-             <Link to="/u-orders">
-              <img src={assets.bag_icon} alt="" />
-              <p>Orders</p>
-            </Link>
-          </li>
-                          <hr />
+                <li><img src={assets.bag_icon} alt="" /><p>Orders</p></li>
+                <hr />
                 <li onClick={logout}><img src={assets.logout_icon} alt="" /><p>Logout</p></li>
               </ul>
             </div>
