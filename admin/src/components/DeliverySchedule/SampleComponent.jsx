@@ -103,7 +103,10 @@ const SampleComponent = () => {
             const orderData = [
                 order._id,
                 order.userId,
-                order.items.map(item => item.name).join(", "),
+                order.items.map(itemObject => {
+                    const itemDetails = Object.values(itemObject)[0]; // Get item details
+                    return `${itemDetails.name} (Quantity: ${itemDetails.quantity})`;
+                }).join(", "), // Join item details for display
                 `$${order.amount}`,
                 new Date(order.date).toLocaleDateString(),
                 order.status,
@@ -194,9 +197,14 @@ const SampleComponent = () => {
                                 <td>{userId}</td>
                                 <td>
                                     <ul>
-                                        {items.map((item, index) => (
-                                            <li key={index}>{item.name}</li>
-                                        ))}
+                                        {items.map((itemObject, index) => {
+                                            const itemDetails = Object.values(itemObject)[0]; // Get item details
+                                            return (
+                                                <li key={index}>
+                                                    {itemDetails.name} (Quantity: {itemDetails.quantity})
+                                                </li>
+                                            );
+                                        })}
                                     </ul>
                                 </td>
                                 <td>${amount}</td>
