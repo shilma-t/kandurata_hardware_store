@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import authMiddleware from '../middleware/auth.js';
-import orderModel from '../models/Order.js';  // Adjust the path as necessary
+import orderModel from '../models/Order.js';  
 import { placeOrder } from '../controllers/orderController.js';
 const router = express.Router();
 
@@ -64,6 +64,5 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-// Add more routes here if necessary (e.g., POST, PUT)
 
 export default router;
