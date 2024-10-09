@@ -14,6 +14,19 @@ const SampleComponent = () => {
     const [selectedProvince, setSelectedProvince] = useState('');
     const navigate = useNavigate();
 
+    // List of all provinces in Sri Lanka
+    const allProvinces = [
+        "Western Province",
+        "Central Province",
+        "Southern Province",
+        "Eastern Province",
+        "Northern Province",
+        "North Western Province",
+        "North Central Province",
+        "Uva Province",
+        "Sabaragamuwa Province"
+    ];
+
     useEffect(() => {
         const fetchOrders = async () => {
             try {
@@ -96,7 +109,7 @@ const SampleComponent = () => {
         const doc = new jsPDF();
         doc.text('Delivery Schedule Report', 14, 10);
         
-        const tableColumn = ["Order ID", "User ID", "Items", "Amount", "Date", "Status", "Address", "Province"];
+        const tableColumn = ["Order ID", "User ID", "Items", "Amount", "Date", "Address", "Province"];
         const tableRows = [];
 
         filteredOrders.forEach(order => {
@@ -148,7 +161,7 @@ const SampleComponent = () => {
                         onChange={(e) => setSelectedProvince(e.target.value)}
                     >
                         <option value="">All Provinces</option>
-                        {Array.from(new Set(orders.map((order) => order.province))).map((province) => (
+                        {allProvinces.map((province) => (
                             <option key={province} value={province}>
                                 {province}
                             </option>
@@ -175,7 +188,7 @@ const SampleComponent = () => {
                         <th>Items</th>
                         <th>Amount</th>
                         <th>Date</th>
-                        <th>Status</th>
+                       
                         <th>Address</th>
                         <th>Province</th>
                     </tr>
@@ -209,7 +222,7 @@ const SampleComponent = () => {
                                 </td>
                                 <td>${amount}</td>
                                 <td>{new Date(date).toLocaleDateString()}</td>
-                                <td>{status}</td>
+                                
                                 <td>{address}</td>
                                 <td>{province}</td>
                             </tr>

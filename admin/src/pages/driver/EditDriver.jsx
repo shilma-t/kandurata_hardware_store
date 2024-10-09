@@ -11,12 +11,19 @@ const EditDriver = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [vehicleModel, setVehicleModel] = useState('');
-  const [nicNumber, setNicNumber] = useState(''); // New state for NIC number
-  const [emailAddress, setEmailAddress] = useState(''); // New state for Email Address
-  const [homeAddress, setHomeAddress] = useState(''); // New state for Home Address
-  const [mobileNumber, setMobileNumber] = useState(''); // New state for Mobile Number
+  const [nicNumber, setNicNumber] = useState(''); // NIC number
+  const [homeAddress, setHomeAddress] = useState(''); // Home Address
+  const [mobileNumber, setMobileNumber] = useState(''); // Mobile Number
   const [loading, setLoading] = useState(true); // To manage loading state
   const [error, setError] = useState(null); // To handle errors
+
+  // Array for vehicle models (dropdown options)
+  const vehicleModels = [
+    'Lorry',
+    'Van',
+    'Bike',
+    'Three Wheeler',
+  ];
 
   // Fetch driver details on component mount
   useEffect(() => {
@@ -131,12 +138,19 @@ const EditDriver = () => {
           />
 
           <label>Vehicle Model</label>
-          <input
-            type="text"
+          {/* Dropdown for selecting vehicle model */}
+          <select
             value={vehicleModel}
             onChange={(e) => setVehicleModel(e.target.value)}
             required
-          />
+          >
+            <option value="" disabled>Select Vehicle Model</option>
+            {vehicleModels.map((model, index) => (
+              <option key={index} value={model}>
+                {model}
+              </option>
+            ))}
+          </select>
 
           <div className="form-buttons">
             <button type="submit" className="save-button">Save Changes</button>
