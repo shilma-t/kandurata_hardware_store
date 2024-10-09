@@ -24,6 +24,11 @@ import SampleComponent from './components/DeliverySchedule/SampleComponent' //DS
 import AssignedOrders from './components/DeliverySchedule/AssignedOrders' // DS
 import ReplyForm from './pages/Reply/ReplyForm';
 
+import SupplierList from './pages/Supplier/SupplierList';
+import AddSupplier from './pages/Supplier/AddSupplier';
+import UpdateSupplier from './pages/Supplier/UpdateSupplier';
+import SupplierComponent from './components/DeliverySchedule/SupplierComponet';
+
 const App = () => {
   return (
     <div>
@@ -56,6 +61,12 @@ const App = () => {
           <Route path="/sales" element={<Sales/>} />
 
           <Route path="/reply/:id" element={<ReplyForm />} />  {/* Reply to inquiries */}
+
+          <Route path="/sup" element={<SupplierComponent/>}/>
+          <Route path="/addSupplier" element={<AddSupplier/>}/>
+          <Route path="/listSupplier" element={<SupplierList/>}/>
+          <Route path="/updateSupplier/:id" element={<UpdateSupplier />} />
+
         </Routes>
       </div>
     </div>
