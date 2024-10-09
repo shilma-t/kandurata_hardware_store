@@ -11,7 +11,7 @@ driverRouter.post('/', async (req, res) => {
     await driver.save();
     res.status(201).send(driver);
   } catch (err) {
-    res.status(400).send(err);
+    res.status(400).send({ error: 'Error creating driver', details: err.message });
   }
 });
 
@@ -21,7 +21,28 @@ driverRouter.get('/', async (req, res) => {
     const drivers = await Driver.find();
     res.send(drivers);
   } catch (err) {
-    res.status(500).send({ message: 'Error fetching drivers' });
+    res.status(500).send({ message: 'Error fetching drivers', details: err.message });
+  }
+});
+
+// Get a specific driver by ID
+driverRouter.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Validate the ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).send({ error: 'Invalid driver ID format' });
+    }
+
+    const driver = await Driver.findById(id);
+    if (!driver) {
+      return res.status(404).send({ message: 'Driver not found' });
+    }
+
+    res.send(driver);
+  } catch (err) {
+    res.status(500).send({ message: 'Error fetching driver', details: err.message });
   }
 });
 
@@ -42,7 +63,7 @@ driverRouter.put('/:id', async (req, res) => {
 
     res.send(driver);
   } catch (err) {
-    res.status(500).send({ message: 'Error updating driver' });
+    res.status(500).send({ message: 'Error updating driver', details: err.message });
   }
 });
 
@@ -61,9 +82,9 @@ driverRouter.delete('/:id', async (req, res) => {
       return res.status(404).send({ message: 'Driver not found' });
     }
 
-    res.sendStatus(204);
+    res.sendStatus(204); // No content to send back
   } catch (err) {
-    res.status(500).send({ message: 'Error deleting driver' });
+    res.status(500).send({ message: 'Error deleting driver', details: err.message });
   }
 });
 

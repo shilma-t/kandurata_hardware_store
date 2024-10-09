@@ -66,8 +66,14 @@ const DriverList = () => {
               <tr>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>Vehicle Model</th>
+                <th>Email Address</th>
                 <th>NIC Number</th>
+                <th>Mobile Number</th>
+                <th>Address </th>
+                <th>Vehicle Model</th>
+                
+                
+
                 <th>Actions</th>
               </tr>
             </thead>
@@ -76,8 +82,13 @@ const DriverList = () => {
                 <tr key={driver._id}>
                   <td>{driver.firstName}</td>
                   <td>{driver.lastName}</td>
-                  <td>{driver.vehicleModel}</td>
+                  <td>{driver.emailAddress}</td>
                   <td>{driver.nicNumber}</td>
+                  <td>{driver.mobileNumber}</td>
+                  <td>{driver.homeAddress}</td>
+                  <td>{driver.vehicleModel}</td>
+                  
+                  
                   <td className="driver-actions">
                     <button className="delete-button" onClick={() => confirmDelete(driver._id)}>Remove Driver</button>
                     <button className="edit-button" onClick={() => editDriver(driver._id)}>Edit Driver</button>
