@@ -22,6 +22,7 @@ const OrderConfirmation = () => {
       return <tr><td colSpan="3">No order details available</td></tr>;
     }
 
+    //test
     return productKeys.map((key, index) => {
       const item = orderDetails[key]; // Get the product details using the dynamic key
       return (
