@@ -22,11 +22,10 @@ body {
 
 /* Sidebar styling */
 .LogisticSidebar {
-  width: 250px;
+  width: 300px;
   background-color: #333;
   color: #fff;
   padding: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -68,6 +67,7 @@ body {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .stat-box {
@@ -78,7 +78,7 @@ body {
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex: 1;
-  margin: 0 10px;
+  margin: 10px;
   min-width: 150px;
 }
 
@@ -112,4 +112,78 @@ body {
 .chart-section canvas {
   width: 90% !important; /* Makes sure the chart fits within its container */
   height: auto !important; /* Keeps the aspect ratio of the chart */
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .LogisticSidebar {
+    width: 250px;
+  }
+
+  .stat-box {
+    padding: 15px;
+  }
+
+  .chart-section {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .LogisticSidebar {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .main-content {
+    padding: 15px;
+  }
+
+  .stats {
+    flex-direction: column;
+  }
+
+  .stat-box {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .LogisticSidebar {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .stat-box {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .chart-section h3 {
+    font-size: 16px;
+  }
+
+  .chart-section {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .stat-box {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .chart-section h3 {
+    font-size: 14px;
+  }
+
+  .chart-section {
+    padding: 8px;
+  }
 }

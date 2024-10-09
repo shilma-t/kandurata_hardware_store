@@ -12,6 +12,7 @@ const AssignedOrders = () => {
     const [orders, setOrders] = useState(assignments);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [selectedOrders, setSelectedOrders] = useState([]); // State to track selected orders
 
     useEffect(() => {
         if (!assignments.length) {
@@ -19,20 +20,39 @@ const AssignedOrders = () => {
         }
     }, [assignments]);
 
-    const handleReadyToShip = async (id) => {
-        try {
-            const response = await fetch(`http://localhost:5001/api/${id}`, {
-                method: 'DELETE',
-            });
+    // Function to handle selection of orders
+    const handleCheckboxChange = (id) => {
+        setSelectedOrders((prevSelected) =>
+            prevSelected.includes(id)
+                ? prevSelected.filter((orderId) => orderId !== id)
+                : [...prevSelected, id]
+        );
+    };
 
-            if (!response.ok) {
-                throw new Error('Order not found or already deleted');
+    // Function to handle "Ready to Ship" for selected orders
+    const handleReadyToShip = async () => {
+        try {
+            const promises = selectedOrders.map((id) =>
+                fetch(`http://localhost:5001/api/${id}`, {
+                    method: 'DELETE',
+                })
+            );
+
+            const responses = await Promise.all(promises);
+
+            // Check if any request failed
+            const failed = responses.some((response) => !response.ok);
+            if (failed) {
+                throw new Error('Some orders were not found or already deleted');
             }
 
-            // Filter out the deleted order from the state
-            setOrders((prevOrders) => prevOrders.filter(order => order._id !== id));
+            // Filter out the deleted orders from the state
+            setOrders((prevOrders) =>
+                prevOrders.filter((order) => !selectedOrders.includes(order._id))
+            );
+            setSelectedOrders([]); // Clear the selected orders
         } catch (error) {
-            console.error('Failed to delete order:', error.message);
+            console.error('Failed to delete orders:', error.message);
             alert(`Error: ${error.message}`); // Provide feedback to the user
         }
     };
@@ -101,6 +121,7 @@ const AssignedOrders = () => {
                 <table>
                     <thead>
                         <tr>
+                            <th>Select</th> {/* Add checkbox column */}
                             <th>User ID</th>
                             <th>Items</th>
                             <th>Amount</th>
@@ -109,7 +130,6 @@ const AssignedOrders = () => {
                             <th>Address</th>
                             <th>Province</th>
                             <th>Driver Name</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -117,6 +137,13 @@ const AssignedOrders = () => {
                             const { _id, userId, items, amount, date, status, address, province, driverName } = order;
                             return (
                                 <tr key={_id}>
+                                    <td>
+                                        <input
+                                            type="checkbox"
+                                            checked={selectedOrders.includes(_id)} // Check if order is selected
+                                            onChange={() => handleCheckboxChange(_id)}
+                                        />
+                                    </td>
                                     <td>{userId}</td>
                                     <td>
                                         <ul className="items-list"> {/* Added a class for styling */}
@@ -131,9 +158,6 @@ const AssignedOrders = () => {
                                     <td>{address}</td>
                                     <td>{province}</td>
                                     <td>{driverName}</td>
-                                    <td>
-                                        <button className="action-button" onClick={() => handleReadyToShip(_id)}>Mark as Ready</button> {/* Added class for styling */}
-                                    </td>
                                 </tr>
                             );
                         })}
@@ -146,6 +170,13 @@ const AssignedOrders = () => {
                 </button>
                 <button className="pdf-button" onClick={generatePDF}>
                     Export PDF
+                </button>
+                <button
+                    className="action-button"
+                    onClick={handleReadyToShip}
+                    disabled={selectedOrders.length === 0} // Disable if no orders selected
+                >
+                    Ready to Ship Selected
                 </button>
             </div>
         </div>
