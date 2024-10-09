@@ -12,6 +12,8 @@ import cartRouter from './routes/cartRoute.js';
 import router from './routes/invoiceRoutes.js';
 import inquiryRoutes from './routes/inquiryRoutes.js';
 import repliesRoutes from './routes/replies.js';
+import supplierRoutes from './routes/supplierRoutes.js';
+
 
 dotenv.config();
 
@@ -34,6 +36,7 @@ app.use('/api/cart',cartRouter)
 app.use('/api/invoice', router);
 app.use('/inquiries', inquiryRoutes);
 app.use('/replies', repliesRoutes);
+app.use('/api/suppliers', supplierRoutes);
 
 
 // Simple route
