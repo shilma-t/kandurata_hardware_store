@@ -45,10 +45,19 @@ function Dashboard() {
       {
         label: 'Number of Orders',
         data: orderData,
-        borderColor: 'rgba(75, 192, 192, 1)',
-        fill: false,
+        borderColor: 'rgba(75, 192, 192, 1)', // Line color
+        backgroundColor: 'rgba(75, 192, 192, 0.2)', // Fill color with some transparency
+        fill: true, // Enable filling under the line
       },
     ],
+  };
+
+  const options = {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
   };
 
   if (loading) return <div className="loading-spinner">Loading...</div>;
@@ -87,7 +96,7 @@ function Dashboard() {
         </div>
         <div className="chart-section">
           <h3>Number of Orders Over Time</h3>
-          <Line data={data} />
+          <Line data={data} options={options} />
         </div>
       </div>
     </div>
