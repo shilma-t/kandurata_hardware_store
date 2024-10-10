@@ -72,76 +72,74 @@ const SupplierList = () => {
     };
 
     return (
-        <div className='supplier-list-container'>
-           
-            <div className="supplier-list-content">
-                <div className="suppliers-container">
-                    <div className="suppliers-wrapper">
-                        <div className="suppliers-header">
-                            <Link to="/addSupplier" className="btn btn-add">Add +</Link>
-                            <form className="form-search">
-                                <input 
-                                    type="text" 
-                                    placeholder="Search..." 
-                                    value={searchQuery} 
-                                    onChange={handleSearchChange} 
-                                    className="form-control"
-                                />
-                                <button type="button" className="search-icon">
-                                    <i className="fas fa-search"></i>
-                                </button>
-                            </form>
-                            <div className="filter-wrapper">
-                                <select onChange={(e) => {
-                                    setSortField(e.target.value);
-                                    handleSort(e.target.value);
-                                }} value={sortField} className="form-select">
-                                    <option value="name">Name</option>
-                                    <option value="company_name">Company Name</option>
-                                    <option value="product_name">Product Name</option>
-                                    <option value="email">Email</option>
-                                </select>
-                                <button onClick={toggleSortOrder} className="btn btn-toggle-sort">
-                                    {sortOrder === 'asc' ? 'Sort Descending' : 'Sort Ascending'}
-                                </button>
-                            </div>
-                            <button onClick={generatePDF} className="btn btn-generate-pdf">Generate PDF</button>
-                        </div>
-                        {message && <div className="alert alert-success">{message}</div>}
-                        {filteredSuppliers.length === 0 && <div className="alert alert-warning">No suppliers found based on your search criteria.</div>}
-                        <table className="table text-center">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Company Name</th>
-                                    <th>Product Name</th>
-                                    <th>Contact Number</th>
-                                    <th>Email</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredSuppliers.map(supplier => (
-                                    <tr key={supplier._id}>
-                                        <td>{supplier.name}</td>
-                                        <td>{supplier.company_name}</td>
-                                        <td>{supplier.product_name}</td>
-                                        <td>{supplier.contact_number}</td>
-                                        <td>{supplier.email}</td>
-                                        <td>
-                                            <Link to={`/updateSupplier/${supplier._id}`} className="btn btn-edit">
-                                               EDIT
-                                            </Link>
-                                            <button className="btn btn-delete" onClick={() => handleDelete(supplier._id)}>
-                                               DELETE
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+        <div className="dashboard">
+            <div className="SupplierSidebar">
+                <ul>
+                    <li><Link to="/logistics">Dashboard</Link></li>
+                    <li><Link to="/sample">Manage Order</Link></li>
+                    <li><Link to="/sup">Supplier Manager</Link></li>
+                    <li><Link to="/drivers">Driver Details</Link></li>
+                    <li><Link to="/drivers/add">Add Driver</Link></li>
+                    <li><Link to="/drivers">Delete Driver</Link></li>
+                </ul>
+            </div>
+            <div className="suppliers-content">
+                <div className="suppliers-header">
+                    <Link to="/addSupplier" className="btn btn-add">Add</Link>
+                    <form className="form-search">
+                        <input 
+                            type="text" 
+                            placeholder="Search..." 
+                            value={searchQuery} 
+                            onChange={handleSearchChange} 
+                            className="form-control"
+                        />
+                    </form>
+                    <div className="filter-wrapper">
+                        <select onChange={(e) => {
+                            setSortField(e.target.value);
+                            handleSort(e.target.value);
+                        }} value={sortField} className="form-select">
+                            <option value="name">Name</option>
+                            <option value="company_name">Company Name</option>
+                            <option value="product_name">Product Name</option>
+                            <option value="email">Email</option>
+                        </select>
+                        <button onClick={toggleSortOrder} className="btn btn-toggle-sort">
+                            {sortOrder === 'asc' ? 'Sort Descending' : 'Sort Ascending'}
+                        </button>
                     </div>
                 </div>
+                {message && <div className="alert alert-success">{message}</div>}
+                {filteredSuppliers.length === 0 && <div className="alert alert-warning">No suppliers found based on your search criteria.</div>}
+                <table className="table text-center">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Company Name</th>
+                            <th>Product Name</th>
+                            <th>Contact Number</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredSuppliers.map(supplier => (
+                            <tr key={supplier._id}>
+                                <td>{supplier.name}</td>
+                                <td>{supplier.company_name}</td>
+                                <td>{supplier.product_name}</td>
+                                <td>{supplier.contact_number}</td>
+                                <td>{supplier.email}</td>
+                                <td>
+                                    <Link to={`/updateSupplier/${supplier._id}`} className="btn btn-edit">EDIT</Link>
+                                    <button className="btn btn-delete" onClick={() => handleDelete(supplier._id)}>DELETE</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                <button onClick={generatePDF} className="btn btn-generate-pdf">Generate PDF</button>
             </div>
         </div>
     );

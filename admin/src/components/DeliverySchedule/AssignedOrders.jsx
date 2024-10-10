@@ -166,17 +166,17 @@ const AssignedOrders = () => {
             </div>
             <div className="button-container">
                 <button onClick={handleBack}>
-                    Return to Logistics
+                    Back to Dashboard
                 </button>
                 <button className="pdf-button" onClick={generatePDF}>
-                    Export PDF
+                    Download PDF Report
                 </button>
                 <button
                     className="action-button"
                     onClick={handleReadyToShip}
                     disabled={selectedOrders.length === 0} // Disable if no orders selected
                 >
-                    Ready to Ship Selected
+                    Ship Selected Orders
                 </button>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 import './LogisticsManager.css';
@@ -28,16 +28,14 @@ function Dashboard() {
     fetchOrders();
   }, []);
 
-  // Process the data to be displayed on the graph
-  const orderDates = orders.map(order => new Date(order.date).toLocaleDateString());
+  const orderCounts = useMemo(() => {
+    const orderDates = orders.map(order => new Date(order.date).toLocaleDateString());
+    return orderDates.reduce((acc, date) => {
+      acc[date] = (acc[date] || 0) + 1;
+      return acc;
+    }, {});
+  }, [orders]);
 
-  // Count the number of orders for each date
-  const orderCounts = orderDates.reduce((acc, date) => {
-    acc[date] = (acc[date] || 0) + 1;
-    return acc;
-  }, {});
-
-  // Prepare labels and data for the graph
   const labels = Object.keys(orderCounts).sort((a, b) => new Date(a) - new Date(b));
   const orderData = labels.map(date => orderCounts[date]);
 
@@ -53,8 +51,8 @@ function Dashboard() {
     ],
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="loading-spinner">Loading...</div>;
+  if (error) return <div className="error-message">Error: {error}</div>;
 
   return (
     <div className="dashboard">
