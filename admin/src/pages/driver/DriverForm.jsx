@@ -20,23 +20,16 @@ const DriverForm = () => {
     mobileNumber: false,
     emailAddress: false,
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
-  const vehicleModels = [
-    'Lorry',
-    'Van',
-    'Bike',
-    'Three Wheeler',
-  ];
+  const vehicleModels = ['Lorry', 'Van', 'Bike', 'Three Wheeler'];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setDriver({ ...driver, [name]: value });
-    
-    // Clear previous error message on input change
-    setErrors({ ...errors, [name]: '' });
-    
-    // Validate field on change
+    setDriver((prevDriver) => ({ ...prevDriver, [name]: value }));
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
     validateField(name, value);
   };
 
@@ -51,34 +44,31 @@ const DriverForm = () => {
     switch (name) {
       case 'mobileNumber':
         valid = mobileRegex.test(value);
-        formErrors.mobileNumber = valid ? '' : 'Mobile number must be 10 digits.';
-        setIsValid({ ...isValid, mobileNumber: valid });
+        formErrors.mobileNumber = valid ? '' : 'Mobile number must be exactly 10 digits.';
         break;
       case 'emailAddress':
         valid = emailRegex.test(value);
-        formErrors.emailAddress = valid ? '' : 'Invalid email address format.';
-        setIsValid({ ...isValid, emailAddress: valid });
+        formErrors.emailAddress = valid ? '' : 'Please enter a valid email address.';
         break;
       case 'nicNumber':
         valid = nicRegex.test(value);
         formErrors.nicNumber = valid ? '' : 'NIC number must be 12 digits or 11 digits followed by "V".';
-        setIsValid({ ...isValid, nicNumber: valid });
         break;
       default:
         break;
     }
 
+    setIsValid((prevValid) => ({ ...prevValid, [name]: valid }));
     setErrors(formErrors);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Ensure all fields are valid before submitting
+
     if (isValid.nicNumber && isValid.mobileNumber && isValid.emailAddress) {
+      setIsSubmitting(true);
       try {
         await axios.post('http://localhost:5001/drivers', driver);
-
-        // Clear form
         setDriver({
           firstName: '',
           lastName: '',
@@ -88,14 +78,19 @@ const DriverForm = () => {
           emailAddress: '',
           vehicleModel: ''
         });
+        setSuccessMessage('Driver successfully registered!');
 
-        // Navigate to the DriverList page after adding a driver
-        navigate('/drivers');
+        setTimeout(() => {
+          setSuccessMessage('');
+          navigate('/drivers');
+        }, 2000);
       } catch (error) {
         console.error('Error adding driver:', error);
+        setErrors({ submit: 'Failed to register driver. Please try again later.' });
+      } finally {
+        setIsSubmitting(false);
       }
     } else {
-      // If any field is invalid, show error messages
       validateField('nicNumber', driver.nicNumber);
       validateField('mobileNumber', driver.mobileNumber);
       validateField('emailAddress', driver.emailAddress);
@@ -116,6 +111,11 @@ const DriverForm = () => {
 
       <div className="form-content">
         <h2 className="form-heading">Register New Driver</h2>
+        {errors.submit && <span className="error">{errors.submit}</span>}
+        
+        {/* Success message */}
+        {successMessage && <div className="success-alert">{successMessage}</div>}
+
         <form onSubmit={handleSubmit} className="driver-form">
           <input
             name="firstName"
@@ -162,7 +162,7 @@ const DriverForm = () => {
             required
           />
           {errors.emailAddress && <span className="error">{errors.emailAddress}</span>}
-          
+
           {/* Dropdown for Vehicle Model */}
           <select 
             name="vehicleModel" 
@@ -176,8 +176,10 @@ const DriverForm = () => {
             ))}
           </select>
 
-          <button type="submit" className="add-driver-button">Register Driver</button>
-          <button type="button" className="cancel-button" onClick={() => navigate('/drivers')}>Cancel</button>
+          <button type="submit" className="add-driver-button" disabled={isSubmitting}>
+            {isSubmitting ? 'Registering...' : 'Register Driver'}
+          </button>
+          <button type="button" className="cancel-button1" onClick={() => navigate('/drivers')}>Cancel</button>
         </form>
       </div>
     </div>

@@ -16,6 +16,7 @@ const EditDriver = () => {
   const [mobileNumber, setMobileNumber] = useState(''); // Mobile Number
   const [loading, setLoading] = useState(true); // To manage loading state
   const [error, setError] = useState(null); // To handle errors
+  const [successMessage, setSuccessMessage] = useState(''); // Success message
 
   // Array for vehicle models (dropdown options)
   const vehicleModels = [
@@ -69,7 +70,11 @@ const EditDriver = () => {
         homeAddress,
         mobileNumber,
       });
-      navigate('/drivers'); // Redirect to driver list after update
+      setSuccessMessage('Driver details updated successfully!'); // Set success message
+      setError(null); // Clear any previous error
+      setTimeout(() => {
+        navigate('/drivers'); // Redirect to driver list after update
+      }, 2000); // Redirect after 2 seconds
     } catch (error) {
       console.error('Error updating driver:', error);
       setError('Error updating driver.'); // Set error message
@@ -98,6 +103,9 @@ const EditDriver = () => {
       </div>
       <div className="edit-driver-content">
         <h2>Edit Driver</h2>
+        
+        {successMessage && <div className="success-alert">{successMessage}</div>}
+
         <form onSubmit={handleEditSubmit} className="edit-driver-form">
           <label>First Name</label>
           <input

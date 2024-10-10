@@ -90,7 +90,7 @@ const DriverList = () => {
                   
                   
                   <td className="driver-actions">
-                    <button className="delete-button" onClick={() => confirmDelete(driver._id)}>Remove Driver</button>
+                    <button className="delete-button1" onClick={() => confirmDelete(driver._id)}>Remove Driver</button>
                     <button className="edit-button" onClick={() => editDriver(driver._id)}>Edit Driver</button>
                   </td>
                 </tr>

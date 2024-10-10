@@ -88,7 +88,7 @@
 
 .delete-button {
   background-color: tomato; /* Color for delete button */
-  color: white; /* White text */
+  color: white;
 }
 
 .delete-button:hover {
@@ -119,7 +119,7 @@
 
 .modal-content {
   background-color: #fff; /* White background for modal */
-  padding: 20px; /* Padding for modal content */
+  padding: 45px; /* Padding for modal content */
   border-radius: 8px; /* Rounded corners */
   max-width: 400px; /* Max width for modal */
   width: 100%; /* Full width */
