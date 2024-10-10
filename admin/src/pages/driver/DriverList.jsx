@@ -48,7 +48,7 @@ const DriverList = () => {
     <div className="driver-list-container">
       <div className="DriverListSidebar">
         <ul>
-          <li><Link to="/">Dashboard</Link></li>
+          <li><Link to="/logistics">Dashboard</Link></li>
           <li><Link to="/sample">Manage Order</Link></li>
           <li><Link to="/drivers">Driver Details</Link></li>
           <li><Link to="/drivers/add">Add Driver</Link></li>

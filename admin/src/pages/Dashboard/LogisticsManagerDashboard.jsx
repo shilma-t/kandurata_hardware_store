@@ -65,7 +65,7 @@ function Dashboard() {
           <li><Link to="/sup">Supplier Manager</Link></li>
           <li><Link to="/drivers">Driver Details</Link></li>
           <li><Link to="/drivers/add">Add Driver</Link></li>
-          <li><Link to="/drivers/delete">Delete Driver</Link></li>
+          <li><Link to="/drivers">Delete Driver</Link></li>
         </ul>
       </div>
       <div className="main-content">

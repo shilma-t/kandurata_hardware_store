@@ -86,23 +86,23 @@ th {
 .assign-driver-btn {
     background-color: #4CAF50;
     color: white;
+    margin-left: 20px;
 }
 
 .back-btn {
     background-color: #f44336;
     color: white;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 .pdf-btn {
     background-color: #2196F3;
     color: white;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 .assign-driver-container {
     display: flex;
-    align-items: center;
     margin-top: 20px;
 }
 

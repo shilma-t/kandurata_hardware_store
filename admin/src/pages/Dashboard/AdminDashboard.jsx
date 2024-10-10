@@ -38,10 +38,8 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="graphs-container">
-          <div className="sales-graph-container">
+        <div className="graphs-container">  
             <SalesGraph />
-          </div>
           <div className="revenue-graph-container">
             <RevenueGraph /> {/* New revenue graph component */}
           </div>

@@ -89,11 +89,11 @@ const EditDriver = () => {
     <div className="edit-driver-container">
       <div className="EditDriverSidebar">
         <ul>
-          <li><Link to="/">Dashboard</Link></li>
+          <li><Link to="/logistics">Dashboard</Link></li>
           <li><Link to="/sample">Manage Order</Link></li>
           <li><Link to="/drivers">Driver Details</Link></li>
           <li><Link to="/drivers/add">Add Driver</Link></li>
-          <li><Link to="/drivers/delete">Delete Driver</Link></li>
+          <li><Link to="/drivers">Delete Driver</Link></li>
         </ul>
       </div>
       <div className="edit-driver-content">

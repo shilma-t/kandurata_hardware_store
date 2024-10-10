@@ -106,7 +106,7 @@ const DriverForm = () => {
     <div className="driver-form-container">
       <div className="AddDriverSidebar">
         <ul>
-          <li><Link to="/">Dashboard</Link></li>
+          <li><Link to="/logistics">Dashboard</Link></li>
           <li><Link to="/sample">Manage Order</Link></li>
           <li><Link to="/drivers">Driver Details</Link></li>
           <li><Link to="/drivers/add">Add Driver</Link></li>
