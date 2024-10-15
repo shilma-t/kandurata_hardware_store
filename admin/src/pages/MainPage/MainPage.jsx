@@ -17,8 +17,11 @@ const MainPage = () => {
           <button className="nav-button">Cashier Dashboard</button>
         </Link>
         <Link to="/hr">
-        <button className="nav-button">HR Manager</button>
-      </Link>
+          <button className="nav-button">HR Manager</button>
+        </Link>
+        <Link to="/employee">
+          <button className="nav-button">Employee Dashboard</button> {/* New button */}
+        </Link>
       </div>
     </div>
   );

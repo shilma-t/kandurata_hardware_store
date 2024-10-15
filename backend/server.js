@@ -14,6 +14,10 @@ import inquiryRoutes from './routes/inquiryRoutes.js';
 import repliesRoutes from './routes/replies.js';
 import supplierRoutes from './routes/supplierRoutes.js';
 
+import invoiceRouter from './routes/invoiceRoutes.js';
+import leaveRoutes from './routes/leaveRoutes.js';
+import employeeRoutes from './routes/employeeRoutes.js';
+
 
 dotenv.config();
 
@@ -38,6 +42,13 @@ app.use('/inquiries', inquiryRoutes);
 app.use('/replies', repliesRoutes);
 app.use('/api/suppliers', supplierRoutes);
 
+app.use('/api/leaves', leaveRoutes);
+app.use('/api', employeeRoutes);
+app.use('/api/suppliers', supplierRoutes);
+app.use('/api/invoice', invoiceRouter); // Changed from 'router' to 'invoiceRouter' for clarity
+
+// Static file serving
+app.use('/images', express.static('uploads'));
 
 // Simple route
 app.get('/', (req, res) => {

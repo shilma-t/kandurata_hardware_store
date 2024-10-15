@@ -29,6 +29,15 @@ import AddSupplier from './pages/Supplier/AddSupplier';
 import UpdateSupplier from './pages/Supplier/UpdateSupplier';
 import SupplierComponent from './components/DeliverySchedule/SupplierComponet';
 
+
+import AddEmployee from './pages/Employee/AddEmployee'; // Adjust the path as necessary
+import ListEmployee from './pages/Employee/EmployeeList';
+import EditEmployee from './pages/Employee/EditEmployee';
+import LeaveForm from './pages/Leaves/LeaveForm';
+import LeaveList from './pages/Leaves/LeaveList';
+
+
+
 const App = () => {
   return (
     <div>
@@ -67,6 +76,11 @@ const App = () => {
           <Route path="/listSupplier" element={<SupplierList/>}/>
           <Route path="/updateSupplier/:id" element={<UpdateSupplier />} />
 
+          <Route path="/add-employee" element={<AddEmployee />} /> {/* New route */}
+          <Route path="/list-employee" element={<ListEmployee />} /> {/* New route */}
+          <Route path="/edit-employee/:id" element={<EditEmployee />} />
+          <Route path="/leaves/new" element={<LeaveForm />} />
+          <Route path="/leaves" element={<LeaveList />} />
         </Routes>
       </div>
     </div>

@@ -102,6 +102,16 @@ const HrManagerDashboard = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
 
+      {/* Buttons to Add and List Employees */}
+      <div className="button-container">
+        <Link to="/add-employee">
+          <button className="action-button">Add Employee</button>
+        </Link>
+        <Link to="/list-employee">
+          <button className="action-button">List Employee</button>
+        </Link>
+      </div>
+
       <button className="generate-report-btn" onClick={generateReport}>
         Generate Report
       </button>
