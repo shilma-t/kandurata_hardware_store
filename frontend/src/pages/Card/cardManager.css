@@ -1,0 +1,54 @@
+/* Button Styles */
+button {
+    margin: 5px;
+    padding: 10px 15px; /* Increased padding for a better touch target */
+    background-color: #29507b; /* Primary color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 50%; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Font size */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transition effects */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+button:active {
+    background-color: #004494; /* Even darker shade on active */
+    transform: translateY(0); /* Reset lift effect */
+}
+
+button:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Blue glow effect on focus */
+}
+
+/* Optional: Styles for disabled buttons */
+button:disabled {
+    background-color: #ccc; /* Gray background for disabled */
+    cursor: not-allowed; /* Not-allowed cursor */
+    opacity: 0.6; /* Slight transparency */
+}
+
+/* List Styles */
+ul {
+    list-style-type: none; /* No bullet points */
+    padding: 0; /* Remove padding */
+}
+
+li {
+    border: 1px solid #ccc; /* Light border */
+    padding: 10px; /* Inner padding */
+    margin: 10px 0; /* Vertical margin */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #f9f9f9; /* Light background color */
+    transition: background-color 0.3s ease; /* Transition for background color */
+}
+
+li:hover {
+    background-color: #e9ecef; /* Slightly darker background on hover */
+}

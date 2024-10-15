@@ -18,6 +18,7 @@ import invoiceRouter from './routes/invoiceRoutes.js';
 import leaveRoutes from './routes/leaveRoutes.js';
 import employeeRoutes from './routes/employeeRoutes.js';
 
+import cardRoutes from './routes/cardRoutes.js';
 
 dotenv.config();
 
@@ -46,6 +47,8 @@ app.use('/api/leaves', leaveRoutes);
 app.use('/api', employeeRoutes);
 app.use('/api/suppliers', supplierRoutes);
 app.use('/api/invoice', invoiceRouter); // Changed from 'router' to 'invoiceRouter' for clarity
+app.use('/api', cardRoutes);
+
 
 // Static file serving
 app.use('/images', express.static('uploads'));

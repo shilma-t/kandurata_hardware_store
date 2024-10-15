@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './ProductDetailPopup.css';
 import { StoreContext } from '../../context/StoreContext';
 
@@ -6,6 +7,9 @@ const ProductDetailPopup = ({ product, onClose }) => {
     const { addToCart } = useContext(StoreContext);
     const [selectedSize, setSelectedSize] = useState(""); // State to hold the selected size
     const [updatedPrice, setUpdatedPrice] = useState(product.retailPrice); // State to hold the updated price
+    const [quantity, setQuantity] = useState(1); // State to track selected quantity
+    const [addedQuantity, setAddedQuantity] = useState(0); // Track total quantity added to cart
+    const navigate = useNavigate(); // Initialize navigate
 
     if (!product) return null;
 
@@ -47,6 +51,20 @@ const ProductDetailPopup = ({ product, onClose }) => {
         }
     }, [selectedSize, product.retailPrice, product.category]);
 
+    // Function to handle quantity change
+    const handleQuantityChange = (newQuantity) => {
+        if (newQuantity >= 1 && newQuantity <= product.quantity) { // Ensure quantity stays within stock limits
+            setQuantity(newQuantity);
+        }
+    };
+
+    // Handle the Add to Cart button click
+    const handleAddToCart = () => {
+        const newAddedQuantity = addedQuantity + quantity; // Accumulate quantity with each click
+        setAddedQuantity(newAddedQuantity); // Update the added quantity
+        addToCart(product._id, selectedSize, product.name, newAddedQuantity); // Pass the total accumulated quantity
+    };
+
     return (
         <div className="product-detail-popup">
             <div className="product-detail-container">
@@ -73,7 +91,7 @@ const ProductDetailPopup = ({ product, onClose }) => {
                     <div className="product-detail-pricing">
                         <p className="old-price">Retail Price: LKR {product.retailPrice}</p>
                         <p className="updated-price">Updated Price: LKR {updatedPrice.toFixed(2)}</p>
-                        <p>Quantity: {product.quantity}</p>
+                        <p>Quantity in stock: {product.quantity}</p>
                         <p>Category: {product.category}</p>
                     </div>
 
@@ -93,17 +111,50 @@ const ProductDetailPopup = ({ product, onClose }) => {
                         ))}
                     </div>
 
-                    <button 
-                        className="add-to-cart-btn" 
-                        onClick={() => addToCart(product._id, selectedSize, product.name)} // Pass selectedSize and product.name
-                        disabled={!selectedSize} // Disable button if no size is selected
-                    >
-                        Add to Cart
-                    </button>
+                    {/* Quantity Selection */}
+                    <div className="quantity-selection">
+                        <h3>Select Quantity:</h3>
+                        <div className="quantity-controls">
+                            <button 
+                                onClick={() => handleQuantityChange(quantity - 1)} 
+                                disabled={quantity <= 1} // Disable button if quantity is 1
+                            >
+                                -
+                            </button>
+                            <span>{quantity}</span>
+                            <button 
+                                onClick={() => handleQuantityChange(quantity + 1)} 
+                                disabled={quantity >= product.quantity} // Disable button if quantity exceeds stock
+                            >
+                                +
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Out of Stock Message */}
+                    {product.quantity === 0 ? (
+                        <p className="out-of-stock-message">Out of Stock</p>
+                    ) : (
+                        <div className="button-group">
+                            <button 
+                                className="add-to-cart-btn" 
+                                onClick={handleAddToCart} // Use the updated handleAddToCart function
+                                disabled={!selectedSize} // Disable button if no size is selected
+                            >
+                                Add to Cart
+                            </button>
+                            <button 
+                                className="view-cart-btn" 
+                                onClick={() => navigate('/cart')} // Redirect to cart page
+                            >
+                                View Cart
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default ProductDetailPopup;

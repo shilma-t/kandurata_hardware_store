@@ -13,6 +13,7 @@ import UserQueries from './components/Inquiry/UserQueries';
 import EditInquiryForm from './components/Inquiry/EditInquiryForm'; 
 import 'bootstrap/dist/css/bootstrap.css';
 
+import Card from './pages/Card/CardManager'
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false); 
@@ -35,6 +36,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/card' element={<Card />} />
         <Route path='/order' element={<PlaceOrder />} />
         <Route path='/u-orders' element={<UserOrders />} />
         <Route path='/order-confirmation' element={<OrderConfirmation />} />
