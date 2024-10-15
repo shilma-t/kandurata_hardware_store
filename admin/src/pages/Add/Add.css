@@ -91,3 +91,38 @@
     padding: 20px; /* Add some padding for aesthetics */
     overflow-y: auto; /* Allow scrolling if content overflows */
 }
+
+
+/* Sidebar styling */
+.PrdAddSidebar {
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .PrdAddSidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .PrdAddSidebar ul li {
+    margin: 15px 0;
+  }
+  
+  .PrdAddSidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  
+  .PrdAddSidebar ul li a:hover {
+    background-color: #555;
+    text-decoration: underline;
+  }

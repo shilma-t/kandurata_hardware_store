@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom'; // Import Link for navigation
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate, useLocation } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import Sidebar from '../../components/Sidebar/CSidebar'; // Corrected import statement
 import './CashierDashboard.css';
 
 const List = () => {
@@ -92,11 +92,14 @@ const List = () => {
 
   return (
     <div className='list-container'>
-      <Sidebar />
-
-      <div className='list-content'>
-        <p></p>
-
+      <div className="CashierSidebar"> 
+        <ul className="sidebar-list"> 
+          <li className="sidebar-item"><Link to="/">Dashboard</Link></li>
+          <li className="sidebar-item"><Link to="/dashboard/cashier">Sales</Link></li>
+          <li className="sidebar-item"><Link to="/invoice-display">View Sales</Link></li>
+        </ul>
+      </div>
+      <div className="list-content">
         <div className="price-toggle">
           <label>
             <input

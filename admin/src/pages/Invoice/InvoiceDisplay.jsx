@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './InvoiceDisplay.css'; // Import the CSS file
-import Sidebar from '../../components/Sidebar/CSidebar'; // Import the Sidebar component
+import { Link } from 'react-router-dom'; // Import Link for navigation
+
 
 const InvoiceDisplay = () => {
   const [invoices, setInvoices] = useState([]);
@@ -49,7 +50,13 @@ const InvoiceDisplay = () => {
 
   return (
     <div className="list-container">
-      <Sidebar /> {/* Include the Sidebar here */}
+      <div className="CashierSidebar"> 
+        <ul className="sidebar-list"> 
+          <li className="sidebar-item"><Link to="/dashboard/cashier">Dashboard</Link></li>
+          <li className="sidebar-item"><Link to="/dashboard/cashier">Sales </Link></li>
+          <li className="sidebar-item"><Link to="/invoice-display">View Sales</Link></li>
+        </ul>
+      </div>
       <div className="list-content"> {/* Wrap the main content */}
         <h2 style={{ textAlign: 'center' }}>Invoice List</h2>
         <div style={{ textAlign: 'center', marginBottom: '10px', display: 'flex', justifyContent: 'center', gap: '10px' }}>

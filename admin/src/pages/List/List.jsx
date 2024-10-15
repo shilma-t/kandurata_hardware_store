@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'; // Ensure you import Link from react-router-dom
 import './List.css';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
@@ -6,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import UpdateModal from './UpdateModal';
-import Sidebar from '../../components/Sidebar/Sidebar';
 import { CSVLink } from 'react-csv';
 import jsPDF from 'jspdf';
 
@@ -18,16 +18,16 @@ const List = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
-  const [suppliers, setSuppliers] = useState([]); // New state for suppliers
-  const [selectedSupplier, setSelectedSupplier] = useState(""); // New state for selected supplier
+  const [suppliers, setSuppliers] = useState([]);
+  const [selectedSupplier, setSelectedSupplier] = useState("");
 
+  // Fetch product list and suppliers
   const fetchList = async () => {
     try {
       const response = await axios.get(`${url}/api/product/list`);
       if (response.data.success) {
         setList(response.data.data);
         setFilteredProducts(response.data.data);
-        // Extract unique suppliers for the dropdown
         const uniqueSuppliers = [...new Set(response.data.data.map(item => item.supplierName))];
         setSuppliers(uniqueSuppliers);
       } else {
@@ -39,22 +39,19 @@ const List = () => {
     }
   };
 
+  // Remove product confirmation
   const handleRemoveProduct = (prodID) => {
     confirmAlert({
       title: 'Confirm Deletion',
       message: 'Are you sure you want to delete this product?',
       buttons: [
-        {
-          label: 'Yes',
-          onClick: () => removeProduct(prodID)
-        },
-        {
-          label: 'No',
-        }
+        { label: 'Yes', onClick: () => removeProduct(prodID) },
+        { label: 'No' }
       ],
     });
   };
 
+  // Remove product
   const removeProduct = async (prodID) => {
     try {
       const response = await axios.post(`${url}/api/product/remove`, { id: prodID });
@@ -71,6 +68,7 @@ const List = () => {
     }
   };
 
+  // Update product
   const handleUpdateProduct = (product) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
@@ -82,6 +80,7 @@ const List = () => {
     fetchList();
   };
 
+  // Search functionality
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
     setSearchQuery(value);
@@ -91,6 +90,7 @@ const List = () => {
     setFilteredProducts(filtered);
   };
 
+  // Sorting functionality
   const handleSort = (key) => {
     let direction = 'ascending';
     if (sortConfig.key === key && sortConfig.direction === 'ascending') {
@@ -105,25 +105,23 @@ const List = () => {
     setFilteredProducts(sorted);
   };
 
+  // PDF Generation
   const generatePDF = (supplierName) => {
     const doc = new jsPDF();
     doc.setFontSize(20);
     doc.text(`Products Supplied by ${supplierName}`, 14, 22);
   
-    // Filter products by selected supplier
     const data = filteredProducts
       .filter(item => item.supplierName === supplierName)
       .map(item => [item.name, item.quantity, item.date]);
   
-    // Set headers
     const headers = ["Product Name", "Quantity", "Supplied Date"];
-    let startY = 40; // Starting position for headers
+    let startY = 40;
     headers.forEach((header, index) => {
       doc.text(header, 14 + (index * 60), startY);
     });
   
-    // Adding data to the PDF
-    startY += 10; // Move down for data rows
+    startY += 10;
     data.forEach((row, rowIndex) => {
       row.forEach((cell, cellIndex) => {
         doc.text(cell.toString(), 14 + (cellIndex * 60), startY + (rowIndex * 10));
@@ -150,7 +148,16 @@ const List = () => {
 
   return (
     <div className='dashboard'>
-      <Sidebar />
+      <div className="ListSidebar">
+        <ul className="sidebar-list">
+          <li className="sidebar-item"><Link to="/dashboard/admin">Dashboard</Link></li>
+          <li className="sidebar-item"><Link to="/add">Add Items</Link></li>
+          <li className="sidebar-item"><Link to="/list">Inventory</Link></li>
+          <li className="sidebar-item"><Link to="/orders">Orders</Link></li>
+          <li className="sidebar-item"><Link to="/users">Users</Link></li>
+          <li className="sidebar-item"><Link to="/sales">Sales</Link></li>
+        </ul>
+      </div>
       <div className='alist add flex-col'>
         <p>All Products List</p>
 
@@ -211,26 +218,15 @@ const List = () => {
             </div>
           ))}
         </div>
-
-        <CSVLink 
-          data={filteredProducts}
-          headers={csvHeaders}
-          filename={"supplier_products_report.csv"}
-          className="btn-report"
-          target="_blank"
-        >
-          Download CSV
-        </CSVLink>
+        
+        {isModalOpen && (
+          <UpdateModal 
+            closeModal={closeModal} 
+            selectedProduct={selectedProduct} 
+          />
+        )}
+        <ToastContainer />
       </div>
-
-      {isModalOpen && (
-        <UpdateModal 
-          isOpen={isModalOpen} 
-          closeModal={closeModal} 
-          selectedProduct={selectedProduct} 
-        />
-      )}
-      <ToastContainer />
     </div>
   );
 };

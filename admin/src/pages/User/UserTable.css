@@ -1,9 +1,10 @@
 /* UserTable.css */
 
 .user-table-container {
-  display: flex; /* Use flexbox for layout */
   width: 100%;
-  background-color: #f9f9f9; /* Light background for the container */
+  display: flex;
+  height: 88vh;
+  font-family: Arial, sans-serif; /* Ensure a clean, modern font */
 }
 
 .user-table-content {
@@ -28,7 +29,7 @@
 }
 
 .user-table th {
-  background-color: #f2f2f2;
+  background-color: #000000;
   font-weight: bold; /* Make header text bold */
 }
 
@@ -68,6 +69,41 @@ h1 {
   text-align: center;
   margin-bottom: 20px; /* Space below the heading */
 }
+
+/* Sidebar Styling */
+.UserSidebar {
+  width: 250px;
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.UserSidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.UserSidebar ul li {
+  margin: 15px 0;
+}
+
+.UserSidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  display: block; 
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.UserSidebar ul li a:hover {
+  background-color: #555;
+  text-decoration: underline;
+}
+
 
 /* Media queries for responsiveness */
 @media (max-width: 600px) {

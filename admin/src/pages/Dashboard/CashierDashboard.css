@@ -1,17 +1,14 @@
 .list-container {
+  width: 100%;
   display: flex;
+ 
+  font-family: Arial, sans-serif; /* Ensure a clean, modern font */
 }
 
 .list-content {
   flex-grow: 1;
   padding: 20px;
   margin-left: 20px; /* Reduced margin for less spacing */
-}
-
-.list p {
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: #333;
 }
 
 .price-toggle {
@@ -27,14 +24,13 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 16px;
-  width: 200px; /* Set fixed width */
+  width: 250px; /* Set fixed width */
 }
 
 /* Styling the list table with grid layout */
 .list-table {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
   width: 100%;
 }
 
@@ -70,6 +66,7 @@
   transition: background-color 0.3s;
   margin-top: 10px;
 }
+
 .proceed-button {
   background-color: tomato;
   color: white;
@@ -79,31 +76,35 @@
   cursor: pointer;
   font-size: 13px;
   transition: background-color 0.3s;
-  margin-top: 10px;
+  margin-top: 20px; /* Increased margin for better separation */
 }
+
 .list-table-format .add-button:hover,
 .proceed-button:hover {
   background-color: tomato; /* Hover effect */
 }
 
-/* Responsive adjustments */
-@media (max-width: 600px) {
-  .list-table-format {
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-    font-size: 12px;
-    padding: 10px;
-  }
+/* Sidebar Styling */
+.CashierSidebar {
+  width: 250px;
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-  .list-table-format.title {
-    display: none;
-  }
+.CashierSidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
 
-  .list-table-format img {
-    width: 40px;
-  }
+.CashierSidebar ul li {
+  margin: 15px 0;
+}
 
-  .list-table-format p {
-    word-wrap: break-word;
-  }
+.CashierSidebar ul li a {
+  color: #fff;
+  text-decoration: none;
 }

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './Add.css';
 import { assets } from '../../assets/assets';
 import axios from "axios";
+import { Link } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import the CSS for react-confirm-alert
-import Sidebar from '../../components/Sidebar/Sidebar'; // Import Sidebar component
 
 const Add = () => {
   const url = "http://localhost:5001"; // Updated URL for API
@@ -21,15 +21,25 @@ const Add = () => {
     supplierName: ""
   });
 
+  useEffect(() => {
+    const generateProductId = () => {
+      const id = 'PROD-' + Math.floor(Math.random() * 1000000);
+      setProductId(id);
+    };
+    generateProductId();
+
+    const currentDate = new Date().toISOString().split('T')[0];
+    setDate(currentDate);
+  }, []);
+
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
-    setData(data => ({ ...data, [name]: value }));
+    setData(prevData => ({ ...prevData, [name]: value }));
   };
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
 
-    // Ensure wholesale price is not greater than retail price
     if (parseFloat(data.wholesalePrice) > parseFloat(data.retailPrice)) {
       alert('Wholesale price cannot be more than retail price!');
       return;
@@ -74,66 +84,55 @@ const Add = () => {
           ]
         });
       } else {
-        console.error('Error response:', response.data);
         alert('Error adding product');
       }
     } catch (error) {
-      console.error('Error:', error);
       alert('An error occurred while adding the product');
     }
   };
 
-  // Handle file change for image upload
   const handleImageChange = (event) => {
     setImage(event.target.files[0]);
   };
 
-  // Generate a unique product ID (for simplicity, using a random number)
-  useEffect(() => {
-    const generateProductId = () => {
-      const id = 'PROD-' + Math.floor(Math.random() * 1000000);
-      setProductId(id);
-    };
-    generateProductId();
-
-    // Get the current system date
-    const currentDate = new Date().toISOString().split('T')[0];
-    setDate(currentDate);
-  }, []);
-
   return (
-    <div className="dashboard"> {/* Add a wrapper for the layout */}
-      <Sidebar /> {/* Render the Sidebar on the left */}
-      <div className="add-container"> {/* Container for Add component */}
+    <div className="dashboard">
+      <div className="PrdAddSidebar">
+        <ul className="sidebar-list">
+          <li className="sidebar-item"><Link to="/">Dashboard</Link></li>
+          <li className="sidebar-item"><Link to="/add">Add Items</Link></li>
+          <li className="sidebar-item"><Link to="/list">Inventory</Link></li>
+          <li className="sidebar-item"><Link to="/orders">Orders</Link></li>
+          <li className="sidebar-item"><Link to="/users">Users</Link></li>
+          <li className="sidebar-item"><Link to="/sales">Sales</Link></li>
+        </ul>
+      </div>
+      
+      <div className="add-container">
         <form className='flex-col' onSubmit={onSubmitHandler}>
-          {/* Product ID - Auto-generated */}
           <div className="add-product-id">
             <p>Product ID</p>
             <input type="text" name='productId' value={productId} readOnly />
           </div>
 
-          {/* Upload Image */}
           <div className="add-img-upload flex-col">
             <p>Upload Image</p>
-            <label htmlFor="image">
+            <label htmlFor="image"> 
               <img src={image ? URL.createObjectURL(image) : assets.upload_area} alt="" />
             </label>
             <input onChange={handleImageChange} type="file" id="image" hidden />
           </div>
 
-          {/* Product Name */}
           <div className="add-product-name flex-col">
             <p>Product Name</p>
             <input type="text" name='name' placeholder='Type here' value={data.name} onChange={onChangeHandler} required />
           </div>
 
-          {/* Product Description */}
           <div className="add-product-description flex-col">
             <p>Product Description</p>
             <textarea name="description" rows="6" placeholder='Write content here' value={data.description} onChange={onChangeHandler}></textarea>
           </div>
 
-          {/* Category, Price, and Quantity */}
           <div className="add-category-price-quantity">
             <div className="add-category flex-col">
               <p>Product Category</p>
@@ -163,19 +162,16 @@ const Add = () => {
             </div>
           </div>
 
-          {/* Supplier Name */}
           <div className="add-supplier-name flex-col">
             <p>Supplier Name</p>
             <input type="text" name='supplierName' placeholder='Enter supplier name' value={data.supplierName} onChange={onChangeHandler} required />
           </div>
 
-          {/* System Date */}
           <div className="add-date">
             <p>Date</p>
             <input type="text" name='date' value={date} readOnly />
           </div>
 
-          {/* Submit Button */}
           <button type='submit' className='add-btn'>ADD</button>
         </form>
       </div>

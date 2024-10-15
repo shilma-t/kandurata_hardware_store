@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './UserTable.css';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Sidebar from '../../components/Sidebar/Sidebar'; // Import the Sidebar component
 
 const UserTable = () => {
   const [users, setUsers] = useState([]);
@@ -62,7 +62,16 @@ const UserTable = () => {
 
   return (
     <div className="user-table-container">
-      <Sidebar /> {/* Include the sidebar */}
+      <div className="UserSidebar">
+        <ul className="sidebar-list">
+          <li className="sidebar-item"><Link to="/dashboard/admin">Dashboard</Link></li>
+          <li className="sidebar-item"><Link to="/add">Add Items</Link></li>
+          <li className="sidebar-item"><Link to="/list">Inventory</Link></li>
+          <li className="sidebar-item"><Link to="/orders">Orders</Link></li>
+          <li className="sidebar-item"><Link to="/users">Users</Link></li>
+          <li className="sidebar-item"><Link to="/sales">Sales</Link></li>
+        </ul>
+      </div>
       <div className="user-table-content"> {/* Wrapper for table content */}
         <h1>User List</h1> {/* Add a heading for user list */}
         <table className="user-table">

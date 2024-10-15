@@ -1,3 +1,4 @@
+/* General Table Format */
 .alist-table-format {
     display: grid;
     grid-template-columns: 0.7fr 1fr 1.5fr 1fr 1fr 0.7fr 0.7fr 0.7fr 0.7fr 0.7fr 0.7fr; /* Adjusted to make room for actions */
@@ -13,12 +14,14 @@
     font-weight: bold;
 }
 
+/* Image Styling */
 .alist-table-format img {
     width: 50px;
     height: auto;
     border-radius: 4px;
 }
 
+/* Action Buttons */
 .alist-table-format div {
     display: flex;
     justify-content: flex-end; /* Aligns the actions to the right */
@@ -39,7 +42,7 @@
 }
 
 .alist-table-format div p:hover {
-    background-color:tomato; /* Darker shade for hover effect */
+    background-color: tomato; /* Darker shade for hover effect */
 }
 
 .alist-table-format div p.cursor-delete {
@@ -50,6 +53,7 @@
     background-color: #c82333; /* Darker red on hover */
 }
 
+/* Responsive Styles */
 @media (max-width: 600px) {
     .alist-table-format {
         grid-template-columns: 1fr 1fr 1fr;
@@ -71,6 +75,7 @@
     }
 }
 
+/* Confirmation Alert Styles */
 .react-confirm-alert-overlay {
     background: rgba(0, 0, 0, 0.5);
     display: flex;
@@ -112,12 +117,11 @@
     opacity: 0.9;
 }
 
+/* Modal Styles */
 .Modal {
     position: absolute;
-    top: 50%;
+    top: 0%;
     left: 50%;
-    right: auto;
-    bottom: auto;
     margin-right: -50%;
     transform: translate(-50%, -50%);
     background: white;
@@ -127,6 +131,7 @@
     width: 100%;
 }
 
+/* Overlay Styles */
 .Overlay {
     position: fixed;
     top: 0;
@@ -135,28 +140,33 @@
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.75);
 }
+
+/* Search Bar Styles */
 .search-bar {
     padding: 10px;
     width: 100%;
     margin-bottom: 20px;
     border-radius: 5px;
     border: 1px solid #ccc;
-  }
-  
-  .btn-report {
+}
+
+/* Button Styles */
+.btn-report {
     display: inline-block;
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #4caf50; /* Green color */
     color: white;
     text-decoration: none;
     border-radius: 5px;
-  }
-  
-  .btn-report:hover {
-    background-color: #45a049;
-  }
-  .search-report-container {
+}
+
+.btn-report:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Search and Report Container */
+.search-report-container {
     display: flex;
     align-items: center;
     gap: 10px; /* Space between elements */
@@ -174,15 +184,36 @@
     border-radius: 4px;
 }
 
-.btn-report {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 4px;
-    background-color: black;
-    color: white;
-    cursor: pointer;
+/* Sidebar Styling */
+.ListSidebar {
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.btn-report:hover {
-    background-color: tomato; /* Hover effect for the button */
+.ListSidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.ListSidebar ul li {
+    margin: 15px 0;
+}
+
+.ListSidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    display: block; 
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.ListSidebar ul li a:hover {
+    background-color: #555;
+    text-decoration: underline;
 }
