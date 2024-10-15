@@ -3,6 +3,8 @@ import './PlaceOrder.css';
 import { StoreContext } from '../../context/StoreContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { fetchCardByCode } from "../Card/CardManager";
+
 
 const PlaceOrder = () => {
   const { getTotalCartAmount, cartItems, userId, clearCart, token } = useContext(StoreContext);
@@ -16,7 +18,9 @@ const PlaceOrder = () => {
   });
   const [formErrors, setFormErrors] = useState({});
   const [paymentMethod, setPaymentMethod] = useState('');
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState(false); 
+  const [cardDetails, setCardDetails] = useState(null); // For storing card details
+  const [uniqueCode, setUniqueCode] = useState(''); // For storing the unique card code
   const navigate = useNavigate(); 
 
   const provinces = {
@@ -72,14 +76,25 @@ const PlaceOrder = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      const data = response.data;
-      if (!data.success) {
-        throw new Error(data.message);
-      }
-
-      return data; // Handle success if needed
+      return response.data; 
     } catch (error) {
       console.error('Error decreasing product quantity:', error);
+      return { success: false, message: error.message }; 
+    }
+  };
+
+  const handleFetchCardDetails = async () => {
+    try {
+      const fetchedCards = await fetchCardByCode(uniqueCode);
+      if (fetchedCards.length > 0) {
+        setCardDetails(fetchedCards[0]);
+      } else {
+        alert('No card found with this unique code');
+        setCardDetails(null);
+      }
+    } catch (error) {
+      console.error('Error fetching card details:', error);
+      alert('Failed to fetch card details');
     }
   };
 
@@ -87,7 +102,7 @@ const PlaceOrder = () => {
     e.preventDefault();
   
     if (validate()) {
-      setLoading(true); // Set loading state before the API call
+      setLoading(true);
   
       const orderData = {
         userId,
@@ -98,6 +113,7 @@ const PlaceOrder = () => {
         province: selectedProvince,
         payment: paymentMethod === 'card',
         paymentMethod,
+        cardDetails: paymentMethod === 'card' ? cardDetails : null,
       };
   
       try {
@@ -108,16 +124,20 @@ const PlaceOrder = () => {
         );
   
         if (response.data.success) {
-          // Decrease quantity for each item in the order
-          for (const itemId in cartItems) {
-            const { quantity } = cartItems[itemId];
-            const decreaseResponse = await decreaseQuantity(itemId, quantity);
-            if (!decreaseResponse.success) {
-              console.error("Error decreasing product quantity:", decreaseResponse.message);
-            }
+          clearCart();
+  
+          const decreaseResults = await Promise.all(
+            Object.keys(cartItems).map(itemId => {
+              const { quantity } = cartItems[itemId];
+              return decreaseQuantity(itemId, quantity);
+            })
+          );
+
+          const failedDecreases = decreaseResults.filter(res => !res.success);
+          if (failedDecreases.length) {
+            console.error("Some items could not be decremented:", failedDecreases);
           }
   
-          clearCart();
           navigate('/order-confirmation', { 
             state: { 
               orderId: response.data.orderId,
@@ -129,20 +149,14 @@ const PlaceOrder = () => {
           throw new Error(response.data.message || 'Order placement failed');
         }
       } catch (error) {
-        if (error.response) {
-          console.error("Error placing the order:", error.response.data);
-          alert(`Error: ${error.response.data.message || error.message}`);
-        } else {
-          console.error("Error:", error.message);
-          alert(`Error: ${error.message}`);
-        }
+        console.error("Error:", error);
+        alert(`Error: ${error.response ? error.response.data.message : error.message}`);
       } finally {
-        setLoading(false); // Reset loading state after API call
+        setLoading(false);
       }
     }
   };
   
-
   return (
     <div>
       <form className='place-order' onSubmit={handleSubmit}>
@@ -155,6 +169,7 @@ const PlaceOrder = () => {
               placeholder='First Name' 
               value={formValues.firstName} 
               onChange={handleChange}
+              aria-label="First Name"
             />
             {formErrors.firstName && <p className="error">{formErrors.firstName}</p>}
             <input 
@@ -163,6 +178,7 @@ const PlaceOrder = () => {
               placeholder='Last Name' 
               value={formValues.lastName} 
               onChange={handleChange}
+              aria-label="Last Name"
             />
             {formErrors.lastName && <p className="error">{formErrors.lastName}</p>}
           </div>
@@ -172,6 +188,7 @@ const PlaceOrder = () => {
             placeholder='Address' 
             value={formValues.address} 
             onChange={handleChange}
+            aria-label="Address"
           />
           {formErrors.address && <p className="error">{formErrors.address}</p>}
           <input 
@@ -180,6 +197,7 @@ const PlaceOrder = () => {
             placeholder='Phone' 
             value={formValues.phone} 
             onChange={handleChange}
+            aria-label="Phone"
           />
           {formErrors.phone && <p className="error">{formErrors.phone}</p>}
           <div className="province-selection">
@@ -187,6 +205,7 @@ const PlaceOrder = () => {
               id="province" 
               value={selectedProvince} 
               onChange={handleProvinceChange}
+              aria-label="Select Province"
             >
               <option value="">Select Province</option>
               {Object.keys(provinces).map((province) => (
@@ -223,36 +242,54 @@ const PlaceOrder = () => {
             <p>Payment Method</p>
             <div>
               <label>
-                <input
-                  type="radio"
-                  name="paymentMethod"
-                  value="cash"
-                  checked={paymentMethod === 'cash'}
-                  onChange={handlePaymentMethodChange}
-                />
-                Cash on Delivery
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="paymentMethod"
-                  value="card"
-                  checked={paymentMethod === 'card'}
-                  onChange={handlePaymentMethodChange}
+                <input 
+                  type="radio" 
+                  value="card" 
+                  checked={paymentMethod === 'card'} 
+                  onChange={handlePaymentMethodChange} 
                 />
                 Card Payment
               </label>
-              {formErrors.paymentMethod && <p className="error">{formErrors.paymentMethod}</p>}
+              <label>
+                <input 
+                  type="radio" 
+                  value="cod" 
+                  checked={paymentMethod === 'cod'} 
+                  onChange={handlePaymentMethodChange} 
+                />
+                Cash on Delivery
+              </label>
             </div>
+            {formErrors.paymentMethod && <p className="error">{formErrors.paymentMethod}</p>}
           </div>
 
-          <button className={paymentMethod === 'card' ? "proceed-payment" : "place-order"} type="submit" disabled={loading}>
-            {loading ? 'Processing...' : (paymentMethod === 'card' ? 'PROCEED TO PAYMENT' : 'PLACE ORDER')}
+          {paymentMethod === 'card' && (
+            <div className="card-fetch">
+              <input 
+                type="text" 
+                placeholder="Enter Card Unique Code" 
+                value={uniqueCode}
+                onChange={(e) => setUniqueCode(e.target.value)}
+                aria-label="Unique Card Code"
+              />
+              <button type="button" onClick={handleFetchCardDetails}>Fetch Card</button>
+              {cardDetails && (
+                <div className="card-details">
+                  <p>Card Number: {cardDetails.cardNumber}</p>
+                  <p>Card Holder: {cardDetails.cardHolderName}</p>
+                  <p>Expires: {cardDetails.expiryDate}</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          <button type="submit" disabled={loading}>
+            {loading ? 'Placing Order...' : 'Place Order'}
           </button>
         </div>
       </form>
     </div>
   );
-}
+};
 
 export default PlaceOrder;
