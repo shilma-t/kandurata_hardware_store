@@ -4,13 +4,21 @@ import { assets } from '../../assets/assets';
 import { StoreContext } from '../../context/StoreContext';
 import { Link } from 'react-router-dom';
 
-const Navbar = ({ setShowLogin }) => {
+// Check for SpeechRecognition API compatibility
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = SpeechRecognition ? new SpeechRecognition() : null;
+
+const Navbar = ({ setShowLogin, scrollToProducts }) => { // Accept scrollToProducts as prop
   const [menu, setMenu] = useState("Home");
   const { token, setToken, featuredProducts } = useContext(StoreContext);
   const [showPopup, setShowPopup] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-const {getTotalCartAmount} =useContext(StoreContext)
+  const { getTotalCartAmount } = useContext(StoreContext);
+  
+  // State to manage voice recognition
+  const [isListening, setIsListening] = useState(false);
+
   const logout = () => {
     setToken(null);
     localStorage.removeItem("token");  
@@ -19,13 +27,42 @@ const {getTotalCartAmount} =useContext(StoreContext)
     setTimeout(() => {
       setShowPopup(false); 
     }, 3000);
+    setMenu("Home");
   };
+
   const handleSearchClick = () => {
     setIsSearching(!isSearching);
   };
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
+  };
+
+  // Voice search handling
+  const startListening = () => {
+    if (!recognition) {
+      alert('Speech recognition not supported in this browser.');
+      return;
+    }
+
+    setIsListening(true);
+    recognition.start();
+
+    recognition.onresult = (event) => {
+      const voiceInput = event.results[0][0].transcript;
+      setSearchQuery(voiceInput); // Update the search query with the voice input
+      setIsListening(false);
+    };
+
+    recognition.onspeechend = () => {
+      setIsListening(false);
+      recognition.stop();
+    };
+
+    recognition.onerror = (event) => {
+      console.error(event.error);
+      setIsListening(false);
+    };
   };
 
   const filteredProducts = featuredProducts.filter(product =>
@@ -38,7 +75,11 @@ const {getTotalCartAmount} =useContext(StoreContext)
       <img src={assets.logo} alt="" />
       <ul className='navbar-menu'>
         <Link to='./'><li onClick={() => setMenu("Home")} className={menu === "Home" ? "active" : ""}>Home</li></Link>
-        <li onClick={() => setMenu("Shop")} className={menu === "Shop" ? "active" : ""}>Shop</li>
+        <li onClick={() => { 
+          setMenu("Shop"); 
+          scrollToProducts(); // Scroll to ProductDisplay section
+        }} 
+        className={menu === "Shop" ? "active" : ""}>Shop</li>
         <Link to='/card'><li onClick={() => setMenu("card")} className={menu === "card" ? "active" : ""}>Card</li></Link> 
         <Link to='/contact-us'><li onClick={() => setMenu("Contact Us")} className={menu === "Contact Us" ? "active" : ""}>Contact us</li></Link> 
       </ul>
@@ -57,6 +98,10 @@ const {getTotalCartAmount} =useContext(StoreContext)
             value={searchQuery}
             onChange={handleSearchChange}
           />
+          <button onClick={startListening} className='voice-search-btn'>
+            <img src={assets.microphone_icon} alt="Voice Search" />
+          </button>
+          {isListening && <p>Listening...</p>} {/* Indicate listening status */}
           <div className='search-results'>
             {searchQuery && filteredProducts.length > 0 ? (
               <ul>
@@ -82,15 +127,12 @@ const {getTotalCartAmount} =useContext(StoreContext)
           : <div className='navbar-profile'>
               <img src={assets.profile_icon} alt="" />
               <ul className="nav-profile-dropdown">
-             
-
-              <li>
-    <Link to="/u-orders">
-        <img src={assets.bag_icon} alt="" />
-        <p>Orders</p>
-    </Link>
-</li>
-
+                <li>
+                  <Link to="/u-orders">
+                    <img src={assets.bag_icon} alt="" />
+                    <p>Orders</p>
+                  </Link>
+                </li>
                 <hr />
                 <li onClick={logout}><img src={assets.logout_icon} alt="" /><p>Logout</p></li>
               </ul>

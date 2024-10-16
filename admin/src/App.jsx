@@ -15,7 +15,6 @@ import { useAuth } from "./context/authContext";
 import DriverForm from "./pages/driver/DriverForm";
 import DriverList from "./pages/driver/DriverList";
 import EditDriver from "./pages/driver/EditDriver";
-import MainPage from "./pages/MainPage/MainPage";
 import Invoice from "./pages/Invoice/Invoice"; 
 import InvoiceDisplay from "./pages/Invoice/InvoiceDisplay";
 import UserTable from "./pages/User/UserTable";

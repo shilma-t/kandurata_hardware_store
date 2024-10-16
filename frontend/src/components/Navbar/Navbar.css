@@ -192,4 +192,18 @@
     color: #49557e;
 }
 
+.voice-search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
 
+.voice-search-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+.navbar-search p {
+  font-size: 14px;
+  color: #555;
+}
