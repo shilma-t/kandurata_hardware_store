@@ -18,12 +18,12 @@ import invoiceRouter from './routes/invoiceRoutes.js';
 import leaveRoutes from './routes/leaveRoutes.js';
 import employeeRoutes from './routes/employeeRoutes.js';
 
-<<<<<<< HEAD
+
 //the below is used for the role base logins
 import employeeRouter from './routes/employee.js'
-=======
+
 import cardRoutes from './routes/cardRoutes.js';
->>>>>>> 217e518838ba64919ee12ddd1879c7db3d3c7926
+
 
 dotenv.config();
 
