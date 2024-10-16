@@ -33,7 +33,7 @@
     color: #000000; /* Dark gray color for the text */
     text-align: center; /* Center the heading text */
     margin-bottom: 20px; /* Space below the heading */
-    font-family: 'Times New Roman', Times, serif;
+
     text-transform: uppercase; /* Transform text to uppercase */
     border-bottom: 1px solid #1D1D1D; /* Bottom border for emphasis */
     padding-bottom: 13px; /* Padding below the text for better spacing */
@@ -44,7 +44,7 @@
     display: block;
     font-size: 1.2rem; /* Font size for labels */
     font-weight: bold;
-    font-family: 'Times New Roman', Times, serif;
+
     margin-bottom: 6.5px; /* Space between label and input */
 
 }
@@ -53,7 +53,7 @@
 input.form-control {
     margin-bottom: 20px; /* Space below the input fields */
     width: 100%;
-    font-family: 'Times New Roman', Times, serif;
+
     padding: 10px; /* Padding inside the input field */
     border-radius: 4px;
     font-size: 1rem;
@@ -69,7 +69,7 @@ input.form-control {
     border: none;
     padding: 10px 15px;
     cursor: pointer;
-    font-family: 'Times New Roman', Times, serif;
+
     font-size: 18px;
     transition: background-color 0.3s;
     border-radius: 4px;

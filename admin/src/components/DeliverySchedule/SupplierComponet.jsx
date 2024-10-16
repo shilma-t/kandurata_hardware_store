@@ -11,18 +11,15 @@ const SupplierComponent = () => {
 
   return (
     <div className="app-content">
-     
-
-      <div className="content-area">
-        <div className="controls-container">
-          <div className="button-container">
-          <Link to="/logistics" className="assign-driver-btn">Back To Dashboard </Link>
-            <Link to="/addSupplier" className="assign-driver-btn">Add Supplier</Link>
-            <Link to="/listSupplier" className="pdf-btn">Supplier List</Link>
-          </div>
-        </div>
-        {/* Add other components like tables or search bars here if needed */}
+     <div className="DriverListSidebar">
+        <ul>
+          <li><Link to="/logistics">Dashboard</Link></li>
+          <li><Link to="/addSupplier">Add Supplier</Link></li>
+          <li><Link to="/listSupplier">List Supplier </Link></li>
+        </ul>
       </div>
+
+      
     </div>
   );
 };

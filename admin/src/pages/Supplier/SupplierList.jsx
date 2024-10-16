@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios'; 
-import jsPDF from 'jspdf'; // Import jsPDF for PDF generation
+import axios from 'axios';
+import jsPDF from 'jspdf';
 import './SupplierList.css';
 
 const SupplierList = () => {
@@ -13,12 +13,17 @@ const SupplierList = () => {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        axios.get('http://localhost:5001/api/suppliers/getSuppliers')
-            .then(result => {
+        const fetchSuppliers = async () => {
+            try {
+                const result = await axios.get('http://localhost:5001/api/suppliers/getSuppliers');
                 setSuppliers(result.data);
                 setFilteredSuppliers(result.data);
-            })
-            .catch(err => console.error("Error fetching suppliers:", err));
+            } catch (err) {
+                console.error("Error fetching suppliers:", err);
+                setMessage('Failed to fetch suppliers. Please try again later.');
+            }
+        };
+        fetchSuppliers();
     }, []);
 
     const handleSearchChange = (e) => {
@@ -34,15 +39,17 @@ const SupplierList = () => {
         setFilteredSuppliers(filtered);
     };
 
-    const handleDelete = (id) => {
-        axios.delete(`http://localhost:5001/api/suppliers/deleteSupplier/${id}`)
-            .then(res => {
-                setMessage('Successfully deleted!');
-                setTimeout(() => setMessage(''), 3000);
-                setSuppliers(suppliers.filter(supplier => supplier._id !== id));
-                setFilteredSuppliers(filteredSuppliers.filter(supplier => supplier._id !== id));
-            })
-            .catch(err => console.log(err));
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(`http://localhost:5001/api/suppliers/deleteSupplier/${id}`);
+            setMessage('Successfully deleted!');
+            setTimeout(() => setMessage(''), 3000);
+            setSuppliers(suppliers.filter(supplier => supplier._id !== id));
+            setFilteredSuppliers(filteredSuppliers.filter(supplier => supplier._id !== id));
+        } catch (err) {
+            console.error("Error deleting supplier:", err);
+            setMessage('Failed to delete supplier. Please try again later.');
+        }
     };
 
     const handleSort = (field) => {
@@ -56,6 +63,7 @@ const SupplierList = () => {
 
     const toggleSortOrder = () => {
         setSortOrder(prevOrder => prevOrder === 'asc' ? 'desc' : 'asc');
+        handleSort(sortField); // Re-sort after toggling order
     };
 
     const generatePDF = () => {
@@ -76,11 +84,8 @@ const SupplierList = () => {
             <div className="SupplierSidebar">
                 <ul>
                     <li><Link to="/logistics">Dashboard</Link></li>
-                    <li><Link to="/sample">Manage Order</Link></li>
-                    <li><Link to="/sup">Supplier Manager</Link></li>
-                    <li><Link to="/drivers">Driver Details</Link></li>
-                    <li><Link to="/drivers/add">Add Driver</Link></li>
-                    <li><Link to="/drivers">Delete Driver</Link></li>
+                    <li><Link to="/addSupplier">Add Supplier</Link></li>
+                    <li><Link to="/listSupplier">List Supplier</Link></li>
                 </ul>
             </div>
             <div className="suppliers-content">

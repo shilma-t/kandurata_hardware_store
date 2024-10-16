@@ -37,7 +37,6 @@
     height: 45px;
     width: 90px;
     font-size: 22px;
-    font-family: 'Times New Roman', Times, serif;
     color: white;
     display: flex;
     justify-content: center;
@@ -57,7 +56,6 @@
     height: 35px;
     width: 135px;
     font-size: 15px;
-    font-family: 'Times New Roman', Times, serif;
     color: white;
     display: flex;
     justify-content: center;
@@ -70,43 +68,6 @@
 .btn-warning:hover {
     background-color: rgb(247, 99, 73);
 }
-
-/* Edit button */
-/*.btn-edit {
-    background-color: #050505;
-    padding: 5px 10px;
-    border-radius: 5px;
-    color: rgb(14, 13, 13);
-    cursor: pointer;
-    margin-right: 5px;
-}
-
-.btn-edit i {
-    font-size: 14px;
-}
-
-/* Delete button */
-/*.btn-delete {
-    background-color: #F44336;
-    padding: 5px 10px;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-}
-
-.btn-delete i {
-    font-size: 14px;
-}*/
-
-/* Hover effects */
-/*.btn-add:hover,
-.btn-search:hover,
-.btn-sort:hover,
-.btn-edit:hover,
-.btn-delete:hover,
-.btn-warning:hover {
-    background-color: rgb(247, 99, 73);
-}*/
 
 /* Table styling */
 .table {
@@ -121,15 +82,13 @@
     border: 1px solid #3d3b3b;
     padding: 12px;
     text-align: center;
-    font-family: 'Times New Roman', Times, serif;
     font-size: 18px;
 }
 
 .table th {
     background-color: rgb(247, 99, 73);
     font-size: 20px;
-    color: #131212;
-    font-family: 'Times New Roman', Times, serif;
+    color: #000000;
    
 }
 
@@ -195,14 +154,12 @@
     transition: background-color 0.3s;
     height: 32px;
     width: 60px;
-    font-family: 'Times New Roman', Times, serif;
     font-size: 14px;
     margin-right: 4px;
 }
 
 /* Delete button */
 .btn-delete {
-    background-color: #ac0f0f;
     padding: 8px 12px;
     border-radius: 5px;
     color: white;
@@ -215,17 +172,16 @@
     text-decoration: none; /* For the Link element */
     border: none; /* Ensures it looks like a button */
     transition: background-color 0.3s;
-    font-family: 'Times New Roman', Times, serif;
     font-size: 14px;
 }
 
 
 /* Hover effects */
 .btn-edit:hover {
-    background-color: #f72121;
+    background-color: tomato;
 }
 
 .btn-delete:hover {
-    background-color: #f72121;
+    background-color: tomato;
 }
 

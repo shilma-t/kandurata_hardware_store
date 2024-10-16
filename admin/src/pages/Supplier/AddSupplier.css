@@ -1,106 +1,58 @@
-.add-supplier-container{
-    margin-left: 260px;
-}
-
-/* Container for the entire form */
-.add-supplier-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin-left: 480px;
-}
-
 .create-user-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: auto;
-    width: 150%;
-    background-color: white;
-    padding: 10px;
+  flex: 1; /* Take up the remaining space */
+  padding: 20px;
+  width: 600px;
+  margin-top: 40px;
+  background-color: #fff; /* White background for the form */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-.add-supplier-content h2 {
-    font-size: 1.3.5rem; /* Set font size */
-    font-weight: bold; /* Make text bold */
-    color: #000000; /* Dark gray color for the text */
-    text-align: center; /* Center the heading text */
-    margin-bottom: 20px; /* Space below the heading */
-    font-family: 'Times New Roman', Times, serif;
-    text-transform: uppercase; /* Transform text to uppercase */
-    border-bottom: 1px solid #1D1D1D; /* Bottom border for emphasis */
-    padding-bottom: 13px; /* Padding below the text for better spacing */
+.create-user-container h2 {
+  margin-bottom: 20px; /* Space below the heading */
+  text-align: center; /* Center the heading */
+  font-weight: 700; /* Bold weight for headings */
 }
 
-
-
-.form-wrapper {
-    width: 380%;
-    background-color: rgb(216, 213, 213); /* Light grey background for the form */
-    border-radius: 8px;
-    padding: 16px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: 'Times New Roman', Times, serif;
-    align-items: center;
+.mb-3 {
+  margin-bottom: 15px; /* Space between form elements */
 }
-/* Styling for labels */
+
 .form-label {
-    display: block;
-    font-size: 1.2rem; /* Font size for labels */
-    font-weight: bold;
-    font-family: 'Times New Roman', Times, serif;
-    margin-bottom: 6.5px; /* Space between label and input */
+  font-weight: 700; /* Bold labels */
 }
 
-/* Ensure inputs have space above them */
-input.form-control {
-    margin-bottom: 20px; /* Space below the input fields */
-    width: 100%;
-    font-family: 'Times New Roman', Times, serif;
-    padding: 10px; /* Padding inside the input field */
-    border-radius: 4px;
-    font-size: 1rem;
-    border: 1px solid #f1eeee;
-    box-sizing: border-box;
+.form-control {
+  width: 100%; /* Full width inputs */
+  padding: 10px; /* Padding inside inputs */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 4px; /* Rounded edges */
+  transition: border-color 0.3s; /* Transition for border color */
 }
 
-/* Submit button styling */
+.form-control:focus {
+  border-color: tomato; /* Change border color on focus */
+  outline: none; /* Remove outline */
+}
+
+.text-danger {
+  color: red; /* Red color for error messages */
+  font-size: 0.875rem; /* Smaller font size for errors */
+  margin-top: 5px; /* Space above error messages */
+}
+
 .btn-submit {
-    background-color: #1D1D1D;
-    color: #fff;
-    font-weight: bold;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 18px;
-    transition: background-color 0.3s;
-    border-radius: 4px;
-    width: 100%; /* Full-width button */
+  background-color: #000000; /* Primary button color */
+  color: white; /* White text color */
+  padding: 10px 15px; /* Padding for button */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded edges */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s; /* Transition for background color */
+  width: 100%; /* Full width button */
+
 }
 
 .btn-submit:hover {
-    background-color: tomato;
+  background-color: tomato; /* Darker shade on hover */
 }
-
-/* Error message styling */
-.text-danger {
-    color: red;
-    font-size: 0.9rem;
-    margin-top: -15px; /* To bring error messages closer to the input fields */
-}
-
-/* Media query for responsiveness */
-
-
-
-.btn-submit:hover {
-    background-color: tomato; /* Change to tomato on hover */
-}
-
-.text-danger {
-    color: red; /* Color for error messages */
-}
-
-/* Additional styles can be added as needed */

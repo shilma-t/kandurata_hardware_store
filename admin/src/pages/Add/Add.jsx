@@ -20,6 +20,7 @@ const Add = () => {
     category: "",
     supplierName: ""
   });
+  const [suppliers, setSuppliers] = useState([]); // State for suppliers
 
   useEffect(() => {
     const generateProductId = () => {
@@ -30,6 +31,18 @@ const Add = () => {
 
     const currentDate = new Date().toISOString().split('T')[0];
     setDate(currentDate);
+
+    // Fetch suppliers when the component mounts
+    const fetchSuppliers = async () => {
+      try {
+        const response = await axios.get(`${url}/api/suppliers/getSuppliers`);
+        setSuppliers(response.data);
+      } catch (error) {
+        console.error("Error fetching suppliers:", error);
+      }
+    };
+
+    fetchSuppliers();
   }, []);
 
   const onChangeHandler = (event) => {
@@ -164,7 +177,12 @@ const Add = () => {
 
           <div className="add-supplier-name flex-col">
             <p>Supplier Name</p>
-            <input type="text" name='supplierName' placeholder='Enter supplier name' value={data.supplierName} onChange={onChangeHandler} required />
+            <select name='supplierName' value={data.supplierName} onChange={onChangeHandler} required>
+              <option value="">Select a supplier</option>
+              {suppliers.map(supplier => (
+                <option key={supplier._id} value={supplier.name}>{supplier.name}</option>
+              ))}
+            </select>
           </div>
 
           <div className="add-date">

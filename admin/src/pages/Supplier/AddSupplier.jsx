@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './AddSupplier.css';
 
@@ -70,9 +71,15 @@ const AddSupplier = () => {
 
   return (
     <div className='add-supplier-container'>
-      <div className='add-supplier-content'>
+      <div className="DriverListSidebar">
+        <ul>
+          <li><Link to="/logistics">Dashboard</Link></li>
+          <li><Link to="/addSupplier">Add Supplier</Link></li>
+          <li><Link to="/listSupplier">List Supplier </Link></li>
+        </ul>
+      </div>
         <div className='create-user-container'>
-          <div className='form-wrapper'>
+        
             <h2>Supplier Management</h2>
             <form onSubmit={Submit}>
               <div className='mb-3 text-start'>
@@ -140,8 +147,6 @@ const AddSupplier = () => {
             </form>
           </div>
         </div>
-      </div>
-    </div>
   );
 };
 

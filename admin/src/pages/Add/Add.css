@@ -126,3 +126,21 @@
     background-color: #555;
     text-decoration: underline;
   }
+  .supplier-dropdown {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #ccc;
+    position: absolute;
+    background: white;
+    z-index: 1; /* Make sure dropdown is above other content */
+}
+
+.supplier-dropdown li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.supplier-dropdown li:hover {
+    background-color: #f0f0f0; /* Highlight on hover */
+}
