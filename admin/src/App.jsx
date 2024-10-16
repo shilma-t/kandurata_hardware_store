@@ -36,6 +36,7 @@ import EditEmployee from './pages/Employee/EditEmployee';
 import LeaveForm from './pages/Leaves/LeaveForm';
 import LeaveList from './pages/Leaves/LeaveList';
 
+import EmployeeRegister from "./pages/MainPage/EmployeeRegister"; // Adjust if the path is incorrect
 
 
 const App = () => {
@@ -81,6 +82,8 @@ const App = () => {
           <Route path="/edit-employee/:id" element={<EditEmployee />} />
           <Route path="/leaves/new" element={<LeaveForm />} />
           <Route path="/leaves" element={<LeaveList />} />
+
+          <Route path="/register" element={<EmployeeRegister />} />
         </Routes>
       </div>
     </div>
