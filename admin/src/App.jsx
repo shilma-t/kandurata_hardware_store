@@ -64,7 +64,7 @@ const App = () => {
           <Route path="/sample" element={<SampleComponent />} />{/* DS */}
           <Route path="/assigned-orders" element={<AssignedOrders />} /> {/* DS */}
           
-          {/* New Invoice route */}
+   
           <Route path="/invoice" element={<Invoice />} />
           <Route path="/invoice-display" element={<InvoiceDisplay />} /> 
           <Route path="/users" element={<UserTable />} /> {/* Corrected this line */}

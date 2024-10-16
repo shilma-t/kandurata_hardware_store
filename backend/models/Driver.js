@@ -11,7 +11,6 @@ const driverSchema = new mongoose.Schema({
   vehicleModel: { type: String, required: true }
 });
 
-// Create or get the model for the schema
 const driverModel = mongoose.models.driver || mongoose.model("driver", driverSchema);
 
 export default driverModel;

@@ -10,7 +10,8 @@ import { StoreContext } from './context/StoreContext';
 import OrderConfirmation from './pages/OrderConformation/OrderConfirmation';
 import UserOrders from './pages/UserOrders/Order'
 import UserQueries from './components/Inquiry/UserQueries';
-import EditInquiryForm from './components/Inquiry/EditInquiryForm'; 
+import EditInquiryForm from './components/Inquiry/EditInquiryForm';
+
 import 'bootstrap/dist/css/bootstrap.css';
 
 import Card from './pages/Card/CardManager'
@@ -30,7 +31,6 @@ const App = () => {
     <div className='app'>
       <Navbar setShowLogin={setShowLogin} token ={token} /> 
 
-      {/* Conditionally render the LoginPopup based on state */}
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
 
       <Routes>
