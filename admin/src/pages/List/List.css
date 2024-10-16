@@ -1,20 +1,14 @@
 /* Styling for the main container to ensure proper layout with Sidebar */
 .main-container {
-    display: flex; /* Sidebar and Product list are flex items */
-    min-height: 100vh; /* Take full height of viewport */
-  }
+  width: 100%;
+  display: flex;
+  font-family: Arial, sans-serif; /* Ensure a clean, modern font */
   
-  /* Sidebar styling */
-  .sidebar {
-    width: 250px;
-    background-color: #f4f4f4;
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   }
   
   /* Product list container styling */
   .product-list-container {
-    flex-grow: 1;
+    margin-left: 100px;
     padding: 20px;
     background-color: #fff;
     overflow-y: auto; /* Scroll if content overflows */
@@ -97,3 +91,5 @@
     color: red;
     font-weight: bold;
   }
+
+  

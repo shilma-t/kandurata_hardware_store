@@ -20,7 +20,7 @@ const List = () => {
   const [selectedSupplier, setSelectedSupplier] = useState('');
   const [lowStockAlerts, setLowStockAlerts] = useState([]); // State for low stock alerts
   const [showAlertsPopup, setShowAlertsPopup] = useState(false); // State to toggle popup
-
+ 
   const url = "http://localhost:5001/api/product";
 
   const fetchProducts = async () => {
