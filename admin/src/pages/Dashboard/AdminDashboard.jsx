@@ -53,6 +53,7 @@ const AdminDashboard = () => {
           <li className="sidebar-item"><Link to="/orders">Orders</Link></li>
           <li className="sidebar-item"><Link to="/users">Users</Link></li>
           <li className="sidebar-item"><Link to="/sales">Sales</Link></li>
+          <li className="sidebar-item"><Link to="/register"> Register here</Link></li>
         </ul>
       </div>
       <div className="dashboard-content">

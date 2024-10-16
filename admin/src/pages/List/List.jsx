@@ -8,8 +8,8 @@ import Papa from 'papaparse';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import './List.css';
-import Sidebar from '../../components/Sidebar/Sidebar';
 import notiIcon from '../../assets/noti_icon.jpeg'; // Import your notification icon
+import { Link } from 'react-router-dom'; // Import Link for navigation
 
 const List = () => {
   const [products, setProducts] = useState([]);
@@ -134,7 +134,16 @@ const List = () => {
 
   return (
     <div className="main-container">
-      <Sidebar />
+      <div className="SalesSidebar">
+        <ul className="sidebar-list">
+          <li className="sidebar-item"><Link to="/dashboard/admin">Dashboard</Link></li>
+          <li className="sidebar-item"><Link to="/add">Add Items</Link></li>
+          <li className="sidebar-item"><Link to="/list">Inventory</Link></li>
+          <li className="sidebar-item"><Link to="/orders">Orders</Link></li>
+          <li className="sidebar-item"><Link to="/users">Users</Link></li>
+          <li className="sidebar-item"><Link to="/sales">Sales</Link></li>
+        </ul>
+      </div>
       
       <div className="product-list-container">
         <h2>Product List</h2>

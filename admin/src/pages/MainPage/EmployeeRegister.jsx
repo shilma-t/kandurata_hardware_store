@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './EmployeeRegister.css'
 
 const EmployeeRegister = () => {
     const [name, setName] = useState('');
@@ -13,7 +14,7 @@ const EmployeeRegister = () => {
             await axios.post('http://localhost:5001/api/employees/register', { name, email, password, role });
             alert("Employee registered successfully");
             // Optionally, redirect to login page or clear form
-        } catch (error) {
+        } catch (error) { 
             console.error('Registration failed:', error.response?.data?.message || error.message);
             alert('Registration failed. Please try again.');
         }
