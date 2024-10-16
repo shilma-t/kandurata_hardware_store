@@ -1,219 +1,99 @@
-/* General Table Format */
-.alist-table-format {
-    display: grid;
-    grid-template-columns: 0.7fr 1fr 1.5fr 1fr 1fr 0.7fr 0.7fr 0.7fr 0.7fr 0.7fr 0.7fr; /* Adjusted to make room for actions */
-    align-items: center;
-    gap: 10px;
-    padding: 12px 15px;
-    border: 1px solid #cacaca;
-    font-size: 13px;
-}
-
-.alist-table-format.title {
-    background-color: #f9f9f9;
-    font-weight: bold;
-}
-
-/* Image Styling */
-.alist-table-format img {
-    width: 50px;
-    height: auto;
-    border-radius: 4px;
-}
-
-/* Action Buttons */
-.alist-table-format div {
-    display: flex;
-    justify-content: flex-end; /* Aligns the actions to the right */
-    align-items: center;
-    gap: 10px;
-}
-
-.alist-table-format div p {
-    margin: 0;
-    padding: 5px 15px; /* Adjusted padding to make them look like buttons */
-    border-radius: 4px;
-    cursor: pointer;
-    background-color: black;
-    color: white;
-    border: none;
-    font-size: 13px;
-    text-align: center;
-}
-
-.alist-table-format div p:hover {
-    background-color: tomato; /* Darker shade for hover effect */
-}
-
-.alist-table-format div p.cursor-delete {
-    background-color: #dc3545; /* Red color for delete button */
-}
-
-.alist-table-format div p.cursor-delete:hover {
-    background-color: #c82333; /* Darker red on hover */
-}
-
-/* Responsive Styles */
-@media (max-width: 600px) {
-    .alist-table-format {
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 10px;
-        font-size: 12px;
-        padding: 10px;
-    }
-
-    .alist-table-format.title {
-        display: none;
-    }
-
-    .alist-table-format img {
-        width: 40px;
-    }
-
-    .alist-table-format p {
-        word-wrap: break-word;
-    }
-}
-
-/* Confirmation Alert Styles */
-.react-confirm-alert-overlay {
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-.react-confirm-alert-body {
-    font-size: 14px;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.react-confirm-alert-button-group {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-}
-
-.react-confirm-alert-button-group button {
-    padding: 8px 16px;
-    font-size: 14px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-}
-
-.react-confirm-alert-button-group button:first-child {
-    background-color: #dc3545; /* Red color for "No" button */
-}
-
-.react-confirm-alert-button-group button:hover {
-    opacity: 0.9;
-}
-
-/* Modal Styles */
-.Modal {
-    position: absolute;
-    top: 0%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 4px;
-    max-width: 500px;
-    width: 100%;
-}
-
-/* Overlay Styles */
-.Overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.75);
-}
-
-/* Search Bar Styles */
-.search-bar {
-    padding: 10px;
-    width: 100%;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-/* Button Styles */
-.btn-report {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #4caf50; /* Green color */
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.btn-report:hover {
-    background-color: #45a049; /* Darker green on hover */
-}
-
-/* Search and Report Container */
-.search-report-container {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Space between elements */
-    margin-bottom: 15px; /* Space below the container */
-}
-
-.search-bar {
-    flex: 1; /* Make search bar grow */
-    padding: 8px;
-}
-
-.supplier-dropdown {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-/* Sidebar Styling */
-.ListSidebar {
+/* Styling for the main container to ensure proper layout with Sidebar */
+.main-container {
+    display: flex; /* Sidebar and Product list are flex items */
+    min-height: 100vh; /* Take full height of viewport */
+  }
+  
+  /* Sidebar styling */
+  .sidebar {
     width: 250px;
-    background-color: #333;
-    color: #fff;
+    background-color: #f4f4f4;
     padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.ListSidebar ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.ListSidebar ul li {
-    margin: 15px 0;
-}
-
-.ListSidebar ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-    display: block; 
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Product list container styling */
+  .product-list-container {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #fff;
+    overflow-y: auto; /* Scroll if content overflows */
+  }
+  
+  /* Search input styling */
+  .search-input {
+    width: 100%;
     padding: 10px;
-    border-radius: 4px;
-}
-
-.ListSidebar ul li a:hover {
-    background-color: #555;
-    text-decoration: underline;
-}
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+ /* Notification section */
+.notification-section {
+    position: fixed; /* Fix the position to the viewport */
+    top: 20px; /* Distance from the top */
+    right: 20px; /* Distance from the right */
+    display: inline-block; /* Ensure it takes only as much space as needed */
+    z-index: 1000; /* Make sure it appears above other content */
+  }
+  
+  /* Notification icon */
+  .noti-icon {
+    width: 30px; /* Resize notification icon */
+    height: auto; /* Maintain aspect ratio */
+    cursor: pointer; /* Change cursor to pointer on hover */
+  }
+  
+  /* Notification count styling */
+  .notification-count {
+    position: absolute;
+    top: 0; /* Position at the top */
+    right: 0; /* Position at the right */
+    background-color: red; /* Background color for count */
+    color: white; /* Text color */
+    border-radius: 50%; /* Make it a circle */
+    padding: 2px 6px; /* Adjust padding for better appearance */
+    font-size: 12px; /* Font size */
+    font-weight: bold; /* Make the font bold */
+    transform: translate(50%, -50%); /* Shift it slightly to the right and up for better alignment */
+  }
+  
+  
+  /* Alerts popup styling */
+  .alerts-popup {
+    position: absolute;
+    top: 40px; /* Position below the icon */
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 1000; /* Ensure it stays above other elements */
+  }
+  
+  /* Actions button styling */
+  .actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px; /* Space between buttons */
+  }
+  
+  /* Styling for table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  /* Low stock message styling */
+  .low-stock-message {
+    color: red;
+    font-weight: bold;
+  }

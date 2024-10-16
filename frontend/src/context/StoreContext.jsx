@@ -8,8 +8,11 @@ const StoreContextProvider = (props) => {
     const [featuredProducts, setFeaturedProducts] = useState([]);
     const [token, setToken] = useState("");
     const [userId, setUserId] = useState("");
+    
     const url = "http://localhost:5001"; // Replace with your actual backend URL
 
+
+    
     // Add item to cart
     const addToCart = async (itemId, size, productName) => {
         setCartItems((prev) => {
@@ -163,6 +166,7 @@ const StoreContextProvider = (props) => {
         getTotalCartAmount,
     };
 
+    
     return (
         <StoreContext.Provider value={contextValue}>
             {props.children}

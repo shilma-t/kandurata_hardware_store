@@ -55,89 +55,67 @@ const Invoice = () => {
   };
 
   // Function to generate PDF invoice
-  // Function to generate PDF invoice
-const generatePDF = async () => {
-  // Check if customer name is provided
-  if (!customerName) {
-    alert('Please enter the customer name before generating the invoice.');
-    return;
-  }
-
-  // Check if any quantity is invalid (less than 1 or not provided)
-  for (const item of invoiceItems) {
-    if (!item.quantity || item.quantity < 1 || item.quantity > item.availableQuantity) {
-      alert(`Invalid quantity for item ${item.name}. Please ensure all quantities are at least 1 and not more than available quantity.`);
+  const generatePDF = async () => {
+    if (!customerName) {
+      alert('Please enter the customer name before generating the invoice.');
       return;
     }
-  }
 
-  const doc = new jsPDF();
-
-  // Add invoice number
-  doc.text(`Invoice Number: ${invoiceNumber}`, 10, 10);
-  
-  // Add customer name
-  doc.text(`Customer Name: ${customerName}`, 10, 20);
-  doc.text(`Date: ${new Date().toLocaleDateString()}`, 10, 30);
-  
-  // Define table columns
-  const columns = ['Item', 'Quantity', 'Price', 'Subtotal'];
-  const rows = invoiceItems.map(item => [
-    item.name,
-    item.quantity,
-    item.price.toFixed(2),
-    item.total.toFixed(2),
-  ]);
-  
-  // Add table to PDF
-  doc.autoTable(columns, rows, { startY: 40 });
-  
-  // Calculate totals
-  const subtotal = invoiceItems.reduce((acc, item) => acc + item.total, 0);
-  const total = subtotal - discount;
-  
-  // Add discount and total
-  doc.text(`Discount: LKR ${discount.toFixed(2)}`, 10, doc.autoTable.previous.finalY + 10);
-  doc.text(`Total: LKR ${total.toFixed(2)}`, 10, doc.autoTable.previous.finalY + 20);
-  
-  // Save the PDF
-  doc.save('invoice.pdf');
-
-  // Save invoice to the database
-  try {
-    const response = await fetch('http://localhost:5001/api/invoice', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        invoiceNumber,
-        customerName,
-        items: invoiceItems,
-        discount,
-        totalAmount: total
-      }),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      alert('Invoice created successfully!');
-
-      // Update product quantities
-      await updateProductQuantities();
-
-      // Reset invoice state
-      setInvoiceItems([]); // Reset items
-      setCustomerName(''); // Reset customer name
-      setDiscount(0); // Reset discount
-    } else {
-      alert('Failed to create invoice.');
+    for (const item of invoiceItems) {
+      if (!item.quantity || item.quantity < 1 || item.quantity > item.availableQuantity) {
+        alert(`Invalid quantity for item ${item.name}.`);
+        return;
+      }
     }
-  } catch (error) {
-    alert('Error occurred while creating the invoice.');
-    console.error(error);
-  }
-};
+
+    const doc = new jsPDF();
+    doc.text(`Invoice Number: ${invoiceNumber}`, 10, 10);
+    doc.text(`Customer Name: ${customerName}`, 10, 20);
+    doc.text(`Date: ${new Date().toLocaleDateString()}`, 10, 30);
+
+    const columns = ['Item', 'Quantity', 'Price', 'Subtotal'];
+    const rows = invoiceItems.map(item => [
+      item.name,
+      item.quantity,
+      item.price.toFixed(2),
+      item.total.toFixed(2),
+    ]);
+
+    doc.autoTable(columns, rows, { startY: 40 });
+
+    const subtotal = invoiceItems.reduce((acc, item) => acc + item.total, 0);
+    const total = subtotal - discount;
+
+    doc.text(`Discount: LKR ${discount.toFixed(2)}`, 10, doc.autoTable.previous.finalY + 10);
+    doc.text(`Total: LKR ${total.toFixed(2)}`, 10, doc.autoTable.previous.finalY + 20);
+    doc.save('invoice.pdf');
+
+    try {
+      const response = await fetch('http://localhost:5001/api/invoice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          invoiceNumber,
+          customerName,
+          items: invoiceItems,
+          discount,
+          totalAmount: total
+        }),
+      });
+
+      if (response.ok) {
+        await updateProductQuantities();
+        alert('Invoice created successfully!');
+        setInvoiceItems([]);
+        setCustomerName('');
+        setDiscount(0);
+      } else {
+        alert('Failed to create invoice.');
+      }
+    } catch (error) {
+      console.error('Error occurred while creating the invoice.', error);
+    }
+  };
 
   // Function to update product quantities
   const updateProductQuantities = async () => {
@@ -146,15 +124,12 @@ const generatePDF = async () => {
         invoiceItems.map(async (item) => {
           const response = await fetch(`http://localhost:5001/api/product/update`, {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              id: item._id, // Assuming the product item has an `_id` field
-              quantity: item.availableQuantity - item.quantity, // Update quantity
+              id: item._id,
+              quantity: item.availableQuantity - item.quantity,
             }),
           });
-  
           if (!response.ok) {
             throw new Error(`Failed to update quantity for ${item.name}`);
           }
@@ -163,16 +138,22 @@ const generatePDF = async () => {
       alert('Product quantities updated successfully!');
     } catch (error) {
       console.error('Error updating product quantities:', error);
-      alert('Error occurred while updating product quantities.');
     }
   };
-  
-  
 
-  // Update the discount handler
+  // Update the discount handler to handle percentage input
   const handleDiscountChange = (value) => {
-    const newDiscount = parseFloat(value);
-    const total = calculateTotal(); // Calculate total without the discount
+    let newDiscount = 0;
+    const total = invoiceItems.reduce((acc, item) => acc + item.total, 0); // Calculate total without the discount
+
+    if (value.includes('%')) {
+      // If percentage is detected, calculate the discount based on total
+      const percentage = parseFloat(value.replace('%', ''));
+      newDiscount = (total * percentage) / 100;
+    } else {
+      // Otherwise, treat it as a fixed discount amount
+      newDiscount = parseFloat(value);
+    }
 
     // Ensure the discount does not exceed the total
     if (newDiscount > total) {
@@ -217,9 +198,8 @@ const generatePDF = async () => {
                 type="number"
                 value={item.quantity}
                 min="1"
-                max={item.availableQuantity} // Set max to available quantity
+                max={item.availableQuantity}
                 onChange={(e) => handleQuantityChange(index, parseInt(e.target.value))}
-                required // Ensure the field is required
               />
               <p>{item.total.toFixed(2)}</p>
               <button className="delete-button" onClick={() => handleDelete(index)}>
@@ -236,11 +216,10 @@ const generatePDF = async () => {
       <div className="discount-section">
         <label>Discount:</label>
         <input
-          type="number"
+          type="text"
           value={discount}
-          min="0"
           onChange={(e) => handleDiscountChange(e.target.value)}
-          placeholder="Enter discount amount"
+          placeholder="Enter discount amount or percentage (e.g., 10 or 10%)"
         />
       </div>
 
