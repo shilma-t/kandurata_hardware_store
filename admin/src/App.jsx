@@ -37,6 +37,8 @@ import LeaveList from "./pages/Leaves/LeaveList";
 import EmployeeRegister from "./pages/MainPage/EmployeeRegister"; 
 import EmployeeLogin from "./pages/MainPage/EmployeeRegister";
 
+import MainPage from "./pages/MainPage/MainPage";
+
 const App = () => {
   return (
     <div>
@@ -44,6 +46,7 @@ const App = () => {
       <hr />
       <div className="app-content">
         <Routes>
+        <Route path="/main" element={<MainPage />} />
           <Route path="/add" element={<Add />} />
           <Route path="/list" element={<List />} />
           <Route path="/orders" element={<Orders />} />

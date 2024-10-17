@@ -82,16 +82,12 @@ function Dashboard() {
             <h2>{orders.length}</h2>
           </div>
           <div className="stat-box">
-            <p>Orders Delivered</p>
-            <h2>{orders.filter(order => order.status === 'Delivered').length}</h2>
-          </div>
-          <div className="stat-box">
             <p>Orders in Progress</p>
-            <h2>{orders.filter(order => order.status === 'In Progress').length}</h2>
+            <h2>{orders.length}</h2>
           </div>
           <div className="stat-box">
             <p>Orders Failed</p>
-            <h2>{orders.filter(order => order.status === 'Failed').length}</h2>
+            <h2>0</h2>
           </div>
         </div>
         <div className="chart-section">
