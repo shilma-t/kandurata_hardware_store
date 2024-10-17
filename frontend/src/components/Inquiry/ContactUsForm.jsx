@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./contactUsForm.css";
@@ -9,12 +9,9 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle"; // Success icon
 import ListAltIcon from '@mui/icons-material/ListAlt'; // Inquiry list icon
 
 const ContactUsForm = () => {
-  const storedName = localStorage.getItem('name') || ''; // Retrieve name from localStorage
-  const storedEmail = localStorage.getItem('email') || ''; // Retrieve email from localStorage
-
   const [formData, setFormData] = useState({
-    username: storedName, // Initialize with stored name
-    email: storedEmail, // Initialize with stored email
+    username: "", // Initialize without stored name
+    email: "", // Initialize without stored email
     message: "",
   });
 
@@ -23,6 +20,17 @@ const ContactUsForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const navigate = useNavigate(); // Initialize useNavigate
+
+  // Prefill form with values from localStorage
+  useEffect(() => {
+    const storedName = localStorage.getItem('name') || ''; // Retrieve name from localStorage
+    const storedEmail = localStorage.getItem('email') || ''; // Retrieve email from localStorage
+    setFormData({
+      username: storedName, // Set stored name
+      email: storedEmail, // Set stored email
+      message: "",
+    });
+  }, []); // Empty dependency array ensures this runs once on mount
 
   // Handle input changes
   const handleChange = (e) => {
@@ -57,7 +65,7 @@ const ContactUsForm = () => {
       createNotify("Inquiry submitted successfully!"); // Show success notification
       setStatusMessage("Inquiry submitted successfully!");
       setIsSubmitted(true); // Set submitted state
-      setFormData({ username: storedName, email: storedEmail, message: "" }); // Clear form message
+      setFormData({ username: "", email: "", message: "" }); // Clear form message
       setErrors({}); // Clear errors
       // Optionally navigate to another page
       // navigate('/queries');
@@ -109,7 +117,6 @@ const ContactUsForm = () => {
                 onChange={handleChange}
                 className="form-control"
                 style={{ width: "100%", boxSizing: "border-box" }}
-                //disabled
               />
               {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
             </div>

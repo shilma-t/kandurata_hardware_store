@@ -25,6 +25,12 @@ const leaveSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  status: {
+    type: String,
+    enum: ['Pending', 'Accepted', 'Declined'],
+    default: 'Pending',
+  },
+
 }, { timestamps: true });
 
 const Leave = mongoose.model('Leave', leaveSchema);
