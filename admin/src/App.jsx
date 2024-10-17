@@ -10,7 +10,7 @@ import LogisticsManagerDashboard from './pages/Dashboard/LogisticsManagerDashboa
 import CashierDashboard from './pages/Dashboard/CashierDashboard';
 import HrManagerDashboard from './pages/Dashboard/HrManagerDashboard';
 import EmployeeDashboard from './pages/Dashboard/EmployeeDashboard';
-import LoginPage from './pages/adminLogin/AdminLoginPage';
+
 import { useAuth } from './context/authContext';
 import DriverForm from './pages/driver/DriverForm';
 import DriverList from './pages/driver/DriverList';
@@ -38,6 +38,8 @@ import LeaveList from './pages/Leaves/LeaveList';
 
 import EmployeeRegister from "./pages/MainPage/EmployeeRegister"; // Adjust if the path is incorrect
 
+import DashboardAcess from "./pages/DashboardAccess/DashboardAccess"
+import EmployeeLogin from "./pages/EmployeeLogin/EmployeeLogin"
 
 const App = () => {
   return (
@@ -46,11 +48,10 @@ const App = () => {
       <hr />
       <div className="app-content">
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<EmployeeLogin />} />
           <Route path="/add" element={<Add />} />
           <Route path="/list" element={<List />} />
           <Route path="/orders" element={<Orders />} />
-          <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard/admin" element={<AdminDashboard />} />
           <Route path="/dashboard/cashier" element={<CashierDashboard />} />
           <Route path="/hr" element={<HrManagerDashboard />} />
@@ -84,6 +85,8 @@ const App = () => {
           <Route path="/leaves" element={<LeaveList />} />
 
           <Route path="/register" element={<EmployeeRegister />} />
+
+          <Route path="/acess" element={<DashboardAcess />} />
         </Routes>
       </div>
     </div>
