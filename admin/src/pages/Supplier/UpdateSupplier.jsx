@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer and toast
-import 'react-toastify/dist/ReactToastify.css'; // Import CSS for Toastify
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css'; 
 import './UpdateSupplier.css';
 
 const UpdateSupplier = () => {
-    const { id } = useParams(); // Get supplier ID from URL
+    const { id } = useParams(); 
     const navigate = useNavigate();
     const [supplier, setSupplier] = useState({
         name: '',
         company_name: '',
-        product_name: '',
         contact_number: '',
         email: ''
     });
     const [error, setError] = useState('');
 
     useEffect(() => {
-        // Fetch supplier data by ID
         const fetchSupplier = async () => {
             try {
                 const response = await axios.get(`http://localhost:5001/api/suppliers/getSupplierById/${id}`);
@@ -39,9 +37,9 @@ const UpdateSupplier = () => {
         e.preventDefault();
         try {
             await axios.put(`http://localhost:5001/api/suppliers/updateSupplier/${id}`, supplier);
-            toast.success('Supplier updated successfully!'); // Show success toast
+            toast.success('Supplier updated successfully!'); 
             setTimeout(() => {
-                navigate('/listSupplier'); // Redirect to supplier list after 2 seconds
+                navigate('/listSupplier'); 
             }, 2000);
         } catch (error) {
             setError('Failed to update supplier details');
@@ -78,17 +76,6 @@ const UpdateSupplier = () => {
                             />
                         </div>
                         <div>
-                            <label className="form-label">Product Name:</label>
-                            <input 
-                                type="text" 
-                                name="product_name" 
-                                className="form-control" 
-                                value={supplier.product_name} 
-                                onChange={handleChange} 
-                                required 
-                            />
-                        </div>
-                        <div>
                             <label className="form-label">Contact Number:</label>
                             <input 
                                 type="text" 
@@ -114,7 +101,7 @@ const UpdateSupplier = () => {
                     </form>
                 </div>
             </div>
-            <ToastContainer /> {/* Add ToastContainer here */}
+            <ToastContainer /> 
         </div>
     );
 };

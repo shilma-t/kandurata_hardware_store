@@ -3,8 +3,8 @@ import { validationResult } from 'express-validator';
 
 // Get all suppliers with optional sorting
 export const getSuppliers = (req, res) => {
-    const sortField = req.query.sortField || 'name'; // Default sort by name
-    const sortOrder = req.query.sortOrder === 'desc' ? -1 : 1; // Default ascending order
+    const sortField = req.query.sortField || 'name';
+    const sortOrder = req.query.sortOrder === 'desc' ? -1 : 1;
 
     SupplierModel.find({})
         .sort({ [sortField]: sortOrder })
@@ -12,7 +12,7 @@ export const getSuppliers = (req, res) => {
         .catch(err => res.status(500).json(err));
 };
 
-// Get a single supplier by ID
+
 // Get a single supplier by ID
 export const getSupplierById = (req, res) => {
     const id = req.params.id;
@@ -20,7 +20,7 @@ export const getSupplierById = (req, res) => {
     SupplierModel.findById(id)
         .then(supplier => {
             if (supplier) {
-                res.json(supplier);  // Send supplier data as a response
+                res.json(supplier);
             } else {
                 res.status(404).json({ message: 'Supplier not found' });
             }
@@ -32,7 +32,7 @@ export const getSupplierById = (req, res) => {
 // Update a supplier by ID with duplicate check
 export const updateSupplierById = async (req, res) => {
     const id = req.params.id;
-    const { name, company_name, product_name, contact_number, email } = req.body;
+    const { name, company_name, contact_number, email } = req.body;
     const errors = validationResult(req);
     
     if (!errors.isEmpty()) {
@@ -44,7 +44,6 @@ export const updateSupplierById = async (req, res) => {
             _id: { $ne: id },
             name,
             company_name,
-            product_name,
             contact_number,
             email
         });
@@ -55,7 +54,7 @@ export const updateSupplierById = async (req, res) => {
 
         const updatedSupplier = await SupplierModel.findByIdAndUpdate(
             id,
-            { name, company_name, product_name, contact_number, email },
+            { name, company_name, contact_number, email },
             { new: true }
         );
 
@@ -84,24 +83,16 @@ export const deleteSupplierById = (req, res) => {
         .catch(err => res.status(500).json(err));
 };
 
+
 // Create a new supplier with duplicate check
+
 export const createSupplier = async (req, res) => {
-    const { name, company_name, product_name, contact_number, email } = req.body;
-
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-
-    if (!name || !company_name || !product_name || !contact_number || !email) {
-        return res.status(400).json({ message: 'All fields are required' });
-    }
+    const { name, company_name, contact_number, email } = req.body;
 
     try {
         const existingSupplier = await SupplierModel.findOne({
             name,
             company_name,
-            product_name,
             contact_number,
             email
         });
@@ -110,7 +101,7 @@ export const createSupplier = async (req, res) => {
             return res.status(400).json({ message: 'Supplier with the same details already exists' });
         }
 
-        const newSupplier = await SupplierModel.create({ name, company_name, product_name, contact_number, email });
+        const newSupplier = await SupplierModel.create({ name, company_name, contact_number, email });
         res.status(201).json(newSupplier);
     } catch (err) {
         res.status(500).json({ message: 'Internal Server Error' });

@@ -33,7 +33,6 @@ const SupplierList = () => {
         const filtered = suppliers.filter(supplier => 
             (supplier.name || '').toLowerCase().includes(query.toLowerCase()) ||
             (supplier.company_name || '').toLowerCase().includes(query.toLowerCase()) ||
-            (supplier.product_name || '').toLowerCase().includes(query.toLowerCase()) ||
             (supplier.email || '').toLowerCase().includes(query.toLowerCase())
         );
         setFilteredSuppliers(filtered);
@@ -72,8 +71,8 @@ const SupplierList = () => {
         doc.text('Supplier List', 14, 20);
         
         filteredSuppliers.forEach((supplier, index) => {
-            const { name, company_name, product_name, contact_number, email } = supplier;
-            doc.text(`${index + 1}. Name: ${name}, Company: ${company_name}, Product: ${product_name}, Contact: ${contact_number}, Email: ${email}`, 14, 30 + (index * 10));
+            const { name, company_name, contact_number, email } = supplier;
+            doc.text(`${index + 1}. Name: ${name}, Company: ${company_name}, Contact: ${contact_number}, Email: ${email}`, 14, 30 + (index * 10));
         });
 
         doc.save('suppliers.pdf');
@@ -86,6 +85,7 @@ const SupplierList = () => {
                     <li><Link to="/logistics">Dashboard</Link></li>
                     <li><Link to="/addSupplier">Add Supplier</Link></li>
                     <li><Link to="/listSupplier">List Supplier</Link></li>
+                    <li><Link to="/sup">Low Stock Products</Link></li>
                 </ul>
             </div>
             <div className="suppliers-content">
@@ -107,7 +107,6 @@ const SupplierList = () => {
                         }} value={sortField} className="form-select">
                             <option value="name">Name</option>
                             <option value="company_name">Company Name</option>
-                            <option value="product_name">Product Name</option>
                             <option value="email">Email</option>
                         </select>
                         <button onClick={toggleSortOrder} className="btn btn-toggle-sort">
@@ -122,7 +121,6 @@ const SupplierList = () => {
                         <tr>
                             <th>Name</th>
                             <th>Company Name</th>
-                            <th>Product Name</th>
                             <th>Contact Number</th>
                             <th>Email</th>
                             <th>Action</th>
@@ -133,7 +131,6 @@ const SupplierList = () => {
                             <tr key={supplier._id}>
                                 <td>{supplier.name}</td>
                                 <td>{supplier.company_name}</td>
-                                <td>{supplier.product_name}</td>
                                 <td>{supplier.contact_number}</td>
                                 <td>{supplier.email}</td>
                                 <td>
