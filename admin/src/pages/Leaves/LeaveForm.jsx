@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './LeaveForm.css'; // Add styles for modal
 
 const LeaveForm = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const LeaveForm = () => {
   const [leaves, setLeaves] = useState([]);
   const [userRole, setUserRole] = useState('');
   const [editingId, setEditingId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to handle modal visibility
 
   const handleChange = (e) => {
     setFormData({
@@ -23,13 +25,13 @@ const LeaveForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validate that the "To" date is after the "From" date
     if (new Date(formData.dateTo) <= new Date(formData.dateFrom)) {
       alert('The "To" date must be after the "From" date.');
       return;
     }
-    
+
     try {
       if (editingId) {
         // Update existing leave request
@@ -55,7 +57,7 @@ const LeaveForm = () => {
       alert('Error submitting leave request');
     }
   };
-  
+
   const fetchLeaves = async () => {
     try {
       const response = await axios.get(`http://localhost:5001/api/leaves?role=${userRole}`);
@@ -104,9 +106,18 @@ const LeaveForm = () => {
     }
   };
 
+  const openModal = () => {
+    setIsModalOpen(true); // Open the modal
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // Close the modal
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <h2> Leave Request Form</h2>
+      <form className='form1' onSubmit={handleSubmit}>
         <label>Username:</label>
         <input
           type="text"
@@ -164,62 +175,72 @@ const LeaveForm = () => {
           required
         />
 
-        <button type="submit">{editingId ? 'Update Leave Request' : 'Submit Leave Request'}</button>
+        <button type="submit">
+          {editingId ? 'Save Changes' : 'Request Leave'}
+        </button>
       </form>
 
-      <button onClick={fetchLeaves}>View Leave Requests</button>
+      <button onClick={openModal}>Show Leave Requests</button>
 
-      <h2>Submitted Leave Requests</h2>
-      <table border="1">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Role</th>
-            <th>Date From</th>
-            <th>Date To</th>
-            <th>Leave Type</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {leaves.map((leave, index) => (
-            <tr key={index}>
-              <td>{leave.username}</td>
-              <td>{leave.role}</td>
-              <td>{new Date(leave.dateFrom).toLocaleDateString()}</td>
-              <td>{new Date(leave.dateTo).toLocaleDateString()}</td>
-              <td>{leave.leaveType}</td>
-              <td>{leave.description}</td>
-              <td>{leave.status}</td>
-              <td>
-                {userRole === 'hr-manager' ? (
-                  <>
-                    <button onClick={() => handleStatusChange(leave._id, 'Accepted')}>Accept</button>
-                    <button onClick={() => handleStatusChange(leave._id, 'Declined')}>Decline</button>
-                  </>
-                ) : (
-                  <>
-                    <button 
-                      onClick={() => handleEdit(leave)} 
-                      disabled={leave.status === 'Accepted'}
-                    >
-                      Edit
-                    </button>
-                    <button 
-                      onClick={() => handleDelete(leave._id)} 
-                      disabled={leave.status === 'Accepted'}
-                    >
-                      Delete
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <button onClick={closeModal} className="close-modal">X</button>
+            <h2>Submitted Leave Requests</h2>
+            <table border="1">
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Role</th>
+                  <th>Date From</th>
+                  <th>Date To</th>
+                  <th>Leave Type</th>
+                  <th>Description</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {leaves.map((leave, index) => (
+                  <tr key={index}>
+                    <td>{leave.username}</td>
+                    <td>{leave.role}</td>
+                    <td>{new Date(leave.dateFrom).toLocaleDateString()}</td>
+                    <td>{new Date(leave.dateTo).toLocaleDateString()}</td>
+                    <td>{leave.leaveType}</td>
+                    <td>{leave.description}</td>
+                    <td>{leave.status}</td>
+                    <td>
+                      {userRole === 'hr-manager' ? (
+                        <>
+                          <button onClick={() => handleStatusChange(leave._id, 'Accepted')}>Approve</button>
+                          <button onClick={() => handleStatusChange(leave._id, 'Declined')}>Reject</button>
+                        </>
+                      ) : (
+                        <>
+                          <button 
+                            onClick={() => handleEdit(leave)} 
+                            disabled={leave.status === 'Accepted'}
+                          >
+                            Modify
+                          </button>
+                          <button 
+                            onClick={() => handleDelete(leave._id)} 
+                            disabled={leave.status === 'Accepted'}
+                          >
+                            Remove
+                          </button>
+                        </>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
