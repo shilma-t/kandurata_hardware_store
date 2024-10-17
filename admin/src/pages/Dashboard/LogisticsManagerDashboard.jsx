@@ -45,12 +45,13 @@ function Dashboard() {
       {
         label: 'Number of Orders',
         data: orderData,
-        borderColor: 'rgba(75, 192, 192, 1)', // Line color
-        backgroundColor: 'rgba(75, 192, 192, 0.2)', // Fill color with some transparency
+        borderColor: 'tomato', // Line color changed to tomato
+        backgroundColor: 'rgba(255, 99, 71, 0.2)', // Fill color (tomato with transparency)
         fill: true, // Enable filling under the line
       },
     ],
   };
+  
 
   const options = {
     scales: {
