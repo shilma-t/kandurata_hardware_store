@@ -9,14 +9,15 @@ import './HRManagerQueries.css';
 const HrManagerDashboard = () => {
   const [queries, setQueries] = useState([]);
   const [replies, setReplies] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // Add search state
+  const [leaves, setLeaves] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch the inquiries and replies from the backend
+  // Fetch the inquiries, replies, and leave requests from the backend
   useEffect(() => {
     const fetchQueries = async () => {
       try {
         const response = await axios.get("http://localhost:5001/inquiries");
-        setQueries(response.data.inquiries || []); // Ensure it's an array
+        setQueries(response.data.inquiries || []);
       } catch (error) {
         console.error("Error fetching inquiries:", error);
       }
@@ -25,14 +26,24 @@ const HrManagerDashboard = () => {
     const fetchReplies = async () => {
       try {
         const response = await axios.get("http://localhost:5001/replies");
-        setReplies(response.data.replies || []); // Ensure it's an array
+        setReplies(response.data.replies || []);
       } catch (error) {
         console.error("Error fetching replies:", error);
       }
     };
 
+    const fetchLeaves = async () => {
+      try {
+        const response = await axios.get("http://localhost:5001/api/leaves");
+        setLeaves(response.data || []);
+      } catch (error) {
+        console.error("Error fetching leave requests:", error);
+      }
+    };
+
     fetchQueries();
     fetchReplies();
+    fetchLeaves();
   }, []);
 
   // Find reply for a given inquiry ID
@@ -49,6 +60,22 @@ const HrManagerDashboard = () => {
     } catch (error) {
       console.error("Error deleting inquiry:", error);
       toast.error("Failed to delete inquiry");
+    }
+  };
+
+  // Handle accept and decline for leave requests
+  const updateLeaveStatus = async (leaveId, status) => {
+    try {
+      await axios.put(`http://localhost:5001/api/leaves/${leaveId}`, { status });
+      setLeaves(
+        leaves.map((leave) =>
+          leave._id === leaveId ? { ...leave, status } : leave
+        )
+      );
+      toast.success(`Leave request ${status.toLowerCase()}ed successfully`);
+    } catch (error) {
+      console.error(`Error updating leave request:`, error);
+      toast.error(`Failed to ${status.toLowerCase()} leave request`);
     }
   };
 
@@ -75,7 +102,7 @@ const HrManagerDashboard = () => {
         query.username,
         query.email,
         query.message,
-        reply ? reply.replyMessage : "No reply"
+        reply ? reply.replyMessage : "No reply",
       ];
     });
 
@@ -129,7 +156,7 @@ const HrManagerDashboard = () => {
         </thead>
         <tbody>
           {filteredQueries.map((query) => {
-            const reply = findReplyForInquiry(query._id); // Get the reply for each inquiry
+            const reply = findReplyForInquiry(query._id);
             return (
               <tr key={query._id}>
                 <td>{query.username}</td>
@@ -137,14 +164,55 @@ const HrManagerDashboard = () => {
                 <td>{query.message}</td>
                 <td>{reply ? reply.replyMessage : "No reply"}</td>
                 <td className="actions">
-                  {!reply && <Link to={`/reply/${query._id}`}>
-                    <button>Reply</button>
-                  </Link>}
-                  {!reply && <button onClick={() => deleteInquiry(query._id)}>Deny</button>}
+                  {!reply && (
+                    <Link to={`/reply/${query._id}`}>
+                      <button>Reply</button>
+                    </Link>
+                  )}
+                  {!reply && (
+                    <button onClick={() => deleteInquiry(query._id)}>Deny</button>
+                  )}
                 </td>
               </tr>
             );
           })}
+        </tbody>
+      </table>
+
+      <h2>Leave Requests</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Date From</th>
+            <th>Date To</th>
+            <th>Leave Type</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {leaves.map((leave) => (
+            <tr key={leave._id}>
+              <td>{leave.username}</td>
+              <td>{leave.role}</td>
+              <td>{new Date(leave.dateFrom).toLocaleDateString()}</td>
+              <td>{new Date(leave.dateTo).toLocaleDateString()}</td>
+              <td>{leave.leaveType}</td>
+              <td>{leave.description}</td>
+              <td>{leave.status || "Pending"}</td>
+              <td>
+                <button onClick={() => updateLeaveStatus(leave._id, "Accepted")}>
+                  Accept
+                </button>
+                <button onClick={() => updateLeaveStatus(leave._id, "Declined")}>
+                  Decline
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
 

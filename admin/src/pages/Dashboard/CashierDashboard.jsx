@@ -97,6 +97,7 @@ const List = () => {
           <li className="sidebar-item"><Link to="/">Dashboard</Link></li>
           <li className="sidebar-item"><Link to="/dashboard/cashier">Sales</Link></li>
           <li className="sidebar-item"><Link to="/invoice-display">View Sales</Link></li>
+          <li className="sidebar-item"><Link to="/new">Leave Request</Link></li> 
         </ul>
       </div>
       <div className="list-content">
