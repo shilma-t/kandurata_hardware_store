@@ -111,25 +111,7 @@ const ProductDetailPopup = ({ product, onClose }) => {
                         ))}
                     </div>
 
-                    {/* Quantity Selection */}
-                    <div className="quantity-selection">
-                        <h3>Select Quantity:</h3>
-                        <div className="quantity-controls">
-                            <button 
-                                onClick={() => handleQuantityChange(quantity - 1)} 
-                                disabled={quantity <= 1} // Disable button if quantity is 1
-                            >
-                                -
-                            </button>
-                            <span>{quantity}</span>
-                            <button 
-                                onClick={() => handleQuantityChange(quantity + 1)} 
-                                disabled={quantity >= product.quantity} // Disable button if quantity exceeds stock
-                            >
-                                +
-                            </button>
-                        </div>
-                    </div>
+                   
 
                     {/* Out of Stock Message */}
                     {product.quantity === 0 ? (

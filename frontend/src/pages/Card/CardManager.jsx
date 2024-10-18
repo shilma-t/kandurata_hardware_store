@@ -1,6 +1,9 @@
 import axios from 'axios';
+import React, { useState } from 'react';
+import './cardManager.css'; // Ensure the correct relative path to your CSS file
+import Modal from './Modal'; // Ensure the correct relative path to your Modal component
 
-// Exported fetchCardByCode function
+// Function to fetch a card by its unique code
 export const fetchCardByCode = async (uniqueCode) => {
     try {
         const response = await axios.get(`http://localhost:5001/api/cards/code/${uniqueCode}`);
@@ -11,11 +14,6 @@ export const fetchCardByCode = async (uniqueCode) => {
         throw new Error('Error fetching card. Please check your code.');
     }
 };
-
-// Rest of your Card component
-import React, { useState } from 'react';
-import './cardManager.css'; // Relative path to the CSS file
-import Modal from './Modal';
 
 const Card = () => {
     const [cardNumber, setCardNumber] = useState('');
@@ -28,8 +26,21 @@ const Card = () => {
     const [editCardId, setEditCardId] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    // Validation errors
+    const [errors, setErrors] = useState({ cardNumber: '' });
+
+    // Add a new card
     const addCard = async (e) => {
         e.preventDefault();
+
+        // Validate card number (must be 16 digits)
+        if (!/^\d{16}$/.test(cardNumber)) {
+            setErrors({ ...errors, cardNumber: 'Card number must be 16 digits long.' });
+            return;
+        } else {
+            setErrors({ ...errors, cardNumber: '' });
+        }
+
         try {
             const payload = { cardNumber, cardHolderName, expiryDate, cardType, uniqueCode };
             console.log('Adding Card:', payload);
@@ -43,6 +54,7 @@ const Card = () => {
         }
     };
 
+    // Reset form fields
     const resetForm = () => {
         setCardNumber('');
         setCardHolderName('');
@@ -51,6 +63,7 @@ const Card = () => {
         setUniqueCode('');
     };
 
+    // Edit card details
     const handleEditCard = (card) => {
         setCardNumber(card.cardNumber);
         setCardHolderName(card.cardHolderName);
@@ -61,6 +74,7 @@ const Card = () => {
         setIsModalOpen(true);
     };
 
+    // Delete a card
     const handleDeleteCard = async (cardId) => {
         try {
             await axios.delete(`http://localhost:5001/api/cards/${cardId}`);
@@ -72,6 +86,7 @@ const Card = () => {
         }
     };
 
+    // Update card details
     const updateCard = async (updatedCardData) => {
         try {
             const response = await axios.put(`http://localhost:5001/api/cards/${editCardId}`, updatedCardData);
@@ -91,20 +106,52 @@ const Card = () => {
         <div>
             <h1>{editCardId ? 'Edit Your Card' : 'Add Your Card'}</h1>
             <form onSubmit={addCard}>
-                <input type="text" placeholder="Card Number" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} required />
-                <input type="text" placeholder="Card Holder Name" value={cardHolderName} onChange={(e) => setCardHolderName(e.target.value)} required />
-                <input type="month" placeholder="Expiry Date" value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} required />
+                <input
+                    type="text"
+                    placeholder="Card Number"
+                    value={cardNumber}
+                    onChange={(e) => setCardNumber(e.target.value)}
+                    required
+                />
+                {errors.cardNumber && <p style={{ color: 'red' }}>{errors.cardNumber}</p>}
+
+                <input
+                    type="text"
+                    placeholder="Card Holder Name"
+                    value={cardHolderName}
+                    onChange={(e) => setCardHolderName(e.target.value)}
+                    required
+                />
+                <input
+                    type="month"
+                    placeholder="Expiry Date"
+                    value={expiryDate}
+                    onChange={(e) => setExpiryDate(e.target.value)}
+                    required
+                />
                 <select value={cardType} onChange={(e) => setCardType(e.target.value)} required>
                     <option value="Debit">Debit Card</option>
                     <option value="Credit">Credit Card</option>
                 </select>
-                <input type="text" placeholder="Unique Code" value={uniqueCode} onChange={(e) => setUniqueCode(e.target.value)} required />
+                <input
+                    type="text"
+                    placeholder="CVV "
+                    value={uniqueCode}
+                    onChange={(e) => setUniqueCode(e.target.value)}
+                    required
+                />
                 <button type="submit">Add Card</button>
             </form>
 
-            <h1>Retrieve Your Card by Unique Code</h1>
+            <h1>Retrieve Your Card by CVV </h1>
             <form onSubmit={(e) => { e.preventDefault(); fetchCardByCode(uniqueCode).then(setCards); }}>
-                <input type="text" placeholder="Unique Code" value={uniqueCode} onChange={(e) => setUniqueCode(e.target.value)} required />
+                <input
+                    type="text"
+                    placeholder="Enter CVV"
+                    value={uniqueCode}
+                    onChange={(e) => setUniqueCode(e.target.value)}
+                    required
+                />
                 <button type="submit">Retrieve Card</button>
             </form>
 
@@ -126,7 +173,12 @@ const Card = () => {
                 </div>
             )}
 
-            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSave={updateCard} cardData={{ cardNumber, cardHolderName, expiryDate, cardType }} />
+            <Modal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSave={updateCard}
+                cardData={{ cardNumber, cardHolderName, expiryDate, cardType }}
+            />
         </div>
     );
 };
